@@ -119,6 +119,18 @@
 			</list>
 		</property>
 	</bean>
+	
+	<bean id="userAccount10" class="security.UserAccount">
+		<property name="username" value="auditor1" />
+		<property name="password" value="175d2e7a63f386554a4dd66e865c3e14" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="AUDITOR" />
+				</bean>
+			</list>
+		</property>
+	</bean>
 
 	<!-- Other domain beans come here -->
 
@@ -208,7 +220,7 @@
 		<property name="vatNumber" value="7" />
 		<property name="userAccount" ref="userAccount7" />
 		<property name="creditCard" ref="creditCard7" />
-
+		<property name="score" value="0.5" />
 		<property name="commercialName" value="commercialName1" />
 	</bean>
 
@@ -222,7 +234,7 @@
 		<property name="vatNumber" value="8" />
 		<property name="userAccount" ref="userAccount8" />
 		<property name="creditCard" ref="creditCard8" />
-
+		<property name="score" value="0.5" />
 		<property name="commercialName" value="commercialName2" />
 	</bean>
 
@@ -235,9 +247,22 @@
 		<property name="vatNumber" value="9" />
 		<property name="userAccount" ref="userAccount9" />
 		<property name="creditCard" ref="creditCard9" />
-
+		<property name="score" value="0.5" />
 		<property name="commercialName" value="commercialName3" />
 	</bean>
+	
+	<!-- Auditor -->
+
+	<bean class="domain.Auditor" id="auditor1">
+		<property name="name" value="Antonia" />
+		<property name="surname" value="del Sol" />
+		<property name="photo" value="http://www.pinturillo.com" />
+		<property name="email" value="antonia@gmail.com" />
+		<property name="phone" value="+33923681276" />
+		<property name="vatNumber" value="3" />
+		<property name="userAccount" ref="userAccount10" />
+		<property name="creditCard" ref="creditCard10" />
+	</bean>	
 
 	<!-- Positions -->
 
@@ -538,6 +563,14 @@
 		<property name="CVV" value="442" />
 	</bean>
 
+	<bean class="domain.CreditCard" id="creditCard10">
+		<property name="holderName" value="Pérez Sánchez" />
+		<property name="brandName" value="Mastercard" />
+		<property name="number" value="5411654645989597" />
+		<property name="expirationMonth" value="11" />
+		<property name="expirationYear" value="20" />
+		<property name="CVV" value="442" />
+	</bean>
 	<!-- Customisation -->
 
 	<bean id="customisation" class="domain.Customisation">

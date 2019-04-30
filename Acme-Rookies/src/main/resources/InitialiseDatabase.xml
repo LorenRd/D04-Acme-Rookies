@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+ * PopulateDatabase.xml
+ *
+ * Copyright (C) 2019 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	">
+	
+	<!-- User accounts -->
+
+	<bean id="userAccount1" class="security.UserAccount">
+		<property name="username" value="admin" />
+		<property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="ADMIN" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Other domain beans come here -->
+	
+	<!-- Administrators -->
+
+	<bean class="domain.Administrator" id="administrator1">
+		<property name="name" value="Lorenzo" />
+		<property name="surname" value="Rondán Domínguez" />
+		<property name="photo" value="http://mifoto.com" />
+		<property name="email" value="loren@" />
+		<property name="phone" value="+34912123123" />
+		<property name="address" value="C/ A nº1 Sevilla" />
+		<property name="vatNumber" value="1" />
+		<property name="userAccount" ref="userAccount1" />
+		<property name="creditCard" ref="creditCard1" />
+	</bean>
+	
+	<!-- Credit Card -->
+
+	<bean class="domain.CreditCard" id="creditCard1">
+		<property name="holderName" value="Lorenzo Domínguez" />
+		<property name="brandName" value="MasterCard" />
+		<property name="number" value="5220 2777 7103 1876" />
+		<property name="expirationMonth" value="7" />
+		<property name="expirationYear" value="19" />
+		<property name="CVV" value="701" />
+	</bean>
+	
+	<!-- Customisation -->
+	
+	<bean id="customisation" class="domain.Customisation">
+		<property name="systemName" value="Acme Rookies" />
+		<property name="welcomeBanner" value="https://i.imgur.com/7b8lu4b.png" />
+		<property name="welcomeMessageEn" value="Welcome to Acme Rookies! We’re IT
+hacker’s favourite job marketplace!" />
+		<property name="welcomeMessageEs" value="¡Bienvenidos a Acme Rookies! ¡Somos el mercado de trabajo favorito de los profesionales de
+las TICs!" />
+		<property name="countryCode" value="+34" />
+	</bean>
+	
+</beans>

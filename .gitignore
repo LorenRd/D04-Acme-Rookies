@@ -1,0 +1,8 @@
+*.class
+\.metadata/
+\.RemoteSystemsTempFiles/
+\Scrapbook/
+\Servers/
+\Acme-Rookies/target/
+\Acme-Rookies/.settings/
+\Acme-Rookies/src/main/resources/Entities.map

@@ -132,6 +132,22 @@
 		</security:authorize>
 		
 		<security:authorize access="isAuthenticated()">
+		<li><a class="fNiv"><spring:message
+						code="master.page.companies" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="company/list.do"><spring:message
+								code="master.page.customer.list.companies" /></a></li>
+				</ul>
+			</li>
+			<li><a class="fNiv"><spring:message
+						code="master.page.positions" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="position/list.do"><spring:message
+								code="master.page.customer.list.positions" /></a></li>
+				</ul>
+			</li>
 			<li>
 				<a class="fNiv"> 
 					<spring:message code="master.page.profile" /> 

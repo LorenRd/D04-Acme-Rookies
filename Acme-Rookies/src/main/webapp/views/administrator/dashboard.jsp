@@ -103,4 +103,7 @@
 	<h3><spring:message code="administrator.worstSalaryPosition" /></h3>
 	<jstl:out value="${worstSalaryPosition.title}"></jstl:out>
 	
+	<h3><spring:message code="administrator.controlPalnel" /></h3>
+	
+	
 </security:authorize>

@@ -22,6 +22,7 @@
 
 		<value>/views/company/tiles.xml</value>
 		<value>/views/rookie/tiles.xml</value>
+		<value>/views/customisation/tiles.xml</value>
 		<value>/views/audit/tiles.xml</value>
 		<value>/views/auditor/tiles.xml</value>
 		<value>/views/position/tiles.xml</value>

@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
+import services.CustomisationService;
 import services.MessageService;
 
 import controllers.AbstractController;
 import domain.Actor;
+import domain.Customisation;
 import domain.Message;
 
 @Controller
@@ -29,13 +31,17 @@ public class MessageController extends AbstractController {
 	@Autowired
 	private MessageService messageService;
 
+	@Autowired
+	private CustomisationService	customisationService;
+
 	// Listing
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		ModelAndView result;
 		final Collection<Message> messages;
-
+		Customisation customisation;
+		customisation = this.customisationService.find();
 		try {
 			final int actorId = this.actorService.findByPrincipal().getId();
 			Assert.notNull(actorId);
@@ -51,6 +57,7 @@ public class MessageController extends AbstractController {
 			result = new ModelAndView("message/list");
 			result.addObject("message", "message.retrieve.error");
 			result.addObject("messages", new ArrayList<Message>());
+			result.addObject("rebrandMessage", customisation.getRebrandingAnnouncement());
 		}
 
 		return result;
@@ -85,5 +92,49 @@ public class MessageController extends AbstractController {
 
 		return result;
 	}
+	
+	@RequestMapping(value = "/warning")
+	public ModelAndView warning() {
+		ModelAndView result;
+		Message mensaje;
 
+		try {
+			mensaje = this.messageService.create();
+			mensaje.setBody("Passwords have been leaked!" + "¡Las contraseñas han sido filtradas!");
+			mensaje.setSubject("WARNING!" + "¡ALERTA!");
+
+			this.messageService.broadcast(mensaje);
+
+			result = new ModelAndView("redirect:/message/actor/list.do");
+		} catch (final Throwable oops) {
+			result = new ModelAndView("redirect:/message/actor/list.do");
+		}
+
+		return result;
+	}
+	
+	@RequestMapping(value = "/rebrand")
+	public ModelAndView rebrand() {
+		ModelAndView result;
+		Message mensaje;
+		Customisation customisation;
+		customisation = this.customisationService.find();
+		
+
+		try {
+			Assert.isTrue(!customisation.getRebrandingAnnouncement());
+			mensaje = this.messageService.create();
+			mensaje.setBody("Now Acme Hacker Rank is named Acme Rookies!" + "¡Cambiamos de nombre, ahora Acme Hacker Rank se llama Acme Rookies!");
+			mensaje.setSubject("Rebrand!" + "¡Cambiamos de nombre!");
+
+			this.messageService.broadcast(mensaje);
+			customisation.setRebrandingAnnouncement(true);
+			this.customisationService.save(customisation);
+			result = new ModelAndView("redirect:/message/actor/list.do");
+		} catch (final Throwable oops) {
+			result = new ModelAndView("redirect:/message/actor/list.do");
+		}
+
+		return result;
+	}
 }

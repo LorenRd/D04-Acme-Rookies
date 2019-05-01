@@ -30,7 +30,7 @@
 		<value>/views/rookie/messages</value>
 		<value>/views/audit/messages</value>
 		<value>/views/auditor/messages</value>	
-		
+		<value>/views/customisation/messages</value>			
 		<value>/views/position/messages</value>
 		<value>/views/message/messages</value>
 		<value>/views/application/messages</value>

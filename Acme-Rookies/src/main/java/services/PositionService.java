@@ -290,15 +290,17 @@ public class PositionService {
 			result.setSkillsRequired(position.getSkillsRequired());
 			result.setProblems(position.getProblems());
 			result.setTechnologiesRequired(position.getTechnologiesRequired());
+			
+			if(result.getDeadline().before(Calendar.getInstance().getTime()))
+				binding.rejectValue("deadline", "application.validation.deadline", "Deadline must be future");
+			if (result.getTechnologiesRequired().isEmpty())
+				binding.rejectValue("technologiesRequired", "application.validation.technologiesRequired", "Must not be blank");
+			if (result.getSkillsRequired().isEmpty())
+				binding.rejectValue("skillsRequired", "application.validation.skillsRequired", "Must not be blank");
 
 		
 		}
-		if(result.getDeadline().before(Calendar.getInstance().getTime()))
-			binding.rejectValue("deadline", "application.validation.deadline", "Deadline must be future");
-		if (result.getTechnologiesRequired().isEmpty())
-			binding.rejectValue("technologiesRequired", "application.validation.technologiesRequired", "Must not be blank");
-		if (result.getSkillsRequired().isEmpty())
-			binding.rejectValue("skillsRequired", "application.validation.skillsRequired", "Must not be blank");
+
 		
 		this.validator.validate(result, binding);
 

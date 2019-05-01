@@ -18,6 +18,7 @@ public class Customisation extends DomainEntity {
 	private String	welcomeMessageEn;
 	private String	welcomeMessageEs;
 	private String	countryCode;
+	private boolean rebrandingAnnouncement;
 
 
 	@NotBlank
@@ -66,4 +67,11 @@ public class Customisation extends DomainEntity {
 		this.countryCode = countryCode;
 	}
 
+	public boolean getRebrandingAnnouncement() {
+		return this.rebrandingAnnouncement;
+	}
+
+	public void setRebrandingAnnouncement(boolean rebrandingAnnouncement) {
+		this.rebrandingAnnouncement = rebrandingAnnouncement;
+	}
 }

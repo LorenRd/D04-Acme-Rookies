@@ -601,6 +601,8 @@ rookies’ favourite job marketplace!" />
 		<property name="welcomeMessageEs" value="¡Bienvenidos a Acme Rookies! ¡Somos el mercado de trabajo favorito de los profesionales de
 las TICs!" />
 		<property name="countryCode" value="+34" />
+		<property name="rebrandingAnnouncement" value="false" />
+		
 	</bean>
 
 	<!-- Messages -->

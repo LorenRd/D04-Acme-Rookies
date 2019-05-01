@@ -90,7 +90,27 @@
 				</ul>
 			</li>
 		</security:authorize>
-		
+		<security:authorize access="hasRole('AUDITOR')">
+			<li><a class="fNiv"><spring:message	code="master.page.auditor" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="audit/auditor/list.do"><spring:message code="master.page.auditor.audits" /></a></li>								
+				</ul>
+			</li>
+			<li><a class="fNiv"><spring:message code="master.page.terms" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<jstl:if test="${cookie['language'].getValue()=='en'}">
+					<li><a href="terms/englishTerms.do"><spring:message
+								code="master.page.terms" /></a></li>
+					</jstl:if>
+					<jstl:if test="${cookie['language'].getValue()=='es'}">
+					<li><a href="terms/terms.do"><spring:message
+								code="master.page.terms" /></a></li>
+					</jstl:if>
+				</ul>
+			</li>
+		</security:authorize>		
 		<security:authorize access="isAnonymous()">
 			<li><a class="fNiv"><spring:message
 						code="master.page.companies" /></a>

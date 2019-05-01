@@ -15,6 +15,7 @@ import repositories.PositionRepository;
 import security.Authority;
 import domain.Actor;
 import domain.Application;
+import domain.Audit;
 import domain.Company;
 import domain.Rookie;
 import domain.Position;
@@ -43,6 +44,12 @@ public class PositionService {
 
 	@Autowired
 	private Validator validator;
+	
+	@Autowired
+	private AuditService auditService;
+
+	
+
 
 	// Simple CRUD Methods
 
@@ -148,13 +155,35 @@ public class PositionService {
 	public Collection<Position> findAllFinalNotApplication() {
 		Collection<Position> result;
 		Collection<Application> applications;
+		Collection<Position> positions;
+
 		Rookie principal;
 		principal = this.rookieService.findByPrincipal();
 		
 		applications = this.applicationService.findAllApplicationsByRookieId(principal.getId());
 		result = this.positionRepository.findAllFinal();
-		for (Position p : result) {
+		positions = this.positionRepository.findAllFinal();
+
+		for (Position p : positions) {
 			for (Application a : applications) {
+				if(a.getPosition().getId() == p.getId())
+					result.remove(p);
+			}
+		}
+		return result;
+	}
+	
+	public Collection<Position> findAllFinalNotAudit() {
+		Collection<Position> positions;
+		Collection<Audit> audits;
+		Collection<Position> result;
+		
+		audits = this.auditService.findAll();
+		positions = this.positionRepository.findAllFinal();
+		result = this.positionRepository.findAllFinal();
+		
+		for (Position p : positions) {
+			for (Audit a : audits) {
 				if(a.getPosition().getId() == p.getId())
 					result.remove(p);
 			}

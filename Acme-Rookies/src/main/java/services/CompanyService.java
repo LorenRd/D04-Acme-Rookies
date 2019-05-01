@@ -112,7 +112,7 @@ public class CompanyService {
 			Assert.isTrue(logedUserAccount.equals(company.getUserAccount()),
 					"company.notEqual.userAccount");
 			saved = this.companyRepository.findOne(company.getId());
-			Assert.notNull(saved, "brotherhood.not.null");
+			Assert.notNull(saved, "company.not.null");
 			Assert.isTrue(
 					saved.getUserAccount().getUsername()
 							.equals(company.getUserAccount().getUsername()),

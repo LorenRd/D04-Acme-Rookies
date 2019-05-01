@@ -254,7 +254,7 @@ public class ProblemCompanyController {
 			private ModelAndView editModelAndView(final Problem problem, final String messageCode) {
 				ModelAndView result;
 
-				result = new ModelAndView("float/edit");
+				result = new ModelAndView("problem/edit");
 				result.addObject("problem", problem);
 				result.addObject("message", messageCode);
 				return result;

@@ -24,7 +24,7 @@ public class Audit extends DomainEntity {
 	private Date	moment;
 	private String	text;
 	private Double score;
-
+	private boolean isDraft;
 
 	@NotNull
 	@Past
@@ -44,7 +44,8 @@ public class Audit extends DomainEntity {
 	public void setText(String text) {
 		this.text = text;
 	}
-
+	
+	@NotNull
 	@Range(min = 0, max = 10)
 	public Double getScore() {
 		return score;
@@ -52,8 +53,15 @@ public class Audit extends DomainEntity {
 	public void setScore(Double score) {
 		this.score = score;
 	}
+	
+	public boolean getIsDraft() {
+		return isDraft;
+	}
 
-
+	public void setIsDraft(boolean isDraft) {
+		this.isDraft = isDraft;
+	}
+	
 	// Relationships----------------------------------------------
 	private Auditor		auditor;
 	private Position position;
@@ -69,7 +77,6 @@ public class Audit extends DomainEntity {
 		this.auditor = auditor;
 	}
 	
-	@NotNull
 	@Valid
 	@OneToOne(optional=false)
 	public Position getPosition() {
@@ -79,5 +86,5 @@ public class Audit extends DomainEntity {
 	public void setPosition(final Position position) {
 		this.position = position;
 	}
-	
+
 }

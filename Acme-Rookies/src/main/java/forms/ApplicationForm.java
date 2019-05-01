@@ -34,7 +34,7 @@ public class ApplicationForm {
 		this.moment = moment;
 	}
 
-	@Pattern(regexp = "^PENDING|APPROVED|REJECTED$")
+	@Pattern(regexp = "^PENDING|SUBMITTED|APPROVED|REJECTED$")
 	@SafeHtml
 	public String getStatus() {
 		return this.status;

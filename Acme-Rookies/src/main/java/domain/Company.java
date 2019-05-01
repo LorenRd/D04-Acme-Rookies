@@ -35,7 +35,7 @@ public class Company extends Actor {
 		this.commercialName = commercialName;
 	}
 	
-	@Range(min = -1, max = 1)
+	@Range(min = 0, max = 1)
 	public double getScore() {
 		return this.score;
 	}

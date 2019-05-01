@@ -479,7 +479,27 @@
 		<property name="position" ref="position2" />
 		<property name="problem" ref="problem3" />
 	</bean>
+	
+	<!-- Audit -->
 
+	<bean class="domain.Audit" id="audit1">
+		<property name="auditor" ref="auditor1" />
+		<property name="moment" value="2019/04/30 13:00" />
+		<property name="position" ref="position2" />
+		<property name="text" value="Example text"/>
+		<property name="isDraft" value="false"/>
+		<property name="score" value="7.5"/>	
+	</bean>
+	
+	<bean class="domain.Audit" id="audit2">
+		<property name="auditor" ref="auditor1" />
+		<property name="moment" value="2019/04/29 13:00" />
+		<property name="position" ref="position3" />
+		<property name="text" value="Example text 2"/>
+		<property name="isDraft" value="true"/>
+		<property name="score" value="6.5"/>	
+	</bean>
+	
 	<!-- Credit Card -->
 
 	<bean class="domain.CreditCard" id="creditCard1">

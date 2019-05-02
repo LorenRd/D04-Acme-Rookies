@@ -17,41 +17,41 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
-<form:form action="administrator/edit.do" modelAttribute="administrator">
+<form:form action="auditor/edit.do" modelAttribute="auditor">
 	<form:hidden path="id" />
 	<form:hidden path="version"/>
 
 	<div class="ui equal width form">
 		<div class="fields">
 			<!-- Name -->
-			<acme:textbox code="administrator.name" path="name"/>
+			<acme:textbox code="auditor.name" path="name"/>
 			<!-- Surname -->
-			<acme:textbox code="administrator.surname" path="surname"/>
+			<acme:textbox code="auditor.surname" path="surname"/>
 			<!-- Photo -->
-			<acme:textbox code="administrator.photo" path="photo"/>
+			<acme:textbox code="auditor.photo" path="photo"/>
 			<!-- Phone -->
-			<acme:textbox code="administrator.phone" path="phone"/>
+			<acme:textbox code="auditor.phone" path="phone"/>
 			<!-- Address -->
-			<acme:textbox code="administrator.address" path="address"/>
+			<acme:textbox code="auditor.address" path="address"/>
 			<!-- VAT number -->
-			<acme:textbox code="administrator.vatNumber" path="vatNumber"/>
+			<acme:textbox code="auditor.vatNumber" path="vatNumber"/>
 		</div>
 		<div class="fields">
 			<!-- Email -->
-			<acme:textbox code="administrator.email" path="email"/>
+			<acme:textbox code="auditor.email" path="email"/>
 		</div>
 	</div>
 
 	
 	<input type="submit" name="save" id="save"
-		value="<spring:message code="administrator.save" />" />
+		value="<spring:message code="auditor.save" />" />
 	
-	<acme:cancel url="administrator/viewProfile.do" code="administrator.cancel"/>
+	<acme:cancel url="auditor/viewProfile.do" code="auditor.cancel"/>
 
 
 </form:form>
 
 
 <script type="text/javascript">
-$("#save").on("click",function(){validatePhone("<spring:message code='admin.confirmationPhone'/>","${countryCode}");});
+$("#save").on("click",function(){validatePhone("<spring:message code='auditor.confirmationPhone'/>","${countryCode}");});
 </script>

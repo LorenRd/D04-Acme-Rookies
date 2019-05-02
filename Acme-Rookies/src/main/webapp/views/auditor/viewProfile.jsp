@@ -27,27 +27,27 @@
 	</thead>
 	<tbody>
 		<tr>
-			<acme:displayText code="administrator.name" dataLabel="name" path="${actor.name}"/>
+			<acme:displayText code="auditor.name" dataLabel="name" path="${actor.name}"/>
 		</tr>
 		<tr>
-			<acme:displayText dataLabel="surname" code="administrator.surname" path="${actor.surname}"/>
+			<acme:displayText dataLabel="surname" code="auditor.surname" path="${actor.surname}"/>
 		</tr>
 		<tr>
-			<acme:displayText dataLabel="phone" code="administrator.phone" path="${actor.phone}"/>
+			<acme:displayText dataLabel="phone" code="auditor.phone" path="${actor.phone}"/>
 		</tr>
 		<tr>
-			<acme:displayText dataLabel="address" code="administrator.address" path="${actor.address}"/>
+			<acme:displayText dataLabel="address" code="auditor.address" path="${actor.address}"/>
 		</tr>
 		<tr>
-			<acme:displayText dataLabel="vatNumber" code="administrator.vatNumber" path="${actor.vatNumber}"/>
+			<acme:displayText dataLabel="vatNumber" code="auditor.vatNumber" path="${actor.vatNumber}"/>
 		</tr>
 		<tr>
-			<acme:displayText dataLabel="email" code="administrator.email" path="${actor.email}"/>
+			<acme:displayText dataLabel="email" code="auditor.email" path="${actor.email}"/>
 		</tr>
 	</tbody>
 </table>
 
-<acme:button url="administrator/edit.do" code="administrator.edit"/>
+<acme:button url="auditor/edit.do" code="auditor.edit"/>
 
 <jstl:if test="${actor.userAccount.username == pageContext.request.userPrincipal.name}">
 	<acme:button url="message/actor/exportData.do" code="actor.exportData"/>
@@ -56,7 +56,7 @@
 <jstl:if test="${actor.userAccount.username == pageContext.request.userPrincipal.name}">
 <br/>
 <br/>
-	<acme:button url="administrator/delete.do" code="actor.delete"/>
+	<acme:button url="auditor/delete.do" code="actor.delete"/>
 </jstl:if>
 
 </body>

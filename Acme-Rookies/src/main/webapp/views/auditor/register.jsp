@@ -21,19 +21,19 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<form:form action="${formURI}" modelAttribute="administratorForm">
+<form:form action="${formURI}" modelAttribute="auditorForm">
 		
-		<form:hidden path="idAdministrator" />
+		<form:hidden path="idAuditor" />
 		
 		<fieldset>
-    	<legend><spring:message code="administrator.fieldset.personalInformation"/></legend>
-		<acme:textbox code="administrator.name" path="name" placeholder="Homer"/>
-		<acme:textbox code="administrator.surname" path="surname" placeholder="Simpson"/>
-		<acme:textbox code="administrator.photo" path="photo" placeholder="https://www.jazzguitar.be/images/bio/homer-simpson.jpg"/>
-		<acme:textbox code="administrator.phone" path="phone" placeholder="+34 600 1234"/>
-		<acme:textbox code="administrator.address" path="address" placeholder="123 Main St Anytown, Australia"/>
-		<acme:textbox code="administrator.email" path="email" placeholder="homerjsimpson@"/>
-		<acme:textbox code="administrator.vatNumber" path="vatNumber" placeholder="2.0"/>
+    	<legend><spring:message code="auditor.fieldset.personalInformation"/></legend>
+		<acme:textbox code="auditor.name" path="name" placeholder="Homer"/>
+		<acme:textbox code="auditor.surname" path="surname" placeholder="Simpson"/>
+		<acme:textbox code="auditor.photo" path="photo" placeholder="https://www.jazzguitar.be/images/bio/homer-simpson.jpg"/>
+		<acme:textbox code="auditor.phone" path="phone" placeholder="+34 600 1234"/>
+		<acme:textbox code="auditor.address" path="address" placeholder="123 Main St Anytown, Australia"/>
+		<acme:textbox code="auditor.email" path="email" placeholder="homerjsimpson@"/>
+		<acme:textbox code="auditor.vatNumber" path="vatNumber" placeholder="2.0"/>
 		</fieldset>
 		<br/>
 		
@@ -49,32 +49,32 @@
 		</fieldset>
 		
 		<fieldset>
-    	<legend><spring:message code="administrator.fieldset.userAccount"/></legend>
-		<acme:textbox code="administrator.username" path="username" placeholder="HomerS"/>
+    	<legend><spring:message code="auditor.fieldset.userAccount"/></legend>
+		<acme:textbox code="auditor.username" path="username" placeholder="HomerS"/>
 		
-		<acme:password code="administrator.password" path="password"/>
-		<acme:password code="administrator.passwordChecker" path="passwordChecker"/>
+		<acme:password code="auditor.password" path="password"/>
+		<acme:password code="auditor.passwordChecker" path="passwordChecker"/>
 		
 		</fieldset>
 		<br/>
 		
-		<acme:checkbox code="administrator.confirmTerms" path="checkBox"/>
+		<acme:checkbox code="auditor.confirmTerms" path="checkBox"/>
 		
 			<jstl:if test="${cookie['language'].getValue()=='en'}">
-			<a href="terms/englishTerms.do"><spring:message code="administrator.terms"/></a>
+			<a href="terms/englishTerms.do"><spring:message code="auditor.terms"/></a>
 			<br/>
 			<br/>	
 		</jstl:if>
 		<jstl:if test="${cookie['language'].getValue()=='es'}">
-			<a href="terms/terms.do"><spring:message code="administrator.terms"/></a>
+			<a href="terms/terms.do"><spring:message code="auditor.terms"/></a>
 		</jstl:if>	
 				
 		<input type="submit" name="register" id="register"
-		value="<spring:message code="administrator.save" />" >&nbsp;
+		value="<spring:message code="auditor.save" />" >&nbsp;
 
-		<acme:cancel url="welcome/index.do" code="administrator.cancel"/>
+		<acme:cancel url="welcome/index.do" code="auditor.cancel"/>
 	</form:form>
 	
 	<script type="text/javascript">
-	$("#register").on("click",function(){validatePhone("<spring:message code='admin.confirmationPhone'/>","${countryCode}");}); 
+	$("#register").on("click",function(){validatePhone("<spring:message code='auditor.confirmationPhone'/>","${countryCode}");}); 
 </script>

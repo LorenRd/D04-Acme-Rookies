@@ -11,7 +11,7 @@
 
 <!-- Listing grid -->
 
-<display:table name="problems" id="row" requestURI="problem/list.do"
+<display:table name="problems" id="row" requestURI="${requestURI }"
 	pagesize="5" class="displaytag">
 	
 	<!-- Display -->

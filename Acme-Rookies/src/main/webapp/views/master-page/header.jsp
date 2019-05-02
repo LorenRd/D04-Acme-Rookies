@@ -27,6 +27,7 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="administrator/administrator/register.do"><spring:message code="master.page.administrator.register"/></a></li>
+					<li><a href="auditor/administrator/register.do"><spring:message code="master.page.auditor.register"/></a></li>						
 					<li><a href="customisation/administrator/display.do"><spring:message code="master.page.administrator.customisation" /></a></li>	
 					<li><a href="dashboard/administrator/display.do"><spring:message code="master.page.administrator.dashboard" /></a></li>		
 				</ul>
@@ -95,7 +96,7 @@
 			<li><a class="fNiv"><spring:message	code="master.page.auditor" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="audit/auditor/list.do"><spring:message code="master.page.auditor.audits" /></a></li>								
+					<li><a href="audit/auditor/list.do"><spring:message code="master.page.auditor.audits" /></a></li>
 				</ul>
 			</li>
 			<li><a class="fNiv"><spring:message code="master.page.terms" /></a>
@@ -184,6 +185,9 @@
 					</security:authorize>
 					<security:authorize access="hasRole('ADMIN')">
 					<li><a href="administrator/viewProfile.do"><spring:message code="master.page.administrator.viewProfile" /></a></li>
+					</security:authorize>
+					<security:authorize access="hasRole('AUDITOR')">
+					<li><a href="auditor/viewProfile.do"><spring:message code="master.page.auditor.viewProfile" /></a></li>
 					</security:authorize>
 					<li><a href="message/actor/list.do"><spring:message code="master.page.profile.messages" /></a></li>					
 					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>

@@ -13,7 +13,6 @@ import org.springframework.validation.Validator;
 import repositories.ProblemRepository;
 import domain.Application;
 import domain.Company;
-import domain.Position;
 import domain.Problem;
 
 @Service
@@ -28,11 +27,11 @@ public class ProblemService {
 	private CompanyService		companyService;
 
 	@Autowired
-	private ApplicationService applicationService;
-	
+	private ApplicationService	applicationService;
+
 	@Autowired
-	private PositionService positionService;
-		
+	private PositionService		positionService;
+
 	@Autowired
 	private Validator			validator;
 
@@ -69,20 +68,10 @@ public class ProblemService {
 	}
 
 	public void delete(final Problem problem) {
-		Collection<Position> positions;
-		Collection<Problem> problems;
 		Collection<Application> applications;
-		
-		positions = this.positionService.findByProblemId(problem.getId());
+
 		applications = this.applicationService.findAllByProblemId(problem.getId());
-		
-		for (Position p : positions) {
-			problems = p.getProblems();
-			Assert.isTrue(problems.size()>2, "problem.position.error");
-		}
-		
-		Assert.notNull(applications, "problem.application.error");
-		
+		Assert.isTrue(applications.size() == 0, "problem.application.error");
 		this.problemRepository.delete(problem);
 
 	}
@@ -104,18 +93,18 @@ public class ProblemService {
 	}
 
 	// Business Methods
-	
-	public Collection<Problem> findAllByCompanyId (final int companyId){
+
+	public Collection<Problem> findAllByCompanyId(final int companyId) {
 		Collection<Problem> result;
 
 		result = this.problemRepository.findAllByCompanyId(companyId);
 
 		return result;
 	}
-	
-	public Collection<Problem> findAllFinalByCompanyId (final int companyId){
+
+	public Collection<Problem> findAllFinalByCompanyId(final int companyId) {
 		Collection<Problem> result;
-		
+
 		result = this.problemRepository.findAllFinalByCompanyId(companyId);
 
 		return result;
@@ -134,11 +123,12 @@ public class ProblemService {
 		result.setAttachments(problem.getAttachments());
 		result.setIsDraft(problem.getIsDraft());
 		result.setCompany(this.companyService.findByPrincipal());
-		
+
 		this.validator.validate(result, binding);
 		return result;
 	}
-	public void deleteInBatch(Collection<Problem> problems){
+
+	public void deleteInBatch(final Collection<Problem> problems) {
 		this.problemRepository.deleteInBatch(problems);
 	}
 }

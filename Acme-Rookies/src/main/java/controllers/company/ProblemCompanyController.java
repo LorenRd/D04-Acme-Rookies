@@ -1,3 +1,4 @@
+
 package controllers.company;
 
 import java.util.ArrayList;
@@ -15,32 +16,37 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.Actor;
-import domain.Problem;
-
 import services.ActorService;
+import services.PositionService;
 import services.ProblemService;
+import domain.Actor;
+import domain.Position;
+import domain.Problem;
 
 @Controller
 @RequestMapping("/problem/company")
 public class ProblemCompanyController {
-	
+
 	@Autowired
 	private ActorService	actorService;
-	
+
 	@Autowired
 	private ProblemService	problemService;
-	
+
+	@Autowired
+	private PositionService	positionService;
+
+
 	//List
-	
+
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		final ModelAndView result;
 		Collection<Problem> problems;
 		problems = new ArrayList<Problem>();
-		
+
 		final Actor principal = this.actorService.findByPrincipal();
-		
+
 		problems = this.problemService.findAllByCompanyId(principal.getId());
 
 		result = new ModelAndView("problem/list");
@@ -49,7 +55,7 @@ public class ProblemCompanyController {
 
 		return result;
 	}
-	
+
 	// Display
 
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
@@ -70,9 +76,9 @@ public class ProblemCompanyController {
 		// Envía la vista
 		return result;
 	}
-	
+
 	//Create
-	
+
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		ModelAndView result;
@@ -83,27 +89,39 @@ public class ProblemCompanyController {
 
 		return result;
 	}
-	
-	
+
 	// Delete
-	
+
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public ModelAndView delete(final int problemId) {
 		Problem problem;
 		ModelAndView result;
-		
+		Collection<Position> positions;
+		Collection<Problem> problems;
+
 		problem = this.problemService.findOne(problemId);
 		try {
+			positions = this.positionService.findFinalByProblemId(problem.getId());
+			for (final Position p : positions) {
+				problems = p.getProblems();
+				Assert.isTrue(problems.size() > 2, "problem.position.error");
+			}
 			this.problemService.delete(problem);
 			result = new ModelAndView("redirect:/welcome/index.do");
 		} catch (final Throwable oops) {
-			result = this.createEditModelAndView(problem, "problem.commit.error");
+			if (oops.getMessage().contains("problem.position.error"))
+				result = this.displayModelAndView(problem, "problem.position.error");
+			else if (oops.getMessage().contains("problem.application.error"))
+				result = this.displayModelAndView(problem, "problem.application.error");
+			else
+				result = this.displayModelAndView(problem, "problem.commit.error");
+
 		}
 		return result;
 	}
-	
+
 	//Edit
-	
+
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam final int problemId) {
 		ModelAndView result;
@@ -117,7 +135,7 @@ public class ProblemCompanyController {
 	}
 
 	//Save draft --- CREATE
-	
+
 	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "saveDraft")
 	public ModelAndView createDraft(@ModelAttribute("problem") Problem problem, final BindingResult binding) {
 		ModelAndView result;
@@ -138,9 +156,9 @@ public class ProblemCompanyController {
 		}
 		return result;
 	}
-	
+
 	//Save Final --- CREATE
-	
+
 	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "saveFinal")
 	public ModelAndView createFinal(@ModelAttribute("problem") Problem problem, final BindingResult binding) {
 		ModelAndView result;
@@ -162,7 +180,7 @@ public class ProblemCompanyController {
 		return result;
 	}
 	// Save Draft --- Edit
-	
+
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "saveDraft")
 	public ModelAndView saveDraft(@ModelAttribute("problem") Problem problem, final BindingResult binding) {
 		ModelAndView result;
@@ -183,9 +201,9 @@ public class ProblemCompanyController {
 		}
 		return result;
 	}
-	
+
 	// Save Draft --- Edit
-	
+
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "saveFinal")
 	public ModelAndView saveFinal(@ModelAttribute("problem") Problem problem, final BindingResult binding) {
 		ModelAndView result;
@@ -206,59 +224,66 @@ public class ProblemCompanyController {
 		}
 		return result;
 	}
-	
-	
+
 	// ------------------- Ancillary Methods
-			protected ModelAndView createEditModelAndView(final Problem problem) {
-				ModelAndView result;
+	protected ModelAndView createEditModelAndView(final Problem problem) {
+		ModelAndView result;
 
-				result = this.createEditModelAndView(problem, null);
+		result = this.createEditModelAndView(problem, null);
 
-				return result;
-			}
+		return result;
+	}
 
-			protected ModelAndView createEditModelAndView(final Problem problem, final String messageCode) {
-				ModelAndView result;
+	protected ModelAndView createEditModelAndView(final Problem problem, final String messageCode) {
+		ModelAndView result;
 
-				result = new ModelAndView("problem/edit");
-				result.addObject("problem", problem);
+		result = new ModelAndView("problem/edit");
+		result.addObject("problem", problem);
 
-				result.addObject("message", messageCode);
+		result.addObject("message", messageCode);
 
-				return result;
-			}
-			
-			private ModelAndView createModelAndView(final Problem problem) {
-				ModelAndView result;
+		return result;
+	}
 
-				result = this.createModelAndView(problem, null);
-				return result;
-			}
+	protected ModelAndView displayModelAndView(final Problem problem, final String messageCode) {
+		ModelAndView result;
 
-			private ModelAndView createModelAndView(final Problem problem, final String messageCode) {
-				ModelAndView result;
-				result = new ModelAndView("problem/create");
-				result.addObject("problem", problem);
-				result.addObject("message", messageCode);
-				return result;
-			}
-			
+		result = new ModelAndView("problem/display");
+		result.addObject("problem", problem);
+		result.addObject("message", messageCode);
 
-			private ModelAndView editModelAndView(final Problem problem) {
-				ModelAndView result;
+		return result;
+	}
 
-				result = this.editModelAndView(problem, null);
-				return result;
-			}
+	private ModelAndView createModelAndView(final Problem problem) {
+		ModelAndView result;
 
-			private ModelAndView editModelAndView(final Problem problem, final String messageCode) {
-				ModelAndView result;
+		result = this.createModelAndView(problem, null);
+		return result;
+	}
 
-				result = new ModelAndView("float/edit");
-				result.addObject("problem", problem);
-				result.addObject("message", messageCode);
-				return result;
-			}
+	private ModelAndView createModelAndView(final Problem problem, final String messageCode) {
+		ModelAndView result;
+		result = new ModelAndView("problem/create");
+		result.addObject("problem", problem);
+		result.addObject("message", messageCode);
+		return result;
+	}
 
+	private ModelAndView editModelAndView(final Problem problem) {
+		ModelAndView result;
+
+		result = this.editModelAndView(problem, null);
+		return result;
+	}
+
+	private ModelAndView editModelAndView(final Problem problem, final String messageCode) {
+		ModelAndView result;
+
+		result = new ModelAndView("float/edit");
+		result.addObject("problem", problem);
+		result.addObject("message", messageCode);
+		return result;
+	}
 
 }

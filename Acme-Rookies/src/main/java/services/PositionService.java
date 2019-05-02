@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.Calendar;
@@ -16,8 +17,8 @@ import security.Authority;
 import domain.Actor;
 import domain.Application;
 import domain.Company;
-import domain.Rookie;
 import domain.Position;
+import domain.Rookie;
 
 @Service
 @Transactional
@@ -25,24 +26,25 @@ public class PositionService {
 
 	// Managed repository -----------------------------------------------------
 	@Autowired
-	private PositionRepository positionRepository;
+	private PositionRepository	positionRepository;
 
 	// Supporting services ----------------------------------------------------
 
 	@Autowired
-	private CompanyService companyService;
+	private CompanyService		companyService;
 
 	@Autowired
-	private ApplicationService applicationService;
+	private ApplicationService	applicationService;
 
 	@Autowired
-	private ActorService actorService;
-	
-	@Autowired
-	private RookieService rookieService;
+	private ActorService		actorService;
 
 	@Autowired
-	private Validator validator;
+	private RookieService		rookieService;
+
+	@Autowired
+	private Validator			validator;
+
 
 	// Simple CRUD Methods
 
@@ -80,7 +82,7 @@ public class PositionService {
 		return result;
 	}
 
-	public Position save(final Position position, String saveMode) {
+	public Position save(final Position position, final String saveMode) {
 		Company principal;
 		Position result;
 		int numProblems = 0;
@@ -90,16 +92,14 @@ public class PositionService {
 
 		Assert.notNull(position);
 		Assert.isTrue(position.getCompany() == principal);
-		
-		if(position.getProblems() != null)
+
+		if (position.getProblems() != null)
 			numProblems = position.getProblems().size();
-		
-		if(saveMode.equals("CANCELLED")){
+
+		if (saveMode.equals("CANCELLED"))
 			Assert.isTrue(position.getStatus().equals("FINAL"));
-		}
-		if (saveMode.equals("FINAL")) {
+		if (saveMode.equals("FINAL"))
 			Assert.isTrue(numProblems >= 2);
-		}
 
 		position.setStatus(saveMode);
 
@@ -119,9 +119,8 @@ public class PositionService {
 		Assert.notNull(principal);
 
 		Assert.isTrue(position.getCompany().getId() == principal.getId());
-		
-		applications = this.applicationService.findAllByPositionId(position
-				.getId());
+
+		applications = this.applicationService.findAllByPositionId(position.getId());
 
 		for (final Application a : applications)
 			this.applicationService.delete(a);
@@ -137,28 +136,26 @@ public class PositionService {
 		result = this.positionRepository.findByCompanyId(companyId);
 		return result;
 	}
-	
+
 	public Collection<Position> findAllFinal() {
 		Collection<Position> result;
 
 		result = this.positionRepository.findAllFinal();
 		return result;
 	}
-	
+
 	public Collection<Position> findAllFinalNotApplication() {
 		Collection<Position> result;
 		Collection<Application> applications;
 		Rookie principal;
 		principal = this.rookieService.findByPrincipal();
-		
+
 		applications = this.applicationService.findAllApplicationsByRookieId(principal.getId());
 		result = this.positionRepository.findAllFinal();
-		for (Position p : result) {
-			for (Application a : applications) {
-				if(a.getPosition().getId() == p.getId())
+		for (final Position p : result)
+			for (final Application a : applications)
+				if (a.getPosition().getId() == p.getId())
 					result.remove(p);
-			}
-		}
 		return result;
 	}
 
@@ -170,40 +167,42 @@ public class PositionService {
 	}
 
 	public Collection<Position> findByKeywordAll(final String keyword, final int companyId) {
-		final Collection<Position> result = this.positionRepository
-				.findByKeyword(keyword, companyId);
+		final Collection<Position> result = this.positionRepository.findByKeyword(keyword, companyId);
 
 		return result;
 	}
 	public Collection<Position> findByKeywordFinal(final String keyword) {
-		final Collection<Position> result = this.positionRepository
-				.findByKeywordFinal(keyword);
+		final Collection<Position> result = this.positionRepository.findByKeywordFinal(keyword);
 
 		return result;
 	}
 	public Collection<Position> findByKeywordFinalCompany(final String keyword, final int companyId) {
-		final Collection<Position> result = this.positionRepository
-				.findByKeywordFinalCompany(keyword, companyId);
+		final Collection<Position> result = this.positionRepository.findByKeywordFinalCompany(keyword, companyId);
 
 		return result;
 	}
-	
+
 	public Collection<Position> findAllFinalCompany(final int companyId) {
 		Collection<Position> result;
 
 		result = this.positionRepository.findAllFinalCompany(companyId);
 		return result;
 	}
-	
+
 	public Collection<Position> findByProblemId(final int problemId) {
 		Collection<Position> result;
 
 		result = this.positionRepository.findByProblemId(problemId);
 		return result;
 	}
-	
 
-	private String generateTicker(Company company) {
+	public Collection<Position> findFinalByProblemId(final int problemId) {
+		Collection<Position> result;
+		result = this.positionRepository.findFinalByProbemId(problemId);
+		return result;
+	}
+
+	private String generateTicker(final Company company) {
 		String result;
 		String text;
 		String numbers;
@@ -211,30 +210,25 @@ public class PositionService {
 		text = company.getCommercialName().toUpperCase();
 		final Random random = new Random();
 
-		if (text.length() < 4) {
-			while (text.length() < 4) {
+		if (text.length() < 4)
+			while (text.length() < 4)
 				text.concat("X");
-			}
-		} else {
-			if (text.length() > 4) {
-				text = text.substring(0, 4);
-			}
-		}
+		else if (text.length() > 4)
+			text = text.substring(0, 4);
 
 		numbers = String.format("%04d", random.nextInt(10000));
 		result = text + "-" + numbers;
 		if (this.repeatedTicker(company, result))
-			generateTicker(company);
+			this.generateTicker(company);
 
 		return result;
 	}
 
-	public boolean repeatedTicker(Company company, String ticker) {
+	public boolean repeatedTicker(final Company company, final String ticker) {
 		Boolean isRepeated = false;
 		int repeats;
 
-		repeats = this.positionRepository.findRepeatedTickers(company.getId(),
-				ticker);
+		repeats = this.positionRepository.findRepeatedTickers(company.getId(), ticker);
 
 		if (repeats > 0)
 			isRepeated = true;
@@ -242,17 +236,16 @@ public class PositionService {
 		return isRepeated;
 	}
 
-	public Position reconstruct(final Position position,
-			final BindingResult binding) {
+	public Position reconstruct(final Position position, final BindingResult binding) {
 		Position result;
 		if (position.getId() == 0) {
 			result = position;
 			result.setCompany(this.companyService.findByPrincipal());
 			result.setTicker(this.generateTicker(result.getCompany()));
 			result.setStatus("DRAFT");
-		} else{
+		} else {
 			result = this.positionRepository.findOne(position.getId());
-	
+
 			result.setDescription(position.getDescription());
 			result.setDeadline(position.getDeadline());
 			result.setTitle(position.getTitle());
@@ -262,15 +255,14 @@ public class PositionService {
 			result.setProblems(position.getProblems());
 			result.setTechnologiesRequired(position.getTechnologiesRequired());
 
-		
 		}
-		if(result.getDeadline().before(Calendar.getInstance().getTime()))
+		if (result.getDeadline().before(Calendar.getInstance().getTime()))
 			binding.rejectValue("deadline", "application.validation.deadline", "Deadline must be future");
 		if (result.getTechnologiesRequired().isEmpty())
 			binding.rejectValue("technologiesRequired", "application.validation.technologiesRequired", "Must not be blank");
 		if (result.getSkillsRequired().isEmpty())
 			binding.rejectValue("skillsRequired", "application.validation.skillsRequired", "Must not be blank");
-		
+
 		this.validator.validate(result, binding);
 
 		return result;
@@ -285,8 +277,7 @@ public class PositionService {
 		authority.setAuthority(Authority.ADMIN);
 		final Actor actor = this.actorService.findByPrincipal();
 		Assert.notNull(actor);
-		Assert.isTrue(actor.getUserAccount().getAuthorities()
-				.contains(authority));
+		Assert.isTrue(actor.getUserAccount().getAuthorities().contains(authority));
 		Double result;
 
 		result = this.positionRepository.avgPositionsPerCompany();
@@ -299,8 +290,7 @@ public class PositionService {
 		authority.setAuthority(Authority.ADMIN);
 		final Actor actor = this.actorService.findByPrincipal();
 		Assert.notNull(actor);
-		Assert.isTrue(actor.getUserAccount().getAuthorities()
-				.contains(authority));
+		Assert.isTrue(actor.getUserAccount().getAuthorities().contains(authority));
 		Double result;
 
 		result = this.positionRepository.minPositionsPerCompany();
@@ -313,8 +303,7 @@ public class PositionService {
 		authority.setAuthority(Authority.ADMIN);
 		final Actor actor = this.actorService.findByPrincipal();
 		Assert.notNull(actor);
-		Assert.isTrue(actor.getUserAccount().getAuthorities()
-				.contains(authority));
+		Assert.isTrue(actor.getUserAccount().getAuthorities().contains(authority));
 		Double result;
 
 		result = this.positionRepository.maxPositionsPerCompany();
@@ -327,8 +316,7 @@ public class PositionService {
 		authority.setAuthority(Authority.ADMIN);
 		final Actor actor = this.actorService.findByPrincipal();
 		Assert.notNull(actor);
-		Assert.isTrue(actor.getUserAccount().getAuthorities()
-				.contains(authority));
+		Assert.isTrue(actor.getUserAccount().getAuthorities().contains(authority));
 		Double result;
 
 		result = this.positionRepository.stddevPositionsPerCompany();
@@ -341,8 +329,7 @@ public class PositionService {
 		authority.setAuthority(Authority.ADMIN);
 		final Actor actor = this.actorService.findByPrincipal();
 		Assert.notNull(actor);
-		Assert.isTrue(actor.getUserAccount().getAuthorities()
-				.contains(authority));
+		Assert.isTrue(actor.getUserAccount().getAuthorities().contains(authority));
 		Double result;
 
 		result = this.positionRepository.avgSalariesOffered();
@@ -355,8 +342,7 @@ public class PositionService {
 		authority.setAuthority(Authority.ADMIN);
 		final Actor actor = this.actorService.findByPrincipal();
 		Assert.notNull(actor);
-		Assert.isTrue(actor.getUserAccount().getAuthorities()
-				.contains(authority));
+		Assert.isTrue(actor.getUserAccount().getAuthorities().contains(authority));
 		Double result;
 
 		result = this.positionRepository.minSalariesOffered();
@@ -369,8 +355,7 @@ public class PositionService {
 		authority.setAuthority(Authority.ADMIN);
 		final Actor actor = this.actorService.findByPrincipal();
 		Assert.notNull(actor);
-		Assert.isTrue(actor.getUserAccount().getAuthorities()
-				.contains(authority));
+		Assert.isTrue(actor.getUserAccount().getAuthorities().contains(authority));
 		Double result;
 
 		result = this.positionRepository.maxSalariesOffered();
@@ -383,8 +368,7 @@ public class PositionService {
 		authority.setAuthority(Authority.ADMIN);
 		final Actor actor = this.actorService.findByPrincipal();
 		Assert.notNull(actor);
-		Assert.isTrue(actor.getUserAccount().getAuthorities()
-				.contains(authority));
+		Assert.isTrue(actor.getUserAccount().getAuthorities().contains(authority));
 		Double result;
 
 		result = this.positionRepository.stddevSalariesOffered();
@@ -397,11 +381,10 @@ public class PositionService {
 		authority.setAuthority(Authority.ADMIN);
 		final Actor actor = this.actorService.findByPrincipal();
 		Assert.notNull(actor);
-		Assert.isTrue(actor.getUserAccount().getAuthorities()
-				.contains(authority));
+		Assert.isTrue(actor.getUserAccount().getAuthorities().contains(authority));
 		Position result = null;
 
-		if(this.positionRepository.bestSalaryPosition().size()>1)
+		if (this.positionRepository.bestSalaryPosition().size() > 1)
 			result = this.positionRepository.bestSalaryPosition().iterator().next();
 
 		return result;
@@ -412,16 +395,15 @@ public class PositionService {
 		authority.setAuthority(Authority.ADMIN);
 		final Actor actor = this.actorService.findByPrincipal();
 		Assert.notNull(actor);
-		Assert.isTrue(actor.getUserAccount().getAuthorities()
-				.contains(authority));
+		Assert.isTrue(actor.getUserAccount().getAuthorities().contains(authority));
 		Position result = null;
-		
-		if(this.positionRepository.worstSalaryPosition().size()>1)
+
+		if (this.positionRepository.worstSalaryPosition().size() > 1)
 			result = this.positionRepository.worstSalaryPosition().iterator().next();
 
 		return result;
 	}
-	public void deleteInBatch(Collection<Position> positions){
+	public void deleteInBatch(final Collection<Position> positions) {
 		this.positionRepository.deleteInBatch(positions);
 	}
 }

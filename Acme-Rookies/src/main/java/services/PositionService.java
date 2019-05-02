@@ -273,38 +273,33 @@ public class PositionService {
 
 	public Position reconstruct(final Position position,
 			final BindingResult binding) {
-		Position result;
+		Position original;
 		if (position.getId() == 0) {
-			result = position;
-			result.setCompany(this.companyService.findByPrincipal());
-			result.setTicker(this.generateTicker(result.getCompany()));
-			result.setStatus("DRAFT");
+			original = position;
+			original.setCompany(this.companyService.findByPrincipal());
+			original.setTicker(this.generateTicker(original.getCompany()));
+			original.setStatus("DRAFT");
 		} else{
-			result = this.positionRepository.findOne(position.getId());
-	
-			result.setDescription(position.getDescription());
-			result.setDeadline(position.getDeadline());
-			result.setTitle(position.getTitle());
-			result.setProfileRequired(position.getProfileRequired());
-			result.setSalaryOffered(position.getSalaryOffered());
-			result.setSkillsRequired(position.getSkillsRequired());
-			result.setProblems(position.getProblems());
-			result.setTechnologiesRequired(position.getTechnologiesRequired());
-			
-			if(result.getDeadline().before(Calendar.getInstance().getTime()))
+			original = this.positionRepository.findOne(position.getId());
+			position.setTicker(original.getTicker());
+			position.setCompany(this.companyService.findByPrincipal());
+			position.setStatus("DRAFT");
+
+		
+			if(position.getDeadline().before(Calendar.getInstance().getTime()))
 				binding.rejectValue("deadline", "application.validation.deadline", "Deadline must be future");
-			if (result.getTechnologiesRequired().isEmpty())
+			if (position.getTechnologiesRequired().isEmpty())
 				binding.rejectValue("technologiesRequired", "application.validation.technologiesRequired", "Must not be blank");
-			if (result.getSkillsRequired().isEmpty())
+			if (position.getSkillsRequired().isEmpty())
 				binding.rejectValue("skillsRequired", "application.validation.skillsRequired", "Must not be blank");
 
 		
 		}
 
 		
-		this.validator.validate(result, binding);
+		this.validator.validate(position, binding);
 
-		return result;
+		return position;
 	}
 
 	public void flush() {

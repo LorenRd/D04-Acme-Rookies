@@ -119,6 +119,42 @@
 			</list>
 		</property>
 	</bean>
+	
+	<bean id="userAccount11" class="security.UserAccount">
+		<property name="username" value="provider1" />
+		<property name="password" value="cdb82d56473901641525fbbd1d5dab56" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="PROVIDER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="userAccount12" class="security.UserAccount">
+		<property name="username" value="provider2" />
+		<property name="password" value="ebfc815ee2cc6a16225105bb7b3e1e53" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="PROVIDER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="userAccount13" class="security.UserAccount">
+		<property name="username" value="provider3" />
+		<property name="password" value="a575bf1b9ca7d068cef7bbc8fa7f43e1" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="PROVIDER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
 
 	<!-- Other domain beans come here -->
 
@@ -237,6 +273,46 @@
 		<property name="creditCard" ref="creditCard9" />
 
 		<property name="commercialName" value="commercialName3" />
+	</bean>
+	
+	<!-- Providers -->
+
+	<bean class="domain.Provider" id="provider1">
+		<property name="name" value="Julia" />
+		<property name="surname" value="Galán Ortiz" />
+		<property name="make" value="Julia Galán Ortiz" />
+		<property name="photo" value="http://www.mifoto.com/perfil" />
+		<property name="email" value="antonia@gmail.com" />
+		<property name="phone" value="+34678918234" />
+		<property name="vatNumber" value="10" />
+		<property name="userAccount" ref="userAccount11" />
+		<property name="creditCard" ref="creditCard11" />
+	</bean>
+	
+	<bean class="domain.Provider" id="provider2">
+		<property name="name" value="Antonia" />
+		<property name="surname" value="Perez Castellanos" />
+		<property name="make" value="Antonia Perez Castellanos" />
+		<property name="photo" value="http://www.mifoto.com/perfil" />
+		<property name="email" value="antonia@gmail.com" />
+		<property name="phone" value="+34678918234" />
+		<property name="address" value="Calle Napoleon, 10, CP: 32123, Madrid" />
+		<property name="vatNumber" value="11" />
+		<property name="userAccount" ref="userAccount12" />
+		<property name="creditCard" ref="creditCard12" />
+	</bean>
+	
+	<bean class="domain.Provider" id="provider3">
+		<property name="name" value="Maria" />
+		<property name="surname" value="del Mar García" />
+		<property name="make" value="Maria del Mar García" />
+		<property name="photo" value="http://www.tuenti.com" />
+		<property name="email" value="maria@gmail.com" />
+		<property name="phone" value="+33923680976" />
+		<property name="address" value="Calle Musica, 1, CP: 32123, Cadiz" />
+		<property name="vatNumber" value="12" />
+		<property name="userAccount" ref="userAccount13" />
+		<property name="creditCard" ref="creditCard13" />
 	</bean>
 
 	<!-- Positions -->
@@ -537,6 +613,33 @@
 		<property name="expirationYear" value="20" />
 		<property name="CVV" value="442" />
 	</bean>
+	
+	<bean class="domain.CreditCard" id="creditCard11">
+		<property name="holderName" value="Julia Galán" />
+		<property name="brandName" value="Visa" />
+		<property name="number" value="5220277771031876" />
+		<property name="expirationMonth" value="11" />
+		<property name="expirationYear" value="20" />
+		<property name="CVV" value="312" />
+	</bean>
+	
+	<bean class="domain.CreditCard" id="creditCard12">
+		<property name="holderName" value="Antonia Perez Castellanos" />
+		<property name="brandName" value="American Express" />
+		<property name="number" value="5632152478545969" />
+		<property name="expirationMonth" value="11" />
+		<property name="expirationYear" value="20" />
+		<property name="CVV" value="242" />
+	</bean>
+	
+	<bean class="domain.CreditCard" id="creditCard13">
+		<property name="holderName" value="Maria del Mar García" />
+		<property name="brandName" value="Mastercard" />
+		<property name="number" value="5210854698741472" />
+		<property name="expirationMonth" value="11" />
+		<property name="expirationYear" value="20" />
+		<property name="CVV" value="538" />
+	</bean>
 
 	<!-- Customisation -->
 
@@ -596,6 +699,47 @@ las TICs!" />
 				<ref bean="company2" />
 			</list>
 		</property>
+	</bean>
+	
+	<!-- Items -->
+	
+	<bean class="domain.Item" id="item1">
+		<property name="name" value="name item 1" />
+		<property name="description" value="description item 1" />
+		<property name="informationLink" value="http://www.link1" />
+		<property name="pictures">
+			<list>
+				<value>http://www.foto1</value>
+				<value>http://www.foto2</value>
+			</list>
+		</property>
+		<property name="provider" ref="provider1" />
+	</bean>
+	
+	<bean class="domain.Item" id="item2">
+		<property name="name" value="name item 2" />
+		<property name="description" value="description item 2" />
+		<property name="informationLink" value="http://www.link2" />
+		<property name="pictures">
+			<list>
+				<value>http://www.foto3</value>
+				<value>http://www.foto4</value>
+			</list>
+		</property>
+		<property name="provider" ref="provider1" />
+	</bean>
+	
+	<bean class="domain.Item" id="item3">
+		<property name="name" value="name item 3" />
+		<property name="description" value="description item 3" />
+		<property name="informationLink" value="http://www.link3" />
+		<property name="pictures">
+			<list>
+				<value>http://www.foto5</value>
+				<value>http://www.foto6</value>
+			</list>
+		</property>
+		<property name="provider" ref="provider2" />
 	</bean>
 
 </beans>

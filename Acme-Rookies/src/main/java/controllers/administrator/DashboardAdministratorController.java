@@ -1,3 +1,4 @@
+
 package controllers.administrator;
 
 import java.util.Collection;
@@ -10,13 +11,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.ApplicationService;
 import services.CompanyService;
-import services.RookieService;
+import services.ItemService;
 import services.PositionService;
-
+import services.ProviderService;
+import services.RookieService;
 import controllers.AbstractController;
 import domain.Company;
-import domain.Rookie;
 import domain.Position;
+import domain.Provider;
+import domain.Rookie;
 
 @Controller
 @RequestMapping("/dashboard/administrator")
@@ -25,16 +28,23 @@ public class DashboardAdministratorController extends AbstractController {
 	// Services
 
 	@Autowired
-	private RookieService rookieService;
+	private RookieService		rookieService;
 
 	@Autowired
-	private CompanyService companyService;
+	private CompanyService		companyService;
 
 	@Autowired
-	private PositionService positionService;
+	private PositionService		positionService;
 
 	@Autowired
-	private ApplicationService applicationService;
+	private ApplicationService	applicationService;
+
+	@Autowired
+	private ItemService			itemService;
+
+	@Autowired
+	private ProviderService		providerService;
+
 
 	// Display
 
@@ -46,8 +56,9 @@ public class DashboardAdministratorController extends AbstractController {
 
 		final Collection<Company> companiesWithMorePositions;
 		final Collection<Rookie> rookiesWithMoreApplications;
+		final Collection<Provider> topFiveProvidersInItems;
 
-		final Double avgSalariesOffered, minSalariesOffered, maxSalariesOffered, stddevSalariesOffered;
+		final Double avgSalariesOffered, minSalariesOffered, maxSalariesOffered, stddevSalariesOffered, avgItemsPerProvider, minItemsPerProvider, maxItemsPerProvider, stddevItemsPerProvider;
 
 		final Position bestSalaryPosition;
 		final Position worstSalaryPosition;
@@ -64,30 +75,23 @@ public class DashboardAdministratorController extends AbstractController {
 		maxPositionsPerCompany = this.positionService.maxPositionsPerCompany();
 
 		// standard Deviation
-		stddevPositionsPerCompany = this.positionService
-				.stddevPositionsPerCompany();
+		stddevPositionsPerCompany = this.positionService.stddevPositionsPerCompany();
 
 		// avg
-		avgApplicationsPerRookie = this.applicationService
-				.avgApplicationsPerRookie();
+		avgApplicationsPerRookie = this.applicationService.avgApplicationsPerRookie();
 
 		// min
-		minApplicationsPerRookie = this.applicationService
-				.minApplicationsPerRookie();
+		minApplicationsPerRookie = this.applicationService.minApplicationsPerRookie();
 
 		// max
-		maxApplicationsPerRookie = this.applicationService
-				.maxApplicationsPerRookie();
+		maxApplicationsPerRookie = this.applicationService.maxApplicationsPerRookie();
 
 		// standard Deviation
-		stddevApplicationsPerRookie = this.applicationService
-				.stddevApplicationsPerRookie();
+		stddevApplicationsPerRookie = this.applicationService.stddevApplicationsPerRookie();
 
-		companiesWithMorePositions = this.companyService
-				.companiesWithMorePositions();
+		companiesWithMorePositions = this.companyService.companiesWithMorePositions();
 
-		rookiesWithMoreApplications = this.rookieService
-				.rookiesWithMoreApplications();
+		rookiesWithMoreApplications = this.rookieService.rookiesWithMoreApplications();
 
 		// avg
 		avgSalariesOffered = this.positionService.avgSalariesOffered();
@@ -104,6 +108,22 @@ public class DashboardAdministratorController extends AbstractController {
 		bestSalaryPosition = this.positionService.bestSalaryPosition();
 		worstSalaryPosition = this.positionService.worstSalaryPosition();
 
+		// avg
+		avgItemsPerProvider = this.itemService.avgItemsPerProvider();
+
+		// min
+		minItemsPerProvider = this.itemService.minItemsPerProvider();
+
+		// max
+		maxItemsPerProvider = this.itemService.maxItemsPerProvider();
+
+		// standard Deviation
+		stddevItemsPerProvider = this.itemService.stddevItemsPerProvider();
+
+		// Top-5 providers of total number of items
+
+		topFiveProvidersInItems = this.providerService.topFiveProvidersInItems();
+
 		result = new ModelAndView("administrator/dashboard");
 		result.addObject("avgPositionsPerCompany", avgPositionsPerCompany);
 		result.addObject("minPositionsPerCompany", minPositionsPerCompany);
@@ -113,14 +133,11 @@ public class DashboardAdministratorController extends AbstractController {
 		result.addObject("avgApplicationsPerRookie", avgApplicationsPerRookie);
 		result.addObject("minApplicationsPerRookie", minApplicationsPerRookie);
 		result.addObject("maxApplicationsPerRookie", maxApplicationsPerRookie);
-		result.addObject("stddevApplicationsPerRookie",
-				stddevApplicationsPerRookie);
+		result.addObject("stddevApplicationsPerRookie", stddevApplicationsPerRookie);
 
-		result.addObject("companiesWithMorePositions",
-				companiesWithMorePositions);
+		result.addObject("companiesWithMorePositions", companiesWithMorePositions);
 
-		result.addObject("rookiessWithMoreApplications",
-				rookiesWithMoreApplications);
+		result.addObject("rookiessWithMoreApplications", rookiesWithMoreApplications);
 
 		result.addObject("avgSalariesOffered", avgSalariesOffered);
 		result.addObject("minSalariesOffered", minSalariesOffered);
@@ -129,6 +146,13 @@ public class DashboardAdministratorController extends AbstractController {
 
 		result.addObject("bestSalaryPosition", bestSalaryPosition);
 		result.addObject("worstSalaryPosition", worstSalaryPosition);
+
+		result.addObject("avgItemsPerProvider", avgItemsPerProvider);
+		result.addObject("minItemsPerProvider", minItemsPerProvider);
+		result.addObject("maxItemsPerProvider", maxItemsPerProvider);
+		result.addObject("stddevItemsPerProvider", stddevItemsPerProvider);
+
+		result.addObject("topFiveProvidersInItems", topFiveProvidersInItems);
 
 		return result;
 

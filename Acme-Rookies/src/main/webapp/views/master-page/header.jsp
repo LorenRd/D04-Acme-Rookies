@@ -91,6 +91,28 @@
 			</li>
 		</security:authorize>
 		
+		<security:authorize access="hasRole('PROVIDER')">
+			<li><a class="fNiv"><spring:message	code="master.page.provider" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="item/provider/list.do"><spring:message code="master.page.provider.items" /></a></li>										
+				</ul>
+			</li>
+			<li><a class="fNiv"><spring:message code="master.page.terms" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<jstl:if test="${cookie['language'].getValue()=='en'}">
+					<li><a href="terms/englishTerms.do"><spring:message
+								code="master.page.terms" /></a></li>
+					</jstl:if>
+					<jstl:if test="${cookie['language'].getValue()=='es'}">
+					<li><a href="terms/terms.do"><spring:message
+								code="master.page.terms" /></a></li>
+					</jstl:if>
+				</ul>
+			</li>
+		</security:authorize>
+		
 		<security:authorize access="isAnonymous()">
 			<li><a class="fNiv"><spring:message
 						code="master.page.companies" /></a>
@@ -108,6 +130,22 @@
 								code="master.page.customer.list.positions" /></a></li>
 				</ul>
 			</li>
+			<li><a class="fNiv"><spring:message
+						code="master.page.providers" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="provider/list.do"><spring:message
+								code="master.page.customer.list.providers" /></a></li>
+				</ul>
+			</li>
+			<li><a class="fNiv"><spring:message
+						code="master.page.items" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="item/list.do"><spring:message
+								code="master.page.customer.list.items" /></a></li>
+				</ul>
+			</li>
 			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a>
 			<ul>
 					<li class="arrow"></li>
@@ -115,6 +153,8 @@
 								code="master.page.register.rookie" /></a></li>
 					<li><a href="company/register.do"><spring:message
 								code="master.page.register.company" /></a></li>
+					<li><a href="provider/register.do"><spring:message
+								code="master.page.register.provider" /></a></li>
 				</ul></li>
 			<li><a class="fNiv"><spring:message code="master.page.terms" /></a>
 				<ul>
@@ -160,6 +200,9 @@
 					</security:authorize>
 					<security:authorize access="hasRole('ROOKIE')">
 					<li><a href="rookie/display.do"><spring:message code="master.page.rookie.display" /></a></li>
+					</security:authorize>
+					<security:authorize access="hasRole('PROVIDER')">
+					<li><a href="provider/display.do"><spring:message code="master.page.provider.display" /></a></li>
 					</security:authorize>
 					<security:authorize access="hasRole('ADMIN')">
 					<li><a href="administrator/viewProfile.do"><spring:message code="master.page.administrator.viewProfile" /></a></li>

@@ -63,6 +63,12 @@
 		<security:intercept-url pattern="/rookie/edit.do" access="hasRole('ROOKIE')" /> 
 		<security:intercept-url pattern="/rookie/delete.do" access="hasRole('ROOKIE')" /> 
 		
+		<security:intercept-url pattern="/provider/display.do" access="permitAll"/>
+		<security:intercept-url pattern="/provider/list.do" access="permitAll"/>
+		<security:intercept-url pattern="/provider/register.do" access="isAnonymous()"/>
+		<security:intercept-url pattern="/provider/edit.do" access="hasRole('PROVIDER')" /> 
+		<security:intercept-url pattern="/provider/delete.do" access="hasRole('PROVIDER')" /> 
+		
 		<security:intercept-url pattern="/application/rookie/list.do" access="hasRole('ROOKIE')" /> 
 		<security:intercept-url pattern="/application/rookie/display.do" access="hasRole('ROOKIE')" /> 
 		<security:intercept-url pattern="/application/rookie/create.do" access="hasRole('ROOKIE')" /> 
@@ -89,6 +95,15 @@
 		<security:intercept-url pattern="/problem/company/delete.do" access="hasRole('COMPANY')"/>
 		<security:intercept-url pattern="/problem/company/display.do" access="hasRole('COMPANY')"/>		
 
+		<security:intercept-url pattern="/item/display.do" access="permitAll"/>
+		<security:intercept-url pattern="/item/list.do" access="permitAll"/>
+		<security:intercept-url pattern="/item/listProviderId.do" access="permitAll"/>		
+		<security:intercept-url pattern="/item/provider/list.do" access="hasRole('PROVIDER')"/>
+		<security:intercept-url pattern="/item/provider/create.do" access="hasRole('PROVIDER')"/>
+		<security:intercept-url pattern="/item/provider/edit.do" access="hasRole('PROVIDER')"/>
+		<security:intercept-url pattern="/item/provider/delete.do" access="hasRole('PROVIDER')"/>
+		<security:intercept-url pattern="/item/provider/display.do" access="hasRole('PROVIDER')"/>		
+		<security:intercept-url pattern="/item/provider/cancel.do" access="hasRole('PROVIDER')"/>		
 		
 		<security:intercept-url pattern="/message/actor/list.do" access="isAuthenticated()" />
 		<security:intercept-url pattern="/message/actor/exportData.do" access="isAuthenticated()" />

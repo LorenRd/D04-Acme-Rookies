@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+
+	<definition name="provider/list" extends="master.page">
+		<put-attribute name="title" value="Providers' list" />
+		<put-attribute name="body" value="/views/provider/list.jsp" />
+	</definition>
+	
+	<definition name="provider/display" extends="master.page">
+		<put-attribute name="title" value="Display provider" />
+		<put-attribute name="body" value="/views/provider/display.jsp" />
+	</definition>
+	
+	<definition name="provider/edit" extends="master.page">
+		<put-attribute name="title" value="Edit provider" />
+		<put-attribute name="body" value="/views/provider/edit.jsp" />
+	</definition>
+	
+	<definition name="provider/register" extends="master.page">
+		<put-attribute name="title" value="New provider registration" />
+		<put-attribute name="body" value="/views/provider/register.jsp" />
+	</definition>
+	
+</tiles-definitions>

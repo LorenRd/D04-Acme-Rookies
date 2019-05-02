@@ -50,6 +50,12 @@
 
 		<bean class="converters.MessageToStringConverter" />
 		<bean class="converters.StringToMessageConverter" />
+		
+		<bean class="converters.ProviderToStringConverter" />
+		<bean class="converters.StringToProviderConverter" />
+		
+		<bean class="converters.ItemToStringConverter" />
+		<bean class="converters.StringToItemConverter" />
 	</util:list>
 
 </beans>

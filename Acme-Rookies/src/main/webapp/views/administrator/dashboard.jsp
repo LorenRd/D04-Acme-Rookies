@@ -103,4 +103,36 @@
 	<h3><spring:message code="administrator.worstSalaryPosition" /></h3>
 	<jstl:out value="${worstSalaryPosition.title}"></jstl:out>
 	
+	<h3><spring:message code="administrator.statistics" /></h3>
+	
+	<table class="displayStyle">
+		<tr>
+			<th colspan="5"><spring:message code="administrator.statistics" /></th>
+		</tr>
+		
+		<tr>
+			<th><spring:message code="administrator.metrics" /></th>
+			<th><spring:message code="administrator.average" /></th>
+			<th><spring:message code="administrator.minimum" /></th>
+			<th><spring:message code="administrator.maximum" /></th>
+			<th><spring:message code="administrator.std" /></th>
+		</tr>
+		
+		<tr>
+			<td><spring:message code="administrator.itemsPerProvider" /></td>
+			<td><jstl:out value="${avgItemsPerProvider }" /></td>
+			<td><jstl:out value="${minItemsPerProvider }" /></td>
+			<td><jstl:out value="${maxItemsPerProvider }" /></td>
+			<td><jstl:out value="${stddevItemsPerProvider }" /></td>
+		</tr>
+	</table>
+	
+	<h3><spring:message code="administrator.topFiveProvidersInItems" /></h3>
+	<display:table pagesize="10" class="displaytag" 
+	name="topFiveProvidersInItems" requestURI="dashboard/administrator/display.do" id="provider">
+		
+	<spring:message code="provider.username" var="username" />
+	<display:column property="userAccount.username" title="${username}" sortable="true"/>
+	</display:table>
+	
 </security:authorize>

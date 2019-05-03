@@ -118,8 +118,9 @@ public class ProviderService {
 		Assert.notNull(principal);
 
 		items = this.itemService.findByProvider(principal.getId());
-
-		this.itemService.deleteInBatch(items);
+		for (Item item : items) {
+			this.itemService.delete(item);
+		}
 
 		messages = this.messageService.findBySenderId(principal.getId());
 		this.messageService.deleteInBach(messages);

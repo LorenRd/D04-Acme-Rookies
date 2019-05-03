@@ -427,7 +427,7 @@ public class PositionService {
 				.contains(authority));
 		Position result = null;
 
-		if(this.positionRepository.bestSalaryPosition().size()>1)
+		if(this.positionRepository.bestSalaryPosition().size()>0)
 			result = this.positionRepository.bestSalaryPosition().iterator().next();
 
 		return result;
@@ -442,7 +442,7 @@ public class PositionService {
 				.contains(authority));
 		Position result = null;
 		
-		if(this.positionRepository.worstSalaryPosition().size()>1)
+		if(this.positionRepository.worstSalaryPosition().size()>0)
 			result = this.positionRepository.worstSalaryPosition().iterator().next();
 
 		return result;

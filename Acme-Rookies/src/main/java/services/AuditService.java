@@ -12,8 +12,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.AuditRepository;
+import security.Authority;
+import domain.Actor;
 import domain.Audit;
 import domain.Auditor;
+import domain.Company;
 
 @Service
 @Transactional
@@ -30,6 +33,10 @@ public class AuditService {
 	@Autowired
 	private AuditorService			auditorService;
 
+	@Autowired
+	private ActorService			actorService;
+
+	
 	// Simple CRUD Methods
 	public void delete(final Audit audit) {
 
@@ -144,4 +151,146 @@ public class AuditService {
 	public void deleteInBatch(Collection<Audit> audits){
 		this.auditRepository.deleteInBatch(audits);
 	}
+	
+	//Dashboard
+	public Double avgAuditScorePosition() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		final Actor actor = this.actorService.findByPrincipal();
+		Assert.notNull(actor);
+		Assert.isTrue(actor.getUserAccount().getAuthorities()
+				.contains(authority));
+		Double result;
+
+		result = this.auditRepository.avgAuditScorePosition();
+
+		return result;
+	}
+	
+	public Double minAuditScorePosition() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		final Actor actor = this.actorService.findByPrincipal();
+		Assert.notNull(actor);
+		Assert.isTrue(actor.getUserAccount().getAuthorities()
+				.contains(authority));
+		Double result;
+
+		result = this.auditRepository.minAuditScorePosition();
+
+		return result;
+	}
+
+	public Double maxAuditScorePosition() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		final Actor actor = this.actorService.findByPrincipal();
+		Assert.notNull(actor);
+		Assert.isTrue(actor.getUserAccount().getAuthorities()
+				.contains(authority));
+		Double result;
+
+		result = this.auditRepository.maxAuditScorePosition();
+
+		return result;
+	}
+	
+	public Double stddevAuditScorePosition() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		final Actor actor = this.actorService.findByPrincipal();
+		Assert.notNull(actor);
+		Assert.isTrue(actor.getUserAccount().getAuthorities()
+				.contains(authority));
+		Double result;
+
+		result = this.auditRepository.stddevAuditScorePosition();
+
+		return result;
+	}
+	
+	public Double avgAuditScoreCompany() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		final Actor actor = this.actorService.findByPrincipal();
+		Assert.notNull(actor);
+		Assert.isTrue(actor.getUserAccount().getAuthorities()
+				.contains(authority));
+		Double result;
+
+		result = this.auditRepository.avgAuditScoreCompany();
+
+		return result;
+	}
+	
+	public Double minAuditScoreCompany() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		final Actor actor = this.actorService.findByPrincipal();
+		Assert.notNull(actor);
+		Assert.isTrue(actor.getUserAccount().getAuthorities()
+				.contains(authority));
+		Double result;
+
+		result = this.auditRepository.minAuditScoreCompany();
+
+		return result;
+	}
+	
+	public Double maxAuditScoreCompany() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		final Actor actor = this.actorService.findByPrincipal();
+		Assert.notNull(actor);
+		Assert.isTrue(actor.getUserAccount().getAuthorities()
+				.contains(authority));
+		Double result;
+
+		result = this.auditRepository.maxAuditScoreCompany();
+
+		return result;
+	}
+	
+	public Double stddevAuditScoreCompany() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		final Actor actor = this.actorService.findByPrincipal();
+		Assert.notNull(actor);
+		Assert.isTrue(actor.getUserAccount().getAuthorities()
+				.contains(authority));
+		Double result;
+
+		result = this.auditRepository.stddevAuditScoreCompany();
+
+		return result;
+	}
+	
+	public Collection<Company> bestScoreCompanies() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		final Actor actor = this.actorService.findByPrincipal();
+		Assert.notNull(actor);
+		Assert.isTrue(actor.getUserAccount().getAuthorities()
+				.contains(authority));
+		Collection<Company> result;
+
+		result = this.auditRepository.bestScoreCompanies();
+
+		return result;
+	}
+	
+	public Double avgSalaryPositionsHighestAvgScore() {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.ADMIN);
+		final Actor actor = this.actorService.findByPrincipal();
+		Assert.notNull(actor);
+		Assert.isTrue(actor.getUserAccount().getAuthorities()
+				.contains(authority));
+		Double result;
+
+		result = this.auditRepository.avgSalaryPositionsHighestAvgScore();
+
+		return result;
+	}
+	
 }

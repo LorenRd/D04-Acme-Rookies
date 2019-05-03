@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.AdministratorService;
 import services.ApplicationService;
+import services.AuditService;
 import services.CompanyService;
 import services.RookieService;
 import services.PositionService;
@@ -36,6 +37,9 @@ public class DashboardAdministratorController extends AbstractController {
 
 	@Autowired
 	private ApplicationService applicationService;
+	
+	@Autowired
+	private AuditService auditService;
 
 	@Autowired
 	private AdministratorService administratorService;
@@ -56,8 +60,13 @@ public class DashboardAdministratorController extends AbstractController {
 		final Position bestSalaryPosition;
 		final Position worstSalaryPosition;
 		
-		final Double avgScoreAudit, minScoreAudit, maxScoreAudit, stddevScoreAudit;
-
+		final Double avgScoreAuditPosition, minScoreAuditPosition, maxScoreAuditPosition, stddevScoreAuditPosition;
+		
+		final Double avgScoreAuditCompany, minScoreAuditCompany, maxScoreAuditCompany, stddevScoreAuditCompany;
+		
+		final Double avgSalaryPositionsHighestAvgScore;
+		
+		final Collection<Company> bestScoreCompanies;
 		// Stadistics
 
 		// avg
@@ -112,14 +121,25 @@ public class DashboardAdministratorController extends AbstractController {
 		
 		//Audit
 		//min
-		minScoreAudit
+		minScoreAuditPosition = this.auditService.minAuditScorePosition();
 		//max
-		maxScoreAudit
+		maxScoreAuditPosition = this.auditService.maxAuditScorePosition();
 		//avg
-		avgScoreAudit
+		avgScoreAuditPosition = this.auditService.avgAuditScorePosition();
 		//stdev
-		stddevScoreAudit
+		stddevScoreAuditPosition = this.auditService.stddevAuditScorePosition();
+		//min
+		minScoreAuditCompany = this.auditService.minAuditScoreCompany();
+		//max
+		maxScoreAuditCompany = this.auditService.maxAuditScoreCompany();
+		//avg
+		avgScoreAuditCompany = this.auditService.avgAuditScoreCompany();
+		//stdev
+		stddevScoreAuditCompany = this.auditService.stddevAuditScoreCompany();
+		//
+		avgSalaryPositionsHighestAvgScore = this.auditService.avgSalaryPositionsHighestAvgScore();
 		
+		bestScoreCompanies = this.auditService.bestScoreCompanies();
 		//
 		result = new ModelAndView("administrator/dashboard");
 		result.addObject("avgPositionsPerCompany", avgPositionsPerCompany);
@@ -146,6 +166,19 @@ public class DashboardAdministratorController extends AbstractController {
 
 		result.addObject("bestSalaryPosition", bestSalaryPosition);
 		result.addObject("worstSalaryPosition", worstSalaryPosition);
+
+		result.addObject("minScoreAuditPosition", minScoreAuditPosition);
+		result.addObject("maxScoreAuditPosition", maxScoreAuditPosition);
+		result.addObject("avgScoreAuditPosition", avgScoreAuditPosition);
+		result.addObject("stddevScoreAuditPosition", stddevScoreAuditPosition);
+
+		result.addObject("minScoreAuditCompany", minScoreAuditCompany);
+		result.addObject("maxScoreAuditCompany", maxScoreAuditCompany);
+		result.addObject("avgScoreAuditCompany", avgScoreAuditCompany);
+		result.addObject("stddevScoreAuditCompany", stddevScoreAuditCompany);
+		
+		result.addObject("avgSalaryPositionsHighestAvgScore", avgSalaryPositionsHighestAvgScore);
+		result.addObject("bestScoreCompanies", bestScoreCompanies);		
 
 		return result;
 

@@ -211,6 +211,14 @@
 								code="master.page.customer.list.positions" /></a></li>
 				</ul>
 			</li>
+			<li><a class="fNiv"><spring:message
+						code="master.page.providers" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="provider/list.do"><spring:message
+								code="master.page.customer.list.providers" /></a></li>
+				</ul>
+			</li>
 			<li>
 				<a class="fNiv"> 
 					<spring:message code="master.page.profile" /> 

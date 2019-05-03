@@ -30,9 +30,6 @@ public class ProblemService {
 	private ApplicationService	applicationService;
 
 	@Autowired
-	private PositionService		positionService;
-
-	@Autowired
 	private Validator			validator;
 
 

@@ -149,6 +149,13 @@ public class PositionService {
 		result = this.positionRepository.findAllFinal();
 		return result;
 	}
+	
+	public Collection<Position> findAllFinalFuture() {
+		Collection<Position> result;
+
+		result = this.positionRepository.findAllFinalFuture();
+		return result;
+	}
 
 	public Collection<Position> findAllFinalNotApplication() {
 		Collection<Position> result;
@@ -166,6 +173,8 @@ public class PositionService {
 			for (Application a : applications) {
 				if(a.getPosition().getId() == p.getId())
 					result.remove(p);
+			}
+		}
 		return result;
 	}
 	

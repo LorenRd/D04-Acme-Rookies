@@ -198,7 +198,7 @@ public class ApplicationRookieController extends AbstractController {
 			result = new ModelAndView("application/create");
 
 		result.addObject("applicationForm", applicationForm);
-		result.addObject("positions", this.positionService.findAllFinal());
+		result.addObject("positions", this.positionService.findAllFinalFuture());
 		result.addObject("message", messageCode);
 		return result;
 	}

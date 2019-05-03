@@ -7,23 +7,23 @@
 <tiles-definitions>
 
 	<definition name="item/list" extends="master.page">
-		<put-attribute name="title" value="items' list" />
+		<put-attribute name="title" value="Items' list" />
 		<put-attribute name="body" value="/views/item/list.jsp" />
 	</definition>
-	
+
 	<definition name="item/display" extends="master.page">
 		<put-attribute name="title" value="Display item" />
 		<put-attribute name="body" value="/views/item/display.jsp" />
 	</definition>
-	
+
 	<definition name="item/create" extends="master.page">
 		<put-attribute name="title" value="Create item" />
 		<put-attribute name="body" value="/views/item/create.jsp" />
 	</definition>
-	
+
 	<definition name="item/edit" extends="master.page">
 		<put-attribute name="title" value="Edit item" />
 		<put-attribute name="body" value="/views/item/edit.jsp" />
 	</definition>
-	
+
 </tiles-definitions>

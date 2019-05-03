@@ -119,7 +119,7 @@
 			</list>
 		</property>
 	</bean>
-	
+
 	<bean id="userAccount10" class="security.UserAccount">
 		<property name="username" value="auditor1" />
 		<property name="password" value="175d2e7a63f386554a4dd66e865c3e14" />
@@ -131,7 +131,7 @@
 			</list>
 		</property>
 	</bean>
-	
+
 	<bean id="userAccount11" class="security.UserAccount">
 		<property name="username" value="provider1" />
 		<property name="password" value="cdb82d56473901641525fbbd1d5dab56" />
@@ -143,7 +143,7 @@
 			</list>
 		</property>
 	</bean>
-	
+
 	<bean id="userAccount12" class="security.UserAccount">
 		<property name="username" value="provider2" />
 		<property name="password" value="ebfc815ee2cc6a16225105bb7b3e1e53" />
@@ -155,7 +155,7 @@
 			</list>
 		</property>
 	</bean>
-	
+
 	<bean id="userAccount13" class="security.UserAccount">
 		<property name="username" value="provider3" />
 		<property name="password" value="a575bf1b9ca7d068cef7bbc8fa7f43e1" />
@@ -286,7 +286,7 @@
 		<property name="score" value="0.0" />
 		<property name="commercialName" value="commercialName3" />
 	</bean>
-	
+
 	<!-- Auditor -->
 
 
@@ -299,8 +299,8 @@
 		<property name="vatNumber" value="3" />
 		<property name="userAccount" ref="userAccount10" />
 		<property name="creditCard" ref="creditCard10" />
-	</bean>	
-	
+	</bean>
+
 	<!-- Providers -->
 	<bean class="domain.Provider" id="provider1">
 		<property name="name" value="Julia" />
@@ -313,7 +313,7 @@
 		<property name="userAccount" ref="userAccount11" />
 		<property name="creditCard" ref="creditCard11" />
 	</bean>
-	
+
 	<bean class="domain.Provider" id="provider2">
 		<property name="name" value="Antonia" />
 		<property name="surname" value="Perez Castellanos" />
@@ -326,7 +326,7 @@
 		<property name="userAccount" ref="userAccount12" />
 		<property name="creditCard" ref="creditCard12" />
 	</bean>
-	
+
 	<bean class="domain.Provider" id="provider3">
 		<property name="name" value="Maria" />
 		<property name="surname" value="del Mar García" />
@@ -459,6 +459,66 @@
 			</list>
 		</property>
 	</bean>
+	
+	<bean class="domain.Position" id="position5">
+		<property name="title" value="title position 5" />
+		<property name="description" value="description position 5" />
+		<property name="deadline" value="2021/04/30" />
+		<property name="profileRequired" value="profileRequired 5" />
+		<property name="skillsRequired">
+			<list>
+				<value>skillRequired 3</value>
+				<value>skillRequired 4</value>
+			</list>
+		</property>
+		<property name="technologiesRequired">
+			<list>
+				<value>technologiesRequired 3</value>
+				<value>technologiesRequired 4</value>
+			</list>
+		</property>
+		<property name="salaryOffered" value="100.0" />
+		<property name="ticker" value="COMM-0001" />
+		<property name="status" value="FINAL" />
+
+		<property name="company" ref="company3" />
+		<property name="problems">
+			<list>
+				<ref bean="problem5" />
+				<ref bean="problem6" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean class="domain.Position" id="position6">
+		<property name="title" value="title position 6" />
+		<property name="description" value="description position 6" />
+		<property name="deadline" value="2021/04/30" />
+		<property name="profileRequired" value="profileRequired 6" />
+		<property name="skillsRequired">
+			<list>
+				<value>skillRequired 3</value>
+				<value>skillRequired 4</value>
+			</list>
+		</property>
+		<property name="technologiesRequired">
+			<list>
+				<value>technologiesRequired 3</value>
+				<value>technologiesRequired 4</value>
+			</list>
+		</property>
+		<property name="salaryOffered" value="150.0" />
+		<property name="ticker" value="COMM-0002" />
+		<property name="status" value="FINAL" />
+
+		<property name="company" ref="company2" />
+		<property name="problems">
+			<list>
+				<ref bean="problem2" />
+				<ref bean="problem7" />
+			</list>
+		</property>
+	</bean>
 	<!-- Problems -->
 	<bean class="domain.Problem" id="problem1">
 		<property name="title" value="title problem 1" />
@@ -515,7 +575,7 @@
 		</property>
 		<property name="company" ref="company1" />
 	</bean>
-	
+
 	<bean class="domain.Problem" id="problem5">
 		<property name="title" value="title problem 5" />
 		<property name="statement" value="statement problem 5" />
@@ -529,15 +589,44 @@
 		</property>
 		<property name="company" ref="company3" />
 	</bean>
+	
+	<bean class="domain.Problem" id="problem6">
+		<property name="title" value="title problem 6" />
+		<property name="statement" value="statement problem 6" />
+		<property name="hint" value="this in an optional hint problem 6" />
+		<property name="isDraft" value="true" />
+		<property name="attachments">
+			<list>
+				<value>Attachment 1</value>
+				<value>Attachment 2</value>
+			</list>
+		</property>
+		<property name="company" ref="company3" />
+	</bean>
+	
+	<bean class="domain.Problem" id="problem7">
+		<property name="title" value="title problem 7" />
+		<property name="statement" value="statement problem 7" />
+		<property name="hint" value="this in an optional hint problem 7" />
+		<property name="isDraft" value="true" />
+		<property name="attachments">
+			<list>
+				<value>Attachment 1</value>
+				<value>Attachment 2</value>
+			</list>
+		</property>
+		<property name="company" ref="company2" />
+	</bean>
 
 	<!-- Application -->
 
 	<bean class="domain.Application" id="application1">
 		<property name="rookie" ref="rookie1" />
-		<property name="status" value="PENDING" />
+		<property name="status" value="SUBMITTED" />
 		<property name="moment" value="2018/03/01 13:00" />
 		<property name="position" ref="position2" />
 		<property name="problem" ref="problem1" />
+		<property name="answer" ref="answer1" />
 	</bean>
 
 	<bean class="domain.Application" id="application2">
@@ -556,26 +645,89 @@
 		<property name="problem" ref="problem3" />
 	</bean>
 	
+	<bean class="domain.Application" id="application4">
+		<property name="rookie" ref="rookie1" />
+		<property name="status" value="SUBMITTED" />
+		<property name="moment" value="2018/06/15 12:24" />
+		<property name="position" ref="position2" />
+		<property name="problem" ref="problem4" />
+		<property name="answer" ref="answer2"/>
+	</bean>
+
+	<bean class="domain.Application" id="application5">
+		<property name="rookie" ref="rookie2" />
+		<property name="status" value="PENDING" />
+		<property name="moment" value="2018/10/17 17:24" />
+		<property name="position" ref="position2" />
+		<property name="problem" ref="problem3" />
+	</bean>
+	
+	<bean class="domain.Application" id="application6">
+		<property name="rookie" ref="rookie1" />
+		<property name="status" value="PENDING" />
+		<property name="moment" value="2018/05/17 17:24" />
+		<property name="position" ref="position2" />
+		<property name="problem" ref="problem3" />
+	</bean>
+	
+	<bean class="domain.Application" id="application7">
+		<property name="rookie" ref="rookie1" />
+		<property name="status" value="PENDING" />
+		<property name="moment" value="2018/05/10 17:24" />
+		<property name="position" ref="position2" />
+		<property name="problem" ref="problem3" />
+	</bean>
+	
+	<bean class="domain.Application" id="application8">
+		<property name="rookie" ref="rookie1" />
+		<property name="status" value="PENDING" />
+		<property name="moment" value="2018/05/05 17:24" />
+		<property name="position" ref="position2" />
+		<property name="problem" ref="problem3" />
+	</bean>
+	
+	<bean class="domain.Application" id="application9">
+		<property name="rookie" ref="rookie1" />
+		<property name="status" value="PENDING" />
+		<property name="moment" value="2018/05/01 17:24" />
+		<property name="position" ref="position2" />
+		<property name="problem" ref="problem3" />
+	</bean>
+	
+	<!-- Answers -->
+	
+	<bean class="domain.Answer" id ="answer1">
+		<property name="moment" value="2018/03/02 14:00"/>
+		<property name="answerText" value="answer1"/>
+		<property name ="codeLink" value="https://drive.google.com/drive/folders/12wxFoI0CyRyaWlp44IUK-r2vj0z9p7tK" />
+	</bean>
+	
+	<bean class="domain.Answer" id ="answer2">
+		<property name="moment" value="2018/06/16 14:00"/>
+		<property name="answerText" value="answer2"/>
+		<property name ="codeLink" value="https://drive.google.com/drive/folders/12wxFoI0CyRyaWlp44IUK-r2vj0z9p7tK" />
+	</bean>
+
 	<!-- Audit -->
 
 	<bean class="domain.Audit" id="audit1">
 		<property name="auditor" ref="auditor1" />
 		<property name="moment" value="2019/04/30 13:00" />
 		<property name="position" ref="position2" />
-		<property name="text" value="Example text"/>
-		<property name="isDraft" value="false"/>
-		<property name="score" value="7.5"/>	
+		<property name="text" value="Example text" />
+		<property name="isDraft" value="false" />
+		<property name="score" value="7.5" />
 	</bean>
-	
+
 	<bean class="domain.Audit" id="audit2">
 		<property name="auditor" ref="auditor1" />
 		<property name="moment" value="2019/04/29 13:00" />
 		<property name="position" ref="position3" />
-		<property name="text" value="Example text 2"/>
-		<property name="isDraft" value="true"/>
-		<property name="score" value="6.5"/>	
+		<property name="text" value="Example text 2" />
+		<property name="isDraft" value="true" />
+		<property name="score" value="6.5" />
 	</bean>
-	
+
 	<!-- Credit Card -->
 
 	<bean class="domain.CreditCard" id="creditCard1">
@@ -658,7 +810,7 @@
 		<property name="expirationYear" value="20" />
 		<property name="CVV" value="442" />
 	</bean>
-	
+
 	<bean class="domain.CreditCard" id="creditCard11">
 		<property name="holderName" value="Julia Galán" />
 		<property name="brandName" value="Visa" />
@@ -667,7 +819,7 @@
 		<property name="expirationYear" value="20" />
 		<property name="CVV" value="312" />
 	</bean>
-	
+
 	<bean class="domain.CreditCard" id="creditCard12">
 		<property name="holderName" value="Antonia Perez Castellanos" />
 		<property name="brandName" value="American Express" />
@@ -676,7 +828,7 @@
 		<property name="expirationYear" value="20" />
 		<property name="CVV" value="242" />
 	</bean>
-	
+
 	<bean class="domain.CreditCard" id="creditCard13">
 		<property name="holderName" value="Maria del Mar García" />
 		<property name="brandName" value="Mastercard" />
@@ -699,13 +851,15 @@
 	<bean id="customisation" class="domain.Customisation">
 		<property name="systemName" value="Acme Rookies" />
 		<property name="welcomeBanner" value="https://i.imgur.com/5EfQQQX.png" />
-		<property name="welcomeMessageEn" value="Welcome to Acme Rookies! We’re IT
+		<property name="welcomeMessageEn"
+			value="Welcome to Acme Rookies! We’re IT
 rookies’ favourite job marketplace!" />
-		<property name="welcomeMessageEs" value="¡Bienvenidos a Acme Rookies! ¡Somos el mercado de trabajo favorito de los profesionales de
+		<property name="welcomeMessageEs"
+			value="¡Bienvenidos a Acme Rookies! ¡Somos el mercado de trabajo favorito de los profesionales de
 las TICs!" />
 		<property name="countryCode" value="+34" />
 		<property name="rebrandingAnnouncement" value="false" />
-		
+
 	</bean>
 
 	<!-- Messages -->
@@ -755,9 +909,9 @@ las TICs!" />
 			</list>
 		</property>
 	</bean>
-	
+
 	<!-- Items -->
-	
+
 	<bean class="domain.Item" id="item1">
 		<property name="name" value="name item 1" />
 		<property name="description" value="description item 1" />
@@ -770,7 +924,7 @@ las TICs!" />
 		</property>
 		<property name="provider" ref="provider1" />
 	</bean>
-	
+
 	<bean class="domain.Item" id="item2">
 		<property name="name" value="name item 2" />
 		<property name="description" value="description item 2" />
@@ -783,7 +937,7 @@ las TICs!" />
 		</property>
 		<property name="provider" ref="provider1" />
 	</bean>
-	
+
 	<bean class="domain.Item" id="item3">
 		<property name="name" value="name item 3" />
 		<property name="description" value="description item 3" />

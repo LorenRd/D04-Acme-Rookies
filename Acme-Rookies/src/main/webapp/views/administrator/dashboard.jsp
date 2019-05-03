@@ -135,4 +135,65 @@
 	<display:column property="userAccount.username" title="${username}" sortable="true"/>
 	</display:table>
 	
+	<!-- Audits -->
+	
+	<h3><spring:message code="administrator.statistics" /></h3>
+	
+	<table class="displayStyle">
+		<tr>
+			<th colspan="5"><spring:message code="administrator.statistics" /></th>
+		</tr>
+		
+		<tr>
+			<th><spring:message code="administrator.metrics" /></th>
+			<th><spring:message code="administrator.average" /></th>
+			<th><spring:message code="administrator.minimum" /></th>
+			<th><spring:message code="administrator.maximum" /></th>
+			<th><spring:message code="administrator.std" /></th>
+		</tr>
+		
+		<tr>
+			<td><spring:message code="administrator.auditScorePosition" /></td>
+			<td><jstl:out value="${avgScoreAuditPosition }" /></td>
+			<td><jstl:out value="${minScoreAuditPosition }" /></td>
+			<td><jstl:out value="${maxScoreAuditPosition }" /></td>
+			<td><jstl:out value="${stddevScoreAuditPosition }" /></td>
+		</tr>
+	</table>
+	<table class="displayStyle">
+		<tr>
+			<th colspan="5"><spring:message code="administrator.statistics" /></th>
+		</tr>
+		
+		<tr>
+			<th><spring:message code="administrator.metrics" /></th>
+			<th><spring:message code="administrator.average" /></th>
+			<th><spring:message code="administrator.minimum" /></th>
+			<th><spring:message code="administrator.maximum" /></th>
+			<th><spring:message code="administrator.std" /></th>
+		</tr>
+		
+		<tr>
+			<td><spring:message code="administrator.auditScoreCompany" /></td>
+			<td><jstl:out value="${minScoreAuditCompany }" /></td>
+			<td><jstl:out value="${maxScoreAuditCompany }" /></td>
+			<td><jstl:out value="${avgScoreAuditCompany }" /></td>
+			<td><jstl:out value="${stddevScoreAuditCompany }" /></td>
+		</tr>
+	</table>
+	<h3><spring:message code="administrator.bestScoreCompanies" /></h3>
+	<display:table pagesize="10" class="displaytag" 
+	name="bestScoreCompanies" requestURI="dashboard/administrator/display.do" id="company">
+		
+	<spring:message code="company.commercialName" var="commercialName" />
+	<display:column property="commercialName" title="${commercialName}" sortable="true"/>
+	</display:table>
+	
+	<h3><spring:message code="administrator.avgSalaryPositionsHighestAvgScore" /></h3>
+	<jstl:out value="${avgSalaryPositionsHighestAvgScore }" />
+	
+	<!-- Compute -->
+	<h3><spring:message code="administrator.controlPanel" /></h3>
+	<input type="button" name="computeScore" value="<spring:message code="administrator.computeScore" />" onclick="redirect: location.href = 'dashboard/administrator/display.do?computeScore';" />		
+
 </security:authorize>

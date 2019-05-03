@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.AuditService;
 import services.CompanyService;
 import services.CustomisationService;
 import services.PositionService;
@@ -40,6 +41,8 @@ public class CompanyController extends AbstractController {
 	@Autowired
 	private CustomisationService	customisationService;
 
+	@Autowired
+	private AuditService	auditService;
 
 	// List
 
@@ -63,6 +66,7 @@ public class CompanyController extends AbstractController {
 	public ModelAndView show(@RequestParam(required = false) final Integer companyId) {
 		final ModelAndView result;
 		Company company = new Company();
+		boolean hasAudits = false;
 
 		if (companyId == null)
 			company = this.companyService.findByPrincipal();
@@ -78,10 +82,15 @@ public class CompanyController extends AbstractController {
 		}catch(final Throwable oops){
 			positions = this.positionService.findAvailableByCompanyId(company.getId());
 		}
+		
+		if(this.auditService.findAllByCompany(companyId).size()>0){
+			hasAudits = true;
+		}
 
 		result = new ModelAndView("company/display");
 		result.addObject("company", company);
 		result.addObject("positions", positions);
+		result.addObject("hasAudits", hasAudits);
 
 		return result;
 

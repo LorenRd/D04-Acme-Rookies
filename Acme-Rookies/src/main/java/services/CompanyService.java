@@ -21,6 +21,7 @@ import security.UserAccount;
 import security.UserAccountRepository;
 import domain.Actor;
 import domain.Application;
+import domain.Audit;
 import domain.Company;
 import domain.CreditCard;
 import domain.Message;
@@ -54,7 +55,10 @@ public class CompanyService {
 
 	 @Autowired
 	 private ApplicationService applicationService;
-	 
+
+	 @Autowired
+	 private AuditService auditService;
+	 	 
 	 @Autowired
 	 private AnswerService answerService;
 	 
@@ -112,7 +116,7 @@ public class CompanyService {
 			Assert.isTrue(logedUserAccount.equals(company.getUserAccount()),
 					"company.notEqual.userAccount");
 			saved = this.companyRepository.findOne(company.getId());
-			Assert.notNull(saved, "brotherhood.not.null");
+			Assert.notNull(saved, "company.not.null");
 			Assert.isTrue(
 					saved.getUserAccount().getUsername()
 							.equals(company.getUserAccount().getUsername()),
@@ -143,6 +147,7 @@ public class CompanyService {
 		  * 	1 Answer de las applications a una position de la company
 		  * 	2 Application a una position de la company
 		  * 	3 Problemas
+		  * 	3.5 - Audits
 		  * 	4 Position
 		  * 	5 Mensajes
 		  * 	6 Company
@@ -153,6 +158,7 @@ public class CompanyService {
 		 Collection<Position> positions;
 		 Collection<Application> applications;
 		 Collection<Message> messages;
+		 Collection<Audit> audits;
 
 		 principal = this.findByPrincipal();
 		 Assert.notNull(principal);
@@ -163,6 +169,9 @@ public class CompanyService {
 					this.answerService.delete(a.getAnswer());
 		 }
 		 this.applicationService.deleteInBatch(applications);
+		 
+		 audits = this.auditService.findAllByCompany(principal.getId());
+		 this.auditService.deleteInBatch(audits);
 		 
 		 positions = this.positionService.findByCompany(principal.getId());
 		 for (Position position : positions) {

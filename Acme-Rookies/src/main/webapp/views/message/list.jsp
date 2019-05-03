@@ -8,11 +8,6 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<security:authorize access="hasRole('ADMIN')">
-<a href="message/administrator/warning.do"><spring:message code="message.warning" /></a>
-<br/>
-</security:authorize>
-
 <display:table name="messages" id="row" pagesize="5" requestURI="${requestURI}" 
 class="displaytag" keepStatus="true">
 	
@@ -25,3 +20,14 @@ class="displaytag" keepStatus="true">
 	<display:column  property="body" title="${bodyHeader}" />
 	
 </display:table>
+
+<security:authorize access="hasRole('ADMIN')">
+<br/>
+<br/>
+<a href="message/actor/warning.do"><spring:message code="message.warning" /></a>
+<br/>
+<jstl:if test="${rebrandMessage == false}">
+<a href="message/actor/rebrand.do"><spring:message code="message.rebrand" /></a>
+</jstl:if>
+<br/>
+</security:authorize>

@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.AdministratorService;
 import services.ApplicationService;
+import services.AuditService;
 import services.CompanyService;
 import services.ItemService;
 import services.PositionService;
@@ -37,7 +39,13 @@ public class DashboardAdministratorController extends AbstractController {
 	private PositionService		positionService;
 
 	@Autowired
-	private ApplicationService	applicationService;
+	private ApplicationService applicationService;
+	
+	@Autowired
+	private AuditService auditService;
+
+	@Autowired
+	private AdministratorService administratorService;
 
 	@Autowired
 	private ItemService			itemService;
@@ -62,7 +70,14 @@ public class DashboardAdministratorController extends AbstractController {
 
 		final Position bestSalaryPosition;
 		final Position worstSalaryPosition;
-
+		
+		final Double avgScoreAuditPosition, minScoreAuditPosition, maxScoreAuditPosition, stddevScoreAuditPosition;
+		
+		final Double avgScoreAuditCompany, minScoreAuditCompany, maxScoreAuditCompany, stddevScoreAuditCompany;
+		
+		final Double avgSalaryPositionsHighestAvgScore;
+		
+		final Collection<Company> bestScoreCompanies;
 		// Stadistics
 
 		// avg
@@ -107,6 +122,29 @@ public class DashboardAdministratorController extends AbstractController {
 
 		bestSalaryPosition = this.positionService.bestSalaryPosition();
 		worstSalaryPosition = this.positionService.worstSalaryPosition();
+		
+		//Audit
+		//min
+		minScoreAuditPosition = this.auditService.minAuditScorePosition();
+		//max
+		maxScoreAuditPosition = this.auditService.maxAuditScorePosition();
+		//avg
+		avgScoreAuditPosition = this.auditService.avgAuditScorePosition();
+		//stdev
+		stddevScoreAuditPosition = this.auditService.stddevAuditScorePosition();
+		//min
+		minScoreAuditCompany = this.auditService.minAuditScoreCompany();
+		//max
+		maxScoreAuditCompany = this.auditService.maxAuditScoreCompany();
+		//avg
+		avgScoreAuditCompany = this.auditService.avgAuditScoreCompany();
+		//stdev
+		stddevScoreAuditCompany = this.auditService.stddevAuditScoreCompany();
+		//
+		avgSalaryPositionsHighestAvgScore = this.auditService.avgSalaryPositionsHighestAvgScore();
+		
+		bestScoreCompanies = this.auditService.bestScoreCompanies();
+		//
 
 		// avg
 		avgItemsPerProvider = this.itemService.avgItemsPerProvider();
@@ -147,6 +185,19 @@ public class DashboardAdministratorController extends AbstractController {
 		result.addObject("bestSalaryPosition", bestSalaryPosition);
 		result.addObject("worstSalaryPosition", worstSalaryPosition);
 
+		result.addObject("minScoreAuditPosition", minScoreAuditPosition);
+		result.addObject("maxScoreAuditPosition", maxScoreAuditPosition);
+		result.addObject("avgScoreAuditPosition", avgScoreAuditPosition);
+		result.addObject("stddevScoreAuditPosition", stddevScoreAuditPosition);
+
+		result.addObject("minScoreAuditCompany", minScoreAuditCompany);
+		result.addObject("maxScoreAuditCompany", maxScoreAuditCompany);
+		result.addObject("avgScoreAuditCompany", avgScoreAuditCompany);
+		result.addObject("stddevScoreAuditCompany", stddevScoreAuditCompany);
+		
+		result.addObject("avgSalaryPositionsHighestAvgScore", avgSalaryPositionsHighestAvgScore);
+		result.addObject("bestScoreCompanies", bestScoreCompanies);		
+
 		result.addObject("avgItemsPerProvider", avgItemsPerProvider);
 		result.addObject("minItemsPerProvider", minItemsPerProvider);
 		result.addObject("maxItemsPerProvider", maxItemsPerProvider);
@@ -156,6 +207,16 @@ public class DashboardAdministratorController extends AbstractController {
 
 		return result;
 
+	}
+	@RequestMapping(value = "/display", method = RequestMethod.GET, params ="computeScore")
+	public ModelAndView computeScore(){
+		final ModelAndView result;
+		
+		this.administratorService.computeScore();
+		
+		result = new ModelAndView("redirect:display.do");
+		
+		return result;
 	}
 
 }

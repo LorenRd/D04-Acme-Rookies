@@ -120,6 +120,18 @@
 		</property>
 	</bean>
 	
+	<bean id="userAccount10" class="security.UserAccount">
+		<property name="username" value="auditor1" />
+		<property name="password" value="175d2e7a63f386554a4dd66e865c3e14" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="AUDITOR" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
 	<bean id="userAccount11" class="security.UserAccount">
 		<property name="username" value="provider1" />
 		<property name="password" value="cdb82d56473901641525fbbd1d5dab56" />
@@ -244,7 +256,7 @@
 		<property name="vatNumber" value="7" />
 		<property name="userAccount" ref="userAccount7" />
 		<property name="creditCard" ref="creditCard7" />
-
+		<property name="score" value="0.0" />
 		<property name="commercialName" value="commercialName1" />
 	</bean>
 
@@ -258,7 +270,7 @@
 		<property name="vatNumber" value="8" />
 		<property name="userAccount" ref="userAccount8" />
 		<property name="creditCard" ref="creditCard8" />
-
+		<property name="score" value="0.0" />
 		<property name="commercialName" value="commercialName2" />
 	</bean>
 
@@ -271,12 +283,25 @@
 		<property name="vatNumber" value="9" />
 		<property name="userAccount" ref="userAccount9" />
 		<property name="creditCard" ref="creditCard9" />
-
+		<property name="score" value="0.0" />
 		<property name="commercialName" value="commercialName3" />
 	</bean>
 	
-	<!-- Providers -->
+	<!-- Auditor -->
 
+
+	<bean class="domain.Auditor" id="auditor1">
+		<property name="name" value="Antonia" />
+		<property name="surname" value="del Sol" />
+		<property name="photo" value="http://www.pinturillo.com" />
+		<property name="email" value="antonia@gmail.com" />
+		<property name="phone" value="+33923681276" />
+		<property name="vatNumber" value="3" />
+		<property name="userAccount" ref="userAccount10" />
+		<property name="creditCard" ref="creditCard10" />
+	</bean>	
+	
+	<!-- Providers -->
 	<bean class="domain.Provider" id="provider1">
 		<property name="name" value="Julia" />
 		<property name="surname" value="Galán Ortiz" />
@@ -530,7 +555,27 @@
 		<property name="position" ref="position2" />
 		<property name="problem" ref="problem3" />
 	</bean>
+	
+	<!-- Audit -->
 
+	<bean class="domain.Audit" id="audit1">
+		<property name="auditor" ref="auditor1" />
+		<property name="moment" value="2019/04/30 13:00" />
+		<property name="position" ref="position2" />
+		<property name="text" value="Example text"/>
+		<property name="isDraft" value="false"/>
+		<property name="score" value="7.5"/>	
+	</bean>
+	
+	<bean class="domain.Audit" id="audit2">
+		<property name="auditor" ref="auditor1" />
+		<property name="moment" value="2019/04/29 13:00" />
+		<property name="position" ref="position3" />
+		<property name="text" value="Example text 2"/>
+		<property name="isDraft" value="true"/>
+		<property name="score" value="6.5"/>	
+	</bean>
+	
 	<!-- Credit Card -->
 
 	<bean class="domain.CreditCard" id="creditCard1">
@@ -641,6 +686,14 @@
 		<property name="CVV" value="538" />
 	</bean>
 
+	<bean class="domain.CreditCard" id="creditCard10">
+		<property name="holderName" value="Pérez Sánchez" />
+		<property name="brandName" value="Mastercard" />
+		<property name="number" value="5411654645989597" />
+		<property name="expirationMonth" value="11" />
+		<property name="expirationYear" value="20" />
+		<property name="CVV" value="442" />
+	</bean>
 	<!-- Customisation -->
 
 	<bean id="customisation" class="domain.Customisation">
@@ -651,6 +704,8 @@ rookies’ favourite job marketplace!" />
 		<property name="welcomeMessageEs" value="¡Bienvenidos a Acme Rookies! ¡Somos el mercado de trabajo favorito de los profesionales de
 las TICs!" />
 		<property name="countryCode" value="+34" />
+		<property name="rebrandingAnnouncement" value="false" />
+		
 	</bean>
 
 	<!-- Messages -->

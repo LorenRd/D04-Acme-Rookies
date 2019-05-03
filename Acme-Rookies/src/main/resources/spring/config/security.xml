@@ -45,11 +45,19 @@
 		<security:intercept-url pattern="/terms/englishTerms.do" access="permitAll"/>
 
 		<security:intercept-url pattern="/dashboard/administrator/display.do" access="hasRole('ADMIN')"/>
+		<security:intercept-url pattern="/customisation/administrator/display.do" access="hasRole('ADMIN')"/> 
+		<security:intercept-url pattern="/customisation/administrator/edit.do" access="hasRole('ADMIN')"/> 
 		
 		<security:intercept-url pattern="/administrator/administrator/register.do" access="hasRole('ADMIN')"/> 
 		<security:intercept-url pattern="/administrator/edit.do" access="hasRole('ADMIN')"/>
 		<security:intercept-url pattern="/administrator/viewProfile.do" access="hasRole('ADMIN')"/>
 		<security:intercept-url pattern="/administrator/delete.do" access="hasRole('ADMIN')"/>
+		<security:intercept-url pattern="/auditor/administrator/register.do" access="hasRole('ADMIN')"/> 
+		
+		<security:intercept-url pattern="/auditor/edit.do" access="hasRole('AUDITOR')"/>
+		<security:intercept-url pattern="/auditor/viewProfile.do" access="hasRole('AUDITOR')"/>
+		<security:intercept-url pattern="/auditor/delete.do" access="hasRole('AUDITOR')"/>
+		<security:intercept-url pattern="/auditor/register.do" access="hasRole('ADMIN')"/>
 		
 		<security:intercept-url pattern="/company/display.do" access="permitAll"/>
 		<security:intercept-url pattern="/company/list.do" access="permitAll"/>
@@ -95,6 +103,13 @@
 		<security:intercept-url pattern="/problem/company/delete.do" access="hasRole('COMPANY')"/>
 		<security:intercept-url pattern="/problem/company/display.do" access="hasRole('COMPANY')"/>		
 
+		<security:intercept-url pattern="/audit/display.do" access="permitAll"/>
+		<security:intercept-url pattern="/audit/auditor/list.do" access="hasRole('AUDITOR')"/>
+		<security:intercept-url pattern="/audit/auditor/create.do" access="hasRole('AUDITOR')"/>
+		<security:intercept-url pattern="/audit/auditor/edit.do" access="hasRole('AUDITOR')"/>
+		<security:intercept-url pattern="/audit/auditor/delete.do" access="hasRole('AUDITOR')"/>
+		<security:intercept-url pattern="/audit/auditor/display.do" access="hasRole('AUDITOR')"/>		
+
 		<security:intercept-url pattern="/item/display.do" access="permitAll"/>
 		<security:intercept-url pattern="/item/list.do" access="permitAll"/>
 		<security:intercept-url pattern="/item/listProviderId.do" access="permitAll"/>		
@@ -107,6 +122,8 @@
 		
 		<security:intercept-url pattern="/message/actor/list.do" access="isAuthenticated()" />
 		<security:intercept-url pattern="/message/actor/exportData.do" access="isAuthenticated()" />
+		<security:intercept-url pattern="/message/actor/warning.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/message/actor/rebrand.do" access="hasRole('ADMIN')" />
 		
 		<security:intercept-url pattern="/message/administrator/warning.do" access="hasRole('ADMIN')" />
 	

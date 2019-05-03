@@ -68,12 +68,12 @@ public class ProblemCompanyController {
 		problem = this.problemService.findOne(problemId);
 		Assert.notNull(problem);
 
-		// Crea y añade objetos a la vista
+		// Crea y aï¿½ade objetos a la vista
 		result = new ModelAndView("problem/display");
 		result.addObject("requestURI", "problem/display.do");
 		result.addObject("problem", problem);
 
-		// Envía la vista
+		// Envï¿½a la vista
 		return result;
 	}
 

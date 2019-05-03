@@ -26,14 +26,6 @@
 			<td><spring:message code="company.surname" />
 			<td data-label="surname"><jstl:out value="${company.surname}" /></td>
 		</tr>
-		
-		<!-- 
-		<spring:message code="company.surname" /> 
-		<jstl:forEach items="${company.surname}" var="surname"><img src='<jstl:out value="${surname}"></jstl:out>'>
-		<br />
-		</jstl:forEach>
-		-->
-		
 		<tr>
 			<td><spring:message code="company.email" />
 			<td data-label="email"><jstl:out value="${company.email}" /></td>
@@ -49,6 +41,17 @@
 		<tr>
 			<td><spring:message code="company.vatNumber" />
 			<td data-label="vatNumber"><jstl:out value="${company.vatNumber}" /></td>
+		</tr>
+		<tr>
+			<td><spring:message code="company.score" />
+			<td data-label="score">
+			<jstl:if test="${hasAudits == true}">
+				<jstl:out value="${company.score}" />
+			</jstl:if>
+			<jstl:if test="${hasAudits == false}">
+					<spring:message code="company.score.nil" />
+			</jstl:if>
+			</td>
 		</tr>
 	</tbody>
 </table>

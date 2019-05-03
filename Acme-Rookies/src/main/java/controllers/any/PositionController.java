@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.AuditService;
 import services.PositionService;
 import controllers.AbstractController;
+import domain.Audit;
 import domain.Position;
 
 @Controller
@@ -23,6 +25,9 @@ public class PositionController extends AbstractController {
 
 	@Autowired
 	private PositionService	positionService;
+	
+	@Autowired
+	private AuditService	auditService;
 
 
 	// List
@@ -71,15 +76,19 @@ public class PositionController extends AbstractController {
 		// Inicializa resultado
 		ModelAndView result;
 		Position position;
-
+		Collection<Audit> audits;
+		
+		
 		// Busca en el repositorio
 		position = this.positionService.findOne(positionId);
 		Assert.notNull(position);
+		audits = this.auditService.findAllByPosition(positionId);
 
 		// Crea y añade objetos a la vista
 		result = new ModelAndView("position/display");
 		result.addObject("requestURI", "position/display.do");
 		result.addObject("position", position);
+		result.addObject("audits", audits);
 
 		// Envía la vista
 		return result;

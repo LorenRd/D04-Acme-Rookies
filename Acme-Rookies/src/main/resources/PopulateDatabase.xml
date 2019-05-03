@@ -220,7 +220,7 @@
 		<property name="vatNumber" value="7" />
 		<property name="userAccount" ref="userAccount7" />
 		<property name="creditCard" ref="creditCard7" />
-		<property name="score" value="0.5" />
+		<property name="score" value="0.0" />
 		<property name="commercialName" value="commercialName1" />
 	</bean>
 
@@ -234,7 +234,7 @@
 		<property name="vatNumber" value="8" />
 		<property name="userAccount" ref="userAccount8" />
 		<property name="creditCard" ref="creditCard8" />
-		<property name="score" value="0.5" />
+		<property name="score" value="0.0" />
 		<property name="commercialName" value="commercialName2" />
 	</bean>
 
@@ -247,7 +247,7 @@
 		<property name="vatNumber" value="9" />
 		<property name="userAccount" ref="userAccount9" />
 		<property name="creditCard" ref="creditCard9" />
-		<property name="score" value="0.5" />
+		<property name="score" value="0.0" />
 		<property name="commercialName" value="commercialName3" />
 	</bean>
 	

@@ -67,6 +67,31 @@
 	        </jstl:if>
 		</jstl:forEach></ul>
 
+		<!-- Audits -->
+<h3> <spring:message code="position.audits" /> </h3>
+<jstl:choose>
+<jstl:when test="${not empty audits}">
+<display:table pagesize="5" class="displaytag" name="audits" requestURI="position/display.do" id="audits">
+		
+		<!-- Display -->
+		<display:column>
+			<a href="audit/display.do?auditId=${audits.id}"><spring:message code="audit.display"/></a>
+		</display:column>
+		
+		<spring:message code="audit.text" var="text" />
+		<display:column property="text" title="${text}" sortable="text"/>
+	
+		<spring:message code="audit.score" var="score" />
+		<display:column property="score" title="${score}" sortable="true"/>
+			
+</display:table>
+</jstl:when>
+<jstl:otherwise>
+<spring:message code="position.audits.empty" /> 
+</jstl:otherwise>
+</jstl:choose>
+
+
 <security:authorize access="hasRole('COMPANY')">
 <jstl:if test="${position.company.userAccount.username == pageContext.request.userPrincipal.name}">
 <br/>

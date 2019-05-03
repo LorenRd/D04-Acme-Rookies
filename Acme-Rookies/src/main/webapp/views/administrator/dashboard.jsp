@@ -103,7 +103,34 @@
 	<h3><spring:message code="administrator.worstSalaryPosition" /></h3>
 	<jstl:out value="${worstSalaryPosition.title}"></jstl:out>
 	
-	<h3><spring:message code="administrator.controlPalnel" /></h3>
+	<!-- Audits -->
 	
+	<h3><spring:message code="administrator.statistics" /></h3>
 	
+	<table class="displayStyle">
+		<tr>
+			<th colspan="5"><spring:message code="administrator.statistics" /></th>
+		</tr>
+		
+		<tr>
+			<th><spring:message code="administrator.metrics" /></th>
+			<th><spring:message code="administrator.average" /></th>
+			<th><spring:message code="administrator.minimum" /></th>
+			<th><spring:message code="administrator.maximum" /></th>
+			<th><spring:message code="administrator.std" /></th>
+		</tr>
+		
+		<tr>
+			<td><spring:message code="administrator.salariesOffered" /></td>
+			<td><jstl:out value="${avgSalariesOffered }" /></td>
+			<td><jstl:out value="${minSalariesOffered }" /></td>
+			<td><jstl:out value="${maxSalariesOffered }" /></td>
+			<td><jstl:out value="${stddevSalariesOffered }" /></td>
+		</tr>
+	</table>
+	
+	<!-- Compute -->
+	<h3><spring:message code="administrator.controlPanel" /></h3>
+	<input type="button" name="computeScore" value="<spring:message code="administrator.computeScore" />" onclick="redirect: location.href = 'dashboard/administrator/display.do?computeScore';" />		
+
 </security:authorize>

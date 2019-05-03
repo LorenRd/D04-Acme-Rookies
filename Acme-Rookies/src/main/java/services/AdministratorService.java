@@ -20,6 +20,8 @@ import security.LoginService;
 import security.UserAccount;
 import security.UserAccountRepository;
 import domain.Administrator;
+import domain.Audit;
+import domain.Company;
 import domain.CreditCard;
 import domain.Message;
 import forms.AdministratorForm;
@@ -49,6 +51,12 @@ public class AdministratorService {
 	@Autowired
 	private CreditCardService creditCardService;
 
+	@Autowired
+	private AuditService auditService;
+	
+	@Autowired
+	private CompanyService companyService;
+	
 	@Autowired
 	private Validator validator;
 
@@ -275,6 +283,24 @@ public class AdministratorService {
 		return result;
 	}
 
+	public void computeScore(){
+		Collection<Company> companies;
+		
+		companies = this.companyService.findAll();
+		for (Company c : companies) {
+			Collection<Audit> audits;
+			audits = this.auditService.findAllByCompany(c.getId());
+			double score = 0.0;
+			for (Audit a : audits) {
+				score += a.getScore();
+			}
+			if(audits.size()==0){
+				c.setScore(0.0);
+			}else{
+				c.setScore(score/(audits.size()*10.0));
+			}
+		}		
+	}
 	public void flush() {
 		this.administratorRepository.flush();
 	}

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.AdministratorService;
 import services.ApplicationService;
 import services.CompanyService;
 import services.RookieService;
@@ -36,6 +37,9 @@ public class DashboardAdministratorController extends AbstractController {
 	@Autowired
 	private ApplicationService applicationService;
 
+	@Autowired
+	private AdministratorService administratorService;
+
 	// Display
 
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
@@ -51,6 +55,8 @@ public class DashboardAdministratorController extends AbstractController {
 
 		final Position bestSalaryPosition;
 		final Position worstSalaryPosition;
+		
+		final Double avgScoreAudit, minScoreAudit, maxScoreAudit, stddevScoreAudit;
 
 		// Stadistics
 
@@ -103,7 +109,18 @@ public class DashboardAdministratorController extends AbstractController {
 
 		bestSalaryPosition = this.positionService.bestSalaryPosition();
 		worstSalaryPosition = this.positionService.worstSalaryPosition();
-
+		
+		//Audit
+		//min
+		minScoreAudit
+		//max
+		maxScoreAudit
+		//avg
+		avgScoreAudit
+		//stdev
+		stddevScoreAudit
+		
+		//
 		result = new ModelAndView("administrator/dashboard");
 		result.addObject("avgPositionsPerCompany", avgPositionsPerCompany);
 		result.addObject("minPositionsPerCompany", minPositionsPerCompany);
@@ -132,6 +149,16 @@ public class DashboardAdministratorController extends AbstractController {
 
 		return result;
 
+	}
+	@RequestMapping(value = "/display", method = RequestMethod.GET, params ="computeScore")
+	public ModelAndView computeScore(){
+		final ModelAndView result;
+		
+		this.administratorService.computeScore();
+		
+		result = new ModelAndView("redirect:display.do");
+		
+		return result;
 	}
 
 }

@@ -75,6 +75,21 @@ public class AuditService {
 		return result;
 	}
 	
+	
+	public Collection<Audit> findAllByCompany (final int companyId){
+		Collection<Audit> result;
+		result = this.auditRepository.findAllByCompanyId(companyId);
+		
+		return result;
+	}
+	
+	public Collection<Audit> findAllByPosition (final int positionId){
+		Collection<Audit> result;
+		result = this.auditRepository.findAllByPositionId(positionId);
+		
+		return result;
+	}
+	
 	public Collection<Audit> findAll (){
 		Collection<Audit> result;
 		result = this.auditRepository.findAll();

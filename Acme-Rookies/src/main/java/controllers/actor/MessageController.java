@@ -51,13 +51,13 @@ public class MessageController extends AbstractController {
 			result = new ModelAndView("message/list");
 			result.addObject("messages", messages);
 			result.addObject("requestURI", "message/actor/list.do");
+			result.addObject("rebrandMessage", customisation.getRebrandingAnnouncement());
 
 		} catch (final Throwable oops) {
 			oops.printStackTrace();
 			result = new ModelAndView("message/list");
 			result.addObject("message", "message.retrieve.error");
 			result.addObject("messages", new ArrayList<Message>());
-			result.addObject("rebrandMessage", customisation.getRebrandingAnnouncement());
 		}
 
 		return result;

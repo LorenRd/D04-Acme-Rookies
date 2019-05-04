@@ -736,6 +736,34 @@
 		</property>
 		<property name="company" ref="company1" />
 	</bean>
+	
+	<bean class="domain.Problem" id="problem6">
+		<property name="title" value="title problem 6" />
+		<property name="statement" value="statement problem 6" />
+		<property name="hint" value="this in an optional hint problem 6" />
+		<property name="isDraft" value="true" />
+		<property name="attachments">
+			<list>
+				<value>Attachment 1</value>
+				<value>Attachment 2</value>
+			</list>
+		</property>
+		<property name="company" ref="company3" />
+	</bean>
+	
+	<bean class="domain.Problem" id="problem7">
+		<property name="title" value="title problem 7" />
+		<property name="statement" value="statement problem 7" />
+		<property name="hint" value="this in an optional hint problem 7" />
+		<property name="isDraft" value="true" />
+		<property name="attachments">
+			<list>
+				<value>Attachment 1</value>
+				<value>Attachment 2</value>
+			</list>
+		</property>
+		<property name="company" ref="company2" />
+	</bean>
 
 	<bean class="domain.Problem" id="problem6">
 		<property name="title" value="title problem 6" />
@@ -826,6 +854,20 @@
 		<property name="position" ref="position2" />
 		<property name="problem" ref="problem3" />
 	</bean>
+
+	<!-- Answers -->
+	
+	<bean class="domain.Answer" id ="answer1">
+		<property name="answerText" value="answer1"/>
+		<property name="moment" value="2018/03/02 14:00"/>
+		<property name ="codeLink" value="https://drive.google.com/drive/folders/12wxFoI0CyRyaWlp44IUK-r2vj0z9p7tK" />
+	</bean>
+	<bean class="domain.Answer" id ="answer2">
+	
+		<property name="moment" value="2018/06/16 14:00"/>
+		<property name="answerText" value="answer2"/>
+	</bean>
+		<property name ="codeLink" value="https://drive.google.com/drive/folders/12wxFoI0CyRyaWlp44IUK-r2vj0z9p7tK" />
 
 	<!-- Audit -->
 

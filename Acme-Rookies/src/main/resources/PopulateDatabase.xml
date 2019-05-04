@@ -609,7 +609,7 @@
 			</list>
 		</property>
 	</bean>
-	
+
 	<bean class="domain.Position" id="position5">
 		<property name="title" value="title position 5" />
 		<property name="description" value="description position 5" />
@@ -639,7 +639,7 @@
 			</list>
 		</property>
 	</bean>
-	
+
 	<bean class="domain.Position" id="position6">
 		<property name="title" value="title position 6" />
 		<property name="description" value="description position 6" />
@@ -739,7 +739,7 @@
 		</property>
 		<property name="company" ref="company1" />
 	</bean>
-	
+
 	<bean class="domain.Problem" id="problem6">
 		<property name="title" value="title problem 6" />
 		<property name="statement" value="statement problem 6" />
@@ -753,7 +753,7 @@
 		</property>
 		<property name="company" ref="company3" />
 	</bean>
-	
+
 	<bean class="domain.Problem" id="problem7">
 		<property name="title" value="title problem 7" />
 		<property name="statement" value="statement problem 7" />
@@ -766,20 +766,6 @@
 			</list>
 		</property>
 		<property name="company" ref="company2" />
-	</bean>
-
-	<bean class="domain.Problem" id="problem6">
-		<property name="title" value="title problem 6" />
-		<property name="statement" value="statement problem 6" />
-		<property name="hint" value="this in an optional hint problem 6" />
-		<property name="isDraft" value="true" />
-		<property name="attachments">
-			<list>
-				<value>Attachment 5</value>
-				<value>Attachment 6</value>
-			</list>
-		</property>
-		<property name="company" ref="company1" />
 	</bean>
 
 	<!-- Application -->

@@ -1,3 +1,4 @@
+
 package services;
 
 import javax.transaction.Transactional;
@@ -22,9 +23,10 @@ public class DashboardServiceTest extends AbstractTest {
 
 	@Autowired
 	private PositionService	positionService;
+
+
 	/*
-	 *  Percentage of service tested: 14,3%
-	 * 
+	 * Percentage of service tested: 14,3%
 	 */
 
 	// --------------------------------------------------
@@ -84,30 +86,30 @@ public class DashboardServiceTest extends AbstractTest {
 	public void valueTest() {
 		final Object valueTest[][] = {
 			{
-				"admin", "avg", 1.33333, null
+				"admin", "avg", 1.0, null
 			}, {
 				"admin", "min", 0.0, null
 			}, {
-				"admin", "max", 3.0, null
+				"admin", "max", 4.0, null
 			}, {
-				"admin", "stddev", 1.24722, null
+				"admin", "stddev", 1.41421, null
 			}, {
-				"rookie1", "avg", 1.33333, IllegalArgumentException.class
+				"rookie1", "avg", 1.0, IllegalArgumentException.class
 			}, {
 				"rookie1", "min", 0.0, IllegalArgumentException.class
 			}, {
-				"rookie1", "max", 3.0, IllegalArgumentException.class
+				"rookie1", "max", 4.0, IllegalArgumentException.class
 			}, {
-				"rookie1", "stddev", 1.24722, IllegalArgumentException.class
+				"rookie1", "stddev", 1.41421, IllegalArgumentException.class
 			}, {
-				"company1", "avg", 1.33333, IllegalArgumentException.class
+				"company1", "avg", 1.0, IllegalArgumentException.class
 			}, {
 				"company1", "min", 0.0, IllegalArgumentException.class
 			}, {
-				"company1", "max", 3.0, IllegalArgumentException.class
+				"company1", "max", 4.0, IllegalArgumentException.class
 			}, {
-				"company1", "stddev", 1.24722, IllegalArgumentException.class
-		}
+				"company1", "stddev", 1.41421, IllegalArgumentException.class
+			}
 		};
 		for (int i = 0; i < valueTest.length; i++)
 			this.ValueTemplate((String) valueTest[i][0], (String) valueTest[i][1], (Double) valueTest[i][2], (Class<?>) valueTest[i][3]);

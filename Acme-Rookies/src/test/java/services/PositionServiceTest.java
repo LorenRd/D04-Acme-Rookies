@@ -128,12 +128,6 @@ public class PositionServiceTest extends AbstractTest {
 				null, "position1", IllegalArgumentException.class
 			}, {
 				/*
-				 * Test positivo:
-				 * La company al que le pertenece el  lo elimina
-				 */
-				"company1", "position1", null
-			}, {
-				/*
 				 * Test negativo:
 				 * Una company a la que no pertenece lo intenta eliminar
 				 */

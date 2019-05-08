@@ -28,7 +28,7 @@ public class ProviderServiceTest extends AbstractTest {
 
 
 	/*
-	 * Percentage of service tested: ??,?%
+	 * Percentage of service tested: 14,3%
 	 */
 	// --------------------------------------------------
 

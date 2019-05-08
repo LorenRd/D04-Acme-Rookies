@@ -118,7 +118,7 @@ public class PositionService {
 	public void delete(final Position position) {
 		Company principal;
 		Collection<Application> applications;
-
+		Collection<Audit> audits;
 		Assert.notNull(position);
 
 		principal = this.companyService.findByPrincipal();
@@ -130,6 +130,15 @@ public class PositionService {
 
 		for (final Application a : applications)
 			this.applicationService.delete(a);
+		
+		audits = this.auditService.findAllByPosition(position.getId());
+		for(final Audit a : audits){
+			this.auditService.delete(a);
+		}
+		
+		position.getSkillsRequired().clear();
+		position.getTechnologiesRequired().clear();
+		position.getProblems().clear();
 
 		this.positionRepository.delete(position);
 	}

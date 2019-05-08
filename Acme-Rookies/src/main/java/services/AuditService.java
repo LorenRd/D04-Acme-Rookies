@@ -39,7 +39,12 @@ public class AuditService {
 	
 	// Simple CRUD Methods
 	public void delete(final Audit audit) {
+		Auditor principal;
 
+		principal = this.auditorService.findByPrincipal();
+		Assert.notNull(principal);
+		
+		Assert.isTrue(principal.getId() == audit.getAuditor().getId());
 		Assert.notNull(audit);
 		Assert.isTrue(audit.getId() != 0);
 		Assert.isTrue(audit.getIsDraft());
@@ -291,6 +296,15 @@ public class AuditService {
 		result = this.auditRepository.avgSalaryPositionsHighestAvgScore();
 
 		return result;
+	}
+
+	public void flush() {
+		this.auditRepository.flush();
+		
+	}
+
+	public boolean exist(int id) {
+		return this.auditRepository.exists(id);
 	}
 	
 }

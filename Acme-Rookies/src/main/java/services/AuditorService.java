@@ -19,6 +19,7 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import security.UserAccountRepository;
+import domain.Administrator;
 import domain.Audit;
 import domain.Auditor;
 import domain.CreditCard;
@@ -44,6 +45,9 @@ public class AuditorService {
 	private ActorService actorService;
 
 	@Autowired
+	private AdministratorService administratorService;
+	
+	@Autowired
 	private CreditCardService creditCardService;
 
 	@Autowired
@@ -66,6 +70,10 @@ public class AuditorService {
 		UserAccount userAccount;
 		Authority authority;
 		CreditCard creditCard;
+		Administrator principal;
+		
+		principal = this.administratorService.findByPrincipal();
+		Assert.isTrue(this.actorService.getAuthorityAsString(principal).equals("ADMIN"));
 
 		result = new Auditor();
 		userAccount = new UserAccount();
@@ -279,6 +287,10 @@ public class AuditorService {
 		this.validator.validate(result, binding);
 		this.auditorRepository.flush();
 		return result;
+	}
+
+	public void flush() {
+		this.auditorRepository.flush();
 	}
 
 

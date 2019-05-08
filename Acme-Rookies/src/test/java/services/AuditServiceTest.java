@@ -12,37 +12,37 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
-import domain.Item;
+import domain.Audit;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
 	"classpath:spring/junit.xml",
 })
 @Transactional
-public class ItemServiceTest extends AbstractTest {
+public class AuditServiceTest extends AbstractTest {
 
 	// Service under test
 
 	@Autowired
-	private ItemService	itemService;
+	private AuditService auditService;
 
 
 	/*
-	 * Percentage of service tested: 34,1 %
+	 * Percentage of service tested: 25%
 	 */
 
 	// --------------------------------------------------
 
 	/*
-	 * 10. An actor who is authenticated as a provider must be able to:
-	 * 1. Manage their items, which includes listing, showing, creating, updating, and deleting them.
+	 * 3. An actor who is authenticated as an auditor must be able to:
+	 * 2. Manage their audits, which includes listing, showing, creating, updating, and deleting them.
 	 */
 
 	// Tests
 
 	/*
-	 * En este test se va a probar que sólo un actor logueado como provider
-	 * puede crear un producto
+	 * En este test se va a probar que sólo un actor logueado como auditor
+	 * puede crear una auditoria
 	 */
 
 	@Test
@@ -57,9 +57,9 @@ public class ItemServiceTest extends AbstractTest {
 			}, {
 				/*
 				 * Test positivo:
-				 * Probamos como proveedor
+				 * Probamos como auditor
 				 */
-				"provider1", null
+				"auditor1", null
 			}
 		};
 		for (int i = 0; i < createTest.length; i++)
@@ -67,8 +67,8 @@ public class ItemServiceTest extends AbstractTest {
 	}
 
 	/*
-	 * En este test se va a probar que sólo un actor logueado como proveedor
-	 * puede actualizar un producto
+	 * En este test se va a probar que sólo un actor logueado como auditor
+	 * puede actualizar una auditoria
 	 */
 
 	@Test
@@ -77,15 +77,15 @@ public class ItemServiceTest extends AbstractTest {
 			{
 				/*
 				 * Test negativo:
-				 * Dejar el campo de descripción vacío
+				 * Dejar el campo de text vacío
 				 */
-				"provider1", "item1", null, ConstraintViolationException.class
+				"auditor1", "audit2", null, ConstraintViolationException.class
 			}, {
 				/*
 				 * Test positivo:
 				 * Introducir otra descripción
 				 */
-				"provider1", "item1", "other description", null
+				"auditor1", "audit2", "other description", null
 			}
 		};
 		for (int i = 0; i < updateTest.length; i++)
@@ -103,15 +103,15 @@ public class ItemServiceTest extends AbstractTest {
 			{
 				/*
 				 * Test negativo:
-				 * Alguien sin autentificar intenta eliminar un producto
+				 * Alguien sin autentificar intenta eliminar una auditoria
 				 */
-				null, "item1", IllegalArgumentException.class
+				null, "audit2", IllegalArgumentException.class
 			}, {
 				/*
 				 * Test positivo:
-				 * El proveedor al que le pertenece lo elimina
+				 * El auditor al que le pertenece lo elimina
 				 */
-				"provider1", "item1", null
+				"auditor1", "audit2", null
 			}
 		};
 		for (int i = 0; i < deleteTest.length; i++)
@@ -126,7 +126,7 @@ public class ItemServiceTest extends AbstractTest {
 		caught = null;
 		try {
 			this.authenticate(actor);
-			this.itemService.create();
+			this.auditService.create();
 			this.unauthenticate();
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
@@ -137,15 +137,15 @@ public class ItemServiceTest extends AbstractTest {
 
 	private void UpdateTemplate(final String actor, final String thing, final String description, final Class<?> class1) {
 		Class<?> caught;
-		Item item;
+		Audit audit;
 		caught = null;
 		try {
 			this.authenticate(actor);
-			item = this.itemService.findOne(super.getEntityId(thing));
-			item.setDescription(description);
-			this.itemService.save(item);
+			audit = this.auditService.findOne(this.getEntityId(thing));
+			audit.setText(description);
+			this.auditService.save(audit, true);
 			this.unauthenticate();
-			this.itemService.flush();
+			this.auditService.flush();
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
 		}
@@ -155,16 +155,16 @@ public class ItemServiceTest extends AbstractTest {
 
 	private void DeleteTemplate(final String actor, final int thing, final Class<?> class1) {
 		Class<?> caught;
-		Item item;
+		Audit audit;
 
 		caught = null;
 		try {
 			this.authenticate(actor);
-			item = this.itemService.findOne(thing);
-			this.itemService.delete(item);
-			this.itemService.flush();
+			audit = this.auditService.findOne(thing);
+			this.auditService.delete(audit);
+			this.auditService.flush();
 			this.unauthenticate();
-			Assert.isTrue(!this.itemService.exist(item.getId()));
+			Assert.isTrue(!this.auditService.exist(audit.getId()));
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
 		}

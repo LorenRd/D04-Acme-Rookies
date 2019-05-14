@@ -855,42 +855,6 @@
 		<property name="score" value="7.5" />
 	</bean>
 
-	<bean class="domain.Audit" id="audit2">
-		<property name="auditor" ref="auditor1" />
-		<property name="moment" value="2019/04/29 13:00" />
-		<property name="position" ref="position3" />
-		<property name="text" value="Example text 2" />
-		<property name="isDraft" value="true" />
-		<property name="score" value="6.5" />
-	</bean>
-
-	<bean class="domain.Audit" id="audit3">
-		<property name="auditor" ref="auditor1" />
-		<property name="moment" value="2019/04/29 14:00" />
-		<property name="position" ref="position1" />
-		<property name="text" value="Example text 3" />
-		<property name="isDraft" value="true" />
-		<property name="score" value="5.5" />
-	</bean>
-
-	<bean class="domain.Audit" id="audit4">
-		<property name="auditor" ref="auditor1" />
-		<property name="moment" value="2019/04/29 14:30" />
-		<property name="position" ref="position4" />
-		<property name="text" value="Example text 4" />
-		<property name="isDraft" value="true" />
-		<property name="score" value="7.5" />
-	</bean>
-
-	<bean class="domain.Audit" id="audit5">
-		<property name="auditor" ref="auditor1" />
-		<property name="moment" value="2019/04/29 14:40" />
-		<property name="position" ref="position5" />
-		<property name="text" value="Example text 5" />
-		<property name="isDraft" value="true" />
-		<property name="score" value="9.5" />
-	</bean>
-
 	<bean class="domain.Audit" id="audit6">
 		<property name="auditor" ref="auditor1" />
 		<property name="moment" value="2019/04/29 15:00" />

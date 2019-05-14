@@ -112,7 +112,7 @@ public class ItemProviderController extends AbstractController {
 					System.out.println(e.getObjectName() + " error [" + e.getDefaultMessage() + "] " + Arrays.toString(e.getCodes()));
 			} else {
 				item = this.itemService.save(item);
-				result = new ModelAndView("redirect:../display.do?itemId=" + item.getId());
+				result = new ModelAndView("redirect:/welcome/index.do");
 			}
 
 		} catch (final Throwable oops) {
@@ -133,7 +133,7 @@ public class ItemProviderController extends AbstractController {
 					System.out.println(e.getObjectName() + " error [" + e.getDefaultMessage() + "] " + Arrays.toString(e.getCodes()));
 			} else {
 				item = this.itemService.save(item);
-				result = new ModelAndView("redirect:../list.do");
+				result = new ModelAndView("redirect:/welcome/index.do");
 			}
 
 		} catch (final Throwable oops) {
@@ -153,7 +153,7 @@ public class ItemProviderController extends AbstractController {
 
 		try {
 			this.itemService.delete(item);
-			result = new ModelAndView("redirect:../list.do");
+			result = new ModelAndView("redirect:/welcome/index.do");
 		} catch (final Throwable oops) {
 			result = this.createEditModelAndView(item, "item.commit.error");
 		}

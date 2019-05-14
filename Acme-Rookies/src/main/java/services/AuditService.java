@@ -24,30 +24,35 @@ public class AuditService {
 
 	// Managed repository -----------------------------------------------------
 	@Autowired
-	private AuditRepository	 auditRepository;
+	private AuditRepository	auditRepository;
 
 	@Autowired
-	private Validator				validator;
+	private Validator		validator;
 
 	// Supporting services ----------------------------------------------------
 	@Autowired
-	private AuditorService			auditorService;
+	private AuditorService	auditorService;
 
 	@Autowired
-	private ActorService			actorService;
+	private ActorService	actorService;
 
-	
+
 	// Simple CRUD Methods
 	public void delete(final Audit audit) {
 		Auditor principal;
 
 		principal = this.auditorService.findByPrincipal();
 		Assert.notNull(principal);
-		
+
 		Assert.isTrue(principal.getId() == audit.getAuditor().getId());
 		Assert.notNull(audit);
 		Assert.isTrue(audit.getId() != 0);
 		Assert.isTrue(audit.getIsDraft());
+
+		this.auditRepository.delete(audit);
+	}
+
+	public void delete2(final Audit audit) {
 
 		this.auditRepository.delete(audit);
 	}
@@ -77,38 +82,42 @@ public class AuditService {
 		return result;
 	}
 
-
 	// Additional functions
 
-	public Collection<Audit> findAllByAuditor (final int auditorId){
+	public Collection<Audit> findAllByAuditor(final int auditorId) {
 		Collection<Audit> result;
 		result = this.auditRepository.findAllByAuditorId(auditorId);
-		
+
 		return result;
 	}
-	
-	
-	public Collection<Audit> findAllByCompany (final int companyId){
+
+	public Collection<Audit> findAllByCompany(final int companyId) {
 		Collection<Audit> result;
 		result = this.auditRepository.findAllByCompanyId(companyId);
-		
+
 		return result;
 	}
-	
-	public Collection<Audit> findAllByPosition (final int positionId){
+
+	public Collection<Audit> findAllByPosition(final int positionId) {
 		Collection<Audit> result;
 		result = this.auditRepository.findAllByPositionId(positionId);
-		
+
 		return result;
 	}
-	
-	public Collection<Audit> findAll (){
+
+	public Collection<Audit> findByPosition(final int positionId) {
+		Collection<Audit> result;
+		result = this.auditRepository.findByPositionId(positionId);
+
+		return result;
+	}
+
+	public Collection<Audit> findAll() {
 		Collection<Audit> result;
 		result = this.auditRepository.findAll();
-		
+
 		return result;
 	}
- 	
 
 	public Audit reconstruct(final Audit audit, final BindingResult binding) {
 		Audit result;
@@ -118,19 +127,18 @@ public class AuditService {
 			result.setIsDraft(true);
 			result.setMoment(new Date(System.currentTimeMillis() - 1));
 			result.setPosition(audit.getPosition());
-			
-			if (audit.getPosition()== null)
+
+			if (audit.getPosition() == null)
 				binding.rejectValue("position", "audit.validation.position", "Can't be null");
 
-		} else{
+		} else {
 			result = this.auditRepository.findOne(audit.getId());
-	
+
 			result.setText(audit.getText());
 			result.setScore(audit.getScore());
 
-		
 		}
-		
+
 		this.validator.validate(result, binding);
 
 		return result;
@@ -152,33 +160,30 @@ public class AuditService {
 		return result;
 	}
 
-
-	public void deleteInBatch(Collection<Audit> audits){
+	public void deleteInBatch(final Collection<Audit> audits) {
 		this.auditRepository.deleteInBatch(audits);
 	}
-	
+
 	//Dashboard
 	public Double avgAuditScorePosition() {
 		final Authority authority = new Authority();
 		authority.setAuthority(Authority.ADMIN);
 		final Actor actor = this.actorService.findByPrincipal();
 		Assert.notNull(actor);
-		Assert.isTrue(actor.getUserAccount().getAuthorities()
-				.contains(authority));
+		Assert.isTrue(actor.getUserAccount().getAuthorities().contains(authority));
 		Double result;
 
 		result = this.auditRepository.avgAuditScorePosition();
 
 		return result;
 	}
-	
+
 	public Double minAuditScorePosition() {
 		final Authority authority = new Authority();
 		authority.setAuthority(Authority.ADMIN);
 		final Actor actor = this.actorService.findByPrincipal();
 		Assert.notNull(actor);
-		Assert.isTrue(actor.getUserAccount().getAuthorities()
-				.contains(authority));
+		Assert.isTrue(actor.getUserAccount().getAuthorities().contains(authority));
 		Double result;
 
 		result = this.auditRepository.minAuditScorePosition();
@@ -191,106 +196,98 @@ public class AuditService {
 		authority.setAuthority(Authority.ADMIN);
 		final Actor actor = this.actorService.findByPrincipal();
 		Assert.notNull(actor);
-		Assert.isTrue(actor.getUserAccount().getAuthorities()
-				.contains(authority));
+		Assert.isTrue(actor.getUserAccount().getAuthorities().contains(authority));
 		Double result;
 
 		result = this.auditRepository.maxAuditScorePosition();
 
 		return result;
 	}
-	
+
 	public Double stddevAuditScorePosition() {
 		final Authority authority = new Authority();
 		authority.setAuthority(Authority.ADMIN);
 		final Actor actor = this.actorService.findByPrincipal();
 		Assert.notNull(actor);
-		Assert.isTrue(actor.getUserAccount().getAuthorities()
-				.contains(authority));
+		Assert.isTrue(actor.getUserAccount().getAuthorities().contains(authority));
 		Double result;
 
 		result = this.auditRepository.stddevAuditScorePosition();
 
 		return result;
 	}
-	
+
 	public Double avgAuditScoreCompany() {
 		final Authority authority = new Authority();
 		authority.setAuthority(Authority.ADMIN);
 		final Actor actor = this.actorService.findByPrincipal();
 		Assert.notNull(actor);
-		Assert.isTrue(actor.getUserAccount().getAuthorities()
-				.contains(authority));
+		Assert.isTrue(actor.getUserAccount().getAuthorities().contains(authority));
 		Double result;
 
 		result = this.auditRepository.avgAuditScoreCompany();
 
 		return result;
 	}
-	
+
 	public Double minAuditScoreCompany() {
 		final Authority authority = new Authority();
 		authority.setAuthority(Authority.ADMIN);
 		final Actor actor = this.actorService.findByPrincipal();
 		Assert.notNull(actor);
-		Assert.isTrue(actor.getUserAccount().getAuthorities()
-				.contains(authority));
+		Assert.isTrue(actor.getUserAccount().getAuthorities().contains(authority));
 		Double result;
 
 		result = this.auditRepository.minAuditScoreCompany();
 
 		return result;
 	}
-	
+
 	public Double maxAuditScoreCompany() {
 		final Authority authority = new Authority();
 		authority.setAuthority(Authority.ADMIN);
 		final Actor actor = this.actorService.findByPrincipal();
 		Assert.notNull(actor);
-		Assert.isTrue(actor.getUserAccount().getAuthorities()
-				.contains(authority));
+		Assert.isTrue(actor.getUserAccount().getAuthorities().contains(authority));
 		Double result;
 
 		result = this.auditRepository.maxAuditScoreCompany();
 
 		return result;
 	}
-	
+
 	public Double stddevAuditScoreCompany() {
 		final Authority authority = new Authority();
 		authority.setAuthority(Authority.ADMIN);
 		final Actor actor = this.actorService.findByPrincipal();
 		Assert.notNull(actor);
-		Assert.isTrue(actor.getUserAccount().getAuthorities()
-				.contains(authority));
+		Assert.isTrue(actor.getUserAccount().getAuthorities().contains(authority));
 		Double result;
 
 		result = this.auditRepository.stddevAuditScoreCompany();
 
 		return result;
 	}
-	
+
 	public Collection<Company> bestScoreCompanies() {
 		final Authority authority = new Authority();
 		authority.setAuthority(Authority.ADMIN);
 		final Actor actor = this.actorService.findByPrincipal();
 		Assert.notNull(actor);
-		Assert.isTrue(actor.getUserAccount().getAuthorities()
-				.contains(authority));
+		Assert.isTrue(actor.getUserAccount().getAuthorities().contains(authority));
 		Collection<Company> result;
 
 		result = this.auditRepository.bestScoreCompanies();
 
 		return result;
 	}
-	
+
 	public Double avgSalaryPositionsHighestAvgScore() {
 		final Authority authority = new Authority();
 		authority.setAuthority(Authority.ADMIN);
 		final Actor actor = this.actorService.findByPrincipal();
 		Assert.notNull(actor);
-		Assert.isTrue(actor.getUserAccount().getAuthorities()
-				.contains(authority));
+		Assert.isTrue(actor.getUserAccount().getAuthorities().contains(authority));
 		Double result;
 
 		result = this.auditRepository.avgSalaryPositionsHighestAvgScore();
@@ -300,11 +297,11 @@ public class AuditService {
 
 	public void flush() {
 		this.auditRepository.flush();
-		
+
 	}
 
-	public boolean exist(int id) {
+	public boolean exist(final int id) {
 		return this.auditRepository.exists(id);
 	}
-	
+
 }

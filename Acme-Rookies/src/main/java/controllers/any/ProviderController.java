@@ -107,7 +107,7 @@ public class ProviderController extends AbstractController {
 					System.out.println(e.getObjectName() + " error [" + e.getDefaultMessage() + "] " + Arrays.toString(e.getCodes()));
 			} else
 				provider = this.providerService.save(provider);
-			result = new ModelAndView("welcome/index");
+			result = new ModelAndView("redirect:/provider/display.do");
 		} catch (final Throwable oops) {
 			result = this.editModelAndView(provider, "provider.commit.error");
 
@@ -130,7 +130,7 @@ public class ProviderController extends AbstractController {
 				result = this.createEditModelAndView(providerForm);
 			} else {
 				provider = this.providerService.save(provider);
-				result = new ModelAndView("welcome/index");
+				result = new ModelAndView("redirect:/provider/display.do?providerId=" + provider.getId());
 			}
 		} catch (final Throwable oops) {
 			result = this.createEditModelAndView(providerForm, "provider.commit.error");
@@ -160,7 +160,7 @@ public class ProviderController extends AbstractController {
 
 			result = new ModelAndView("redirect:/j_spring_security_logout");
 		} catch (final Throwable oops) {
-			result = new ModelAndView("redirect:/company/display.do");
+			result = new ModelAndView("redirect:/provider/display.do");
 		}
 
 		return result;

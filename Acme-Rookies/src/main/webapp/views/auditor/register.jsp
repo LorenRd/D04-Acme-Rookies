@@ -32,7 +32,7 @@
 		<acme:textbox code="auditor.photo" path="photo" placeholder="https://www.jazzguitar.be/images/bio/homer-simpson.jpg"/>
 		<acme:textbox code="auditor.phone" path="phone" placeholder="+34 600 1234"/>
 		<acme:textbox code="auditor.address" path="address" placeholder="123 Main St Anytown, Australia"/>
-		<acme:textbox code="auditor.email" path="email" placeholder="homerjsimpson@"/>
+		<acme:textbox code="auditor.email" path="email" placeholder="homerjsimpson@email.com"/>
 		<acme:textbox code="auditor.vatNumber" path="vatNumber" placeholder="2.0"/>
 		</fieldset>
 		<br/>

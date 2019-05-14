@@ -44,12 +44,10 @@ public class PositionService {
 	private RookieService		rookieService;
 
 	@Autowired
-	private Validator validator;
-	
-	@Autowired
-	private AuditService auditService;
+	private Validator			validator;
 
-	
+	@Autowired
+	private AuditService		auditService;
 
 
 	// Simple CRUD Methods
@@ -130,12 +128,11 @@ public class PositionService {
 
 		for (final Application a : applications)
 			this.applicationService.delete(a);
-		
-		audits = this.auditService.findAllByPosition(position.getId());
-		for(final Audit a : audits){
-			this.auditService.delete(a);
-		}
-		
+
+		audits = this.auditService.findByPosition(position.getId());
+		for (final Audit a : audits)
+			this.auditService.delete2(a);
+
 		position.getSkillsRequired().clear();
 		position.getTechnologiesRequired().clear();
 		position.getProblems().clear();
@@ -158,7 +155,7 @@ public class PositionService {
 		result = this.positionRepository.findAllFinal();
 		return result;
 	}
-	
+
 	public Collection<Position> findAllFinalFuture() {
 		Collection<Position> result;
 
@@ -178,30 +175,26 @@ public class PositionService {
 		result = this.positionRepository.findAllFinal();
 		positions = this.positionRepository.findAllFinal();
 
-		for (Position p : positions) {
-			for (Application a : applications) {
-				if(a.getPosition().getId() == p.getId())
+		for (final Position p : positions)
+			for (final Application a : applications)
+				if (a.getPosition().getId() == p.getId())
 					result.remove(p);
-			}
-		}
 		return result;
 	}
-	
+
 	public Collection<Position> findAllFinalNotAudit() {
 		Collection<Position> positions;
 		Collection<Audit> audits;
 		Collection<Position> result;
-		
+
 		audits = this.auditService.findAll();
 		positions = this.positionRepository.findAllFinal();
 		result = this.positionRepository.findAllFinal();
-		
-		for (Position p : positions) {
-			for (Audit a : audits) {
-				if(a.getPosition().getId() == p.getId())
+
+		for (final Position p : positions)
+			for (final Audit a : audits)
+				if (a.getPosition().getId() == p.getId())
 					result.remove(p);
-			}
-		}
 		return result;
 	}
 
@@ -282,32 +275,27 @@ public class PositionService {
 		return isRepeated;
 	}
 
-	public Position reconstruct(final Position position,
-			final BindingResult binding) {
+	public Position reconstruct(final Position position, final BindingResult binding) {
 		Position original;
 		if (position.getId() == 0) {
 			original = position;
 			original.setCompany(this.companyService.findByPrincipal());
 			original.setTicker(this.generateTicker(original.getCompany()));
 			original.setStatus("DRAFT");
-		} else{
+		} else {
 			original = this.positionRepository.findOne(position.getId());
 			position.setTicker(original.getTicker());
 			position.setCompany(this.companyService.findByPrincipal());
 			position.setStatus("DRAFT");
-
-		
-			if(position.getDeadline().before(Calendar.getInstance().getTime()))
-				binding.rejectValue("deadline", "application.validation.deadline", "Deadline must be future");
-			if (position.getTechnologiesRequired().isEmpty())
-				binding.rejectValue("technologiesRequired", "application.validation.technologiesRequired", "Must not be blank");
-			if (position.getSkillsRequired().isEmpty())
-				binding.rejectValue("skillsRequired", "application.validation.skillsRequired", "Must not be blank");
-
-		
 		}
 
-		
+		if (position.getDeadline().before(Calendar.getInstance().getTime()))
+			binding.rejectValue("deadline", "application.validation.deadline", "Deadline must be future");
+		if (position.getTechnologiesRequired().isEmpty())
+			binding.rejectValue("technologiesRequired", "application.validation.technologiesRequired", "Must not be blank");
+		if (position.getSkillsRequired().isEmpty())
+			binding.rejectValue("skillsRequired", "application.validation.skillsRequired", "Must not be blank");
+
 		this.validator.validate(position, binding);
 
 		return position;
@@ -429,7 +417,7 @@ public class PositionService {
 		Assert.isTrue(actor.getUserAccount().getAuthorities().contains(authority));
 		Position result = null;
 
-		if(this.positionRepository.bestSalaryPosition().size()>0)
+		if (this.positionRepository.bestSalaryPosition().size() > 0)
 			result = this.positionRepository.bestSalaryPosition().iterator().next();
 
 		return result;
@@ -442,8 +430,8 @@ public class PositionService {
 		Assert.notNull(actor);
 		Assert.isTrue(actor.getUserAccount().getAuthorities().contains(authority));
 		Position result = null;
-		
-		if(this.positionRepository.worstSalaryPosition().size()>0)
+
+		if (this.positionRepository.worstSalaryPosition().size() > 0)
 			result = this.positionRepository.worstSalaryPosition().iterator().next();
 
 		return result;

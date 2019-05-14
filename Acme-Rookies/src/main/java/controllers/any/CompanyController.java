@@ -42,7 +42,8 @@ public class CompanyController extends AbstractController {
 	private CustomisationService	customisationService;
 
 	@Autowired
-	private AuditService	auditService;
+	private AuditService			auditService;
+
 
 	// List
 
@@ -74,18 +75,17 @@ public class CompanyController extends AbstractController {
 			company = this.companyService.findOne(companyId);
 
 		Collection<Position> positions;
-		
-		try{
+
+		try {
 			Company principal;
 			principal = this.companyService.findByPrincipal();
 			positions = this.positionService.findByCompany(principal.getId());
-		}catch(final Throwable oops){
+		} catch (final Throwable oops) {
 			positions = this.positionService.findAvailableByCompanyId(company.getId());
 		}
-		
-		if(this.auditService.findAllByCompany(companyId).size()>0){
+
+		if (this.auditService.findAllByCompany(company.getId()).size() > 0)
 			hasAudits = true;
-		}
 
 		result = new ModelAndView("company/display");
 		result.addObject("company", company);
@@ -181,7 +181,7 @@ public class CompanyController extends AbstractController {
 
 		return result;
 	}
-	
+
 	// Ancillary methods ------------------------------------------------------
 
 	private ModelAndView editModelAndView(final Company company) {

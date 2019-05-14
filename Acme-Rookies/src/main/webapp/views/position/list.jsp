@@ -19,7 +19,7 @@
 
 <!-- Listing grid -->
 
-<display:table name="positions" id="row" requestURI="position/list.do"
+<display:table name="positions" id="row" requestURI="${requestURI }"
 	pagesize="5" class="displaytag">
 	
 	<!-- Display -->

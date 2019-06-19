@@ -14,8 +14,8 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -53,7 +53,7 @@ public class claseSinNombre extends DomainEntity {
 		this.publicationMoment = publicationMoment;
 	}
 	
-	@Length(max = 100)
+	@Size(max = 100)
 	@NotBlank
 	public String getBody() {
 		return body;

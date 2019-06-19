@@ -76,6 +76,7 @@
 					<li><a href="position/company/list.do"><spring:message code="master.page.company.positions" /></a></li>
 					<li><a href="problem/company/list.do"><spring:message code="master.page.company.problems" /></a></li>
 					<li><a href="application/company/list.do"><spring:message code="master.page.company.applications" /></a></li>										
+					<li><a href="claseSinNombre/list.do"><spring:message code="master.page.claseSinNombre.list" /></a></li>
 				</ul>
 			</li>
 			<li><a class="fNiv"><spring:message code="master.page.terms" /></a>
@@ -97,6 +98,7 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="audit/auditor/list.do"><spring:message code="master.page.auditor.audits" /></a></li>
+					<li><a href="claseSinNombre/list.do"><spring:message code="master.page.claseSinNombre.list" /></a></li>
 				</ul>
 			</li>
 			<li><a class="fNiv"><spring:message code="master.page.terms" /></a>

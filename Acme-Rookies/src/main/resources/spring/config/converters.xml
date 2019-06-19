@@ -14,6 +14,9 @@
 	<util:list id="converters">
 		<!-- Add your own converters using entries of the following form: <bean 
 			class="converters.Class1ToClass2" /> -->
+			
+		<bean class="converters.claseSinNombreToStringConverter" />
+		<bean class="converters.StringToclaseSinNombreConverter" />
 
 		<bean class="converters.ActorToStringConverter" />
 		<bean class="converters.StringToActorConverter" />

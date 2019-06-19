@@ -103,6 +103,15 @@
 		<security:intercept-url pattern="/problem/company/delete.do" access="hasRole('COMPANY')"/>
 		<security:intercept-url pattern="/problem/company/display.do" access="hasRole('COMPANY')"/>		
 
+<!-- ESTOOOOO -->
+		<security:intercept-url pattern="/claseSinNombre/company/list.do" access="hasRole('COMPANY')"/>
+		<security:intercept-url pattern="/claseSinNombre/company/create.do" access="hasRole('COMPANY')"/>
+		<security:intercept-url pattern="/claseSinNombre/company/edit.do" access="hasRole('COMPANY')"/>
+		<security:intercept-url pattern="/claseSinNombre/company/delete.do" access="hasRole('COMPANY')"/>
+		<security:intercept-url pattern="/claseSinNombre/display.do" access="hasAnyRole('COMPANY','AUDITOR')"/>
+		<security:intercept-url pattern="/claseSinNombre/list.do" access="hasAnyRole('COMPANY','AUDITOR')"/>
+<!-- ESTOOOOO -->
+
 		<security:intercept-url pattern="/audit/display.do" access="permitAll"/>
 		<security:intercept-url pattern="/audit/auditor/list.do" access="hasRole('AUDITOR')"/>
 		<security:intercept-url pattern="/audit/auditor/create.do" access="hasRole('AUDITOR')"/>

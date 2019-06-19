@@ -669,6 +669,22 @@
 			</list>
 		</property>
 	</bean>
+	<!-- ClaseSinNombre -->
+	<bean class="domain.claseSinNombre" id="claseSinNombre1">
+		<property name="ticker" value="190624-ABCD" />
+		<property name="publicationMoment" value="2018/03/02 14:00" />
+		<property name="body" value="Vamos a aprobar el Control Check de DP2" />
+		<property name="picture" value="https://imageog.flaticon.com/icons/png/512/65/65935.png" />
+		<property name="isDraft" value="false" />
+		<property name="audit" ref="audit1" />
+	</bean>
+	
+	<bean class="domain.claseSinNombre" id="claseSinNombre2">
+		<property name="ticker" value="190624-ZZZZ" />
+		<property name="body" value="Esta es draft, sin fecha ni foto" />
+		<property name="isDraft" value="true" />
+		<property name="audit" ref="audit1" />
+	</bean>	
 	<!-- Problems -->
 	<bean class="domain.Problem" id="problem1">
 		<property name="title" value="title problem 1" />

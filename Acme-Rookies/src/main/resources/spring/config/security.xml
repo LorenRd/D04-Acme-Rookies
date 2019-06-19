@@ -126,6 +126,13 @@
 		<security:intercept-url pattern="/message/actor/rebrand.do" access="hasRole('ADMIN')" />
 		
 		<security:intercept-url pattern="/message/administrator/warning.do" access="hasRole('ADMIN')" />
+		
+		<security:intercept-url pattern="/claseSinNombre/display.do" access="permitAll"/>
+		<security:intercept-url pattern="/claseSinNombre/rookie/list.do" access="hasRole('ROOKIE')"/>
+		<security:intercept-url pattern="/claseSinNombre/rookie/create.do" access="hasRole('ROOKIE')"/>
+		<security:intercept-url pattern="/claseSinNombre/rookie/edit.do" access="hasRole('ROOKIE')"/>
+		<security:intercept-url pattern="/claseSinNombre/rookie/delete.do" access="hasRole('ROOKIE')"/>
+		<security:intercept-url pattern="/claseSinNombre/rookie/display.do" access="hasRole('ROOKIE')"/>
 	
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 

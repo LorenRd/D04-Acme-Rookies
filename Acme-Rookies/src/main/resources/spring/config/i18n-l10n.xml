@@ -37,6 +37,7 @@
 		<value>/views/problem/messages</value>
 		<value>/views/provider/messages</value>
 		<value>/views/item/messages</value>
+		<value>/views/claseSinNombre/messages</value>
 
 	</util:list>
 

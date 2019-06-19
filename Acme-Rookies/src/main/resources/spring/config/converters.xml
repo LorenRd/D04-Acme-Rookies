@@ -56,6 +56,9 @@
 		
 		<bean class="converters.ItemToStringConverter" />
 		<bean class="converters.StringToItemConverter" />
+		
+		<bean class="converters.claseSinNombreToStringConverter" />
+		<bean class="converters.StringToclaseSinNombreConverter" />
 	</util:list>
 
 </beans>

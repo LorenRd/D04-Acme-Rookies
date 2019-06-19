@@ -24,13 +24,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Access(AccessType.PROPERTY)
 public class claseSinNombre extends DomainEntity {
 
-	private String 	ticker;
+	private String	ticker;
 	private Date	publicationMoment;
 	private String	body;
-	private String 	picture;
-	private boolean isDraft;
-	
-	
+	private String	picture;
+	private boolean	isDraft;
+
+
 	@NotBlank
 	@Column(unique = true)
 	@Pattern(regexp = "^[0-9]{6}-([A-Z]{4})$")
@@ -52,16 +52,16 @@ public class claseSinNombre extends DomainEntity {
 	public void setPublicationMoment(final Date publicationMoment) {
 		this.publicationMoment = publicationMoment;
 	}
-	
+
 	@Size(max = 100)
 	@NotBlank
 	public String getBody() {
-		return body;
+		return this.body;
 	}
-	public void setBody(String body) {
+	public void setBody(final String body) {
 		this.body = body;
 	}
-	
+
 	@URL
 	public String getPicture() {
 		return this.picture;
@@ -70,27 +70,40 @@ public class claseSinNombre extends DomainEntity {
 	public void setPicture(final String picture) {
 		this.picture = picture;
 	}
-	
+
 	public boolean getIsDraft() {
-		return isDraft;
+		return this.isDraft;
 	}
 
-	public void setIsDraft(boolean isDraft) {
+	public void setIsDraft(final boolean isDraft) {
 		this.isDraft = isDraft;
 	}
-	
+
+
 	// Relationships----------------------------------------------
-	private Audit		audit;
+	private Position	position;
+	private Rookie		rookie;
+
 
 	@NotNull
 	@Valid
 	@ManyToOne(optional = false)
-	public Audit getAudit() {
-		return this.audit;
+	public Position getPosition() {
+		return this.position;
 	}
 
-	public void setAudit(final Audit audit) {
-		this.audit = audit;
+	public void setPosition(final Position position) {
+		this.position = position;
 	}
-	
+
+	@NotNull
+	@Valid
+	@ManyToOne(optional = false)
+	public Rookie getRookie() {
+		return this.rookie;
+	}
+
+	public void setRookie(final Rookie rookie) {
+		this.rookie = rookie;
+	}
 }

@@ -1195,5 +1195,47 @@ las TICs!" />
 		<property name="codeLink"
 			value="https://drive.google.com/drive/folders/12wxFoI0CyRyaWlp44IUK-r2vj0z9p7tK" />
 	</bean>
+	
+	<!-- clasesSinNombre -->
+	
+	<bean class="domain.claseSinNombre" id="claseSinNombre1">
+		<property name="rookie" ref="rookie1" />
+		<property name="publicationMoment" value="2019/04/30 13:00" />
+		<property name="position" ref="position2" />
+		<property name="body" value="Example text" />
+		<property name="isDraft" value="false" />
+		<property name="picture" value="http://www.foto1" />
+		<property name="ticker" value="190312-ABCD" />
+	</bean>
+	
+	<bean class="domain.claseSinNombre" id="claseSinNombre2">
+		<property name="rookie" ref="rookie1" />
+		<property name="publicationMoment" value="2019/04/30 13:00" />
+		<property name="position" ref="position2" />
+		<property name="body" value="Example text" />
+		<property name="isDraft" value="false" />
+		<property name="picture" value="http://www.foto2" />
+		<property name="ticker" value="190312-EFGH" />
+	</bean>
+	
+	<bean class="domain.claseSinNombre" id="claseSinNombre3">
+		<property name="rookie" ref="rookie2" />
+		<property name="publicationMoment" value="2019/04/30 13:00" />
+		<property name="position" ref="position2" />
+		<property name="body" value="Example text" />
+		<property name="isDraft" value="false" />
+		<property name="picture" value="http://www.foto3" />
+		<property name="ticker" value="190312-IJKL" />
+	</bean>
+	
+	<bean class="domain.claseSinNombre" id="claseSinNombre4">
+		<property name="rookie" ref="rookie2" />
+		<property name="publicationMoment" value="2019/04/30 13:00" />
+		<property name="position" ref="position2" />
+		<property name="body" value="Example text" />
+		<property name="isDraft" value="false" />
+		<property name="picture" value="http://www.foto4" />
+		<property name="ticker" value="190312-MNOP" />
+	</bean>
 
 </beans>

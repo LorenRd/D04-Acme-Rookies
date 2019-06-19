@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+
+	<definition name="claseSinNombre/list" extends="master.page">
+		<put-attribute name="title" value="claseSinNombres' list" />
+		<put-attribute name="body" value="/views/claseSinNombre/list.jsp" />
+	</definition>
+	
+	<definition name="claseSinNombre/display" extends="master.page">
+		<put-attribute name="title" value="Display claseSinNombre" />
+		<put-attribute name="body" value="/views/claseSinNombre/display.jsp" />
+	</definition>
+	
+	<definition name="claseSinNombre/create" extends="master.page">
+		<put-attribute name="title" value="Create claseSinNombre" />
+		<put-attribute name="body" value="/views/claseSinNombre/create.jsp" />
+	</definition>
+	
+	<definition name="claseSinNombre/edit" extends="master.page">
+		<put-attribute name="title" value="Edit claseSinNombre" />
+		<put-attribute name="body" value="/views/claseSinNombre/edit.jsp" />
+	</definition>
+	
+</tiles-definitions>

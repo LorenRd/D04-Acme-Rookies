@@ -1,6 +1,10 @@
 package services;
 
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
+import java.util.Random;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -69,7 +73,9 @@ public class claseSinNombreService {
 		Assert.notNull(claseSinNombre);
 		Assert.isTrue(claseSinNombre.getAudit().getPosition().getCompany().getId() == principal.getId());
 		claseSinNombre.setIsDraft(draft);
-
+		if(!draft)
+			claseSinNombre.setPublicationMoment(new Date(System.currentTimeMillis() - 1));
+		
 		result = this.claseSinNombreRepository.save(claseSinNombre);
 		Assert.notNull(result);
 		return result;
@@ -132,10 +138,46 @@ public class claseSinNombreService {
 
 		result = new claseSinNombre();
 		result.setIsDraft(true);
+		result.setTicker(generateTicker());
 
 		return result;
 	}
 
+	private String generateTicker() {
+		String result;
+		String numbers;
+
+		final Random random = new Random();
+
+		Date today = new Date();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(today);
+
+		String day = String.valueOf(cal.get(Calendar.DAY_OF_MONTH));
+		String month = String.valueOf(cal.get(Calendar.MONTH));
+		String year = String.valueOf(cal.get(Calendar.YEAR));
+
+		year.substring(2, 4);
+
+		numbers = String.format("%04d", random.nextInt(10000));
+		result = year + month + day + "-" + numbers;
+		if (this.repeatedTicker(result))
+			this.generateTicker();
+
+		return result;
+	}
+
+	public boolean repeatedTicker(final String ticker) {
+		Boolean isRepeated = false;
+		int repeats;
+
+		repeats = this.claseSinNombreRepository.findRepeatedTickers(ticker);
+
+		if (repeats > 0)
+			isRepeated = true;
+
+		return isRepeated;
+	}
 
 
 	public void flush() {
@@ -146,5 +188,18 @@ public class claseSinNombreService {
 	public boolean exist(final int id) {
 		return this.claseSinNombreRepository.exists(id);
 	}
+
+	public Collection<claseSinNombre> findByAudit(int auditId) {
+		Collection<claseSinNombre> result;
+		result = this.claseSinNombreRepository.findByAuditId(auditId);
+		return result;
+	}
+
+	public Collection<claseSinNombre> findByAuditFinal(int auditId) {
+		Collection<claseSinNombre> result;
+		result = this.claseSinNombreRepository.findByAuditFinalId(auditId);
+		return result;
+	}
+
 
 }

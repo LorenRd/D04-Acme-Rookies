@@ -29,7 +29,41 @@
 		<b><spring:message code="audit.isDraft.final" /></b>
 		</jstl:if>
 <br/>
+<security:authorize access="hasAnyRole('COMPANY','AUDITOR')">
+		<!-- claseSinNombre -->
+<h3><spring:message code="claseSinNombre.claseSinNombre" /></h3>
+<jstl:choose>
+<jstl:when test="${not empty claseSinNombre}">
+<display:table pagesize="5" class="displaytag" name="claseSinNombre" requestURI="audit/display.do" id="claseSinNombre">
+		
+		<!-- Display -->
+		<display:column>
+			<a href="claseSinNombre/display.do?claseSinNombreId=${claseSinNombre.id}"><spring:message code="claseSinNombre.display"/></a>
+		</display:column>
+		
+	<spring:message code="claseSinNombre.ticker" var="tickerHeader" />
+	<display:column property="ticker" title="${tickerHeader}"
+		sortable="true" />
+		
+	<spring:message code="claseSinNombre.body" var="bodyHeader" />
+	<display:column property="body" title="${bodyHeader}"
+		sortable="true" />
+		
+			
+</display:table>
+</jstl:when>
+<jstl:otherwise>
+<spring:message code="claseSinNombre.audits.empty" /> 
+</jstl:otherwise>
+</jstl:choose>
+<br/>
+</security:authorize>
 
+<jstl:if test="${audit.position.company.id == principal.id}">
+<jstl:if test="${!audit.isDraft}">
+		<acme:button url="claseSinNombre/company/create.do" code="claseSinNombre.create"/>
+</jstl:if>
+</jstl:if>
 <jstl:if test="${audit.auditor.userAccount.username == pageContext.request.userPrincipal.name}">
 <br/>
 	<jstl:if test="${audit.isDraft == true}">
@@ -38,5 +72,8 @@
 		<a href="audit/auditor/delete.do?auditId=${audit.id}"><spring:message code="audit.delete"/></a><br/>
 	</jstl:if>
 </jstl:if>
+
+
+
 
 	

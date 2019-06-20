@@ -36,14 +36,23 @@ public class claseSinNombreController extends AbstractController {
 		final ModelAndView result;
 		Collection<claseSinNombre> claseSinNombres;
 		claseSinNombres = new ArrayList<claseSinNombre>();
-
+		String rol;
+		
 		final Actor principal = this.actorService.findByPrincipal();
 
-		claseSinNombres = this.claseSinNombreService.findAllByCompany(principal.getId());
+		rol = principal.getUserAccount().getAuthorities().iterator().next().toString();
 
+		if(rol.equals("COMPANY"))
+			claseSinNombres = this.claseSinNombreService.findAllByCompany(principal.getId());
+		else if (rol.equals("AUDITOR"))
+			claseSinNombres = this.claseSinNombreService.findAllByAuditor(principal.getId());
+		else
+			claseSinNombres = new ArrayList<claseSinNombre>();
+
+			
 		result = new ModelAndView("claseSinNombre/list");
 		result.addObject("claseSinNombre", claseSinNombres);
-		result.addObject("requestURI", "claseSinNombre/company/list.do");
+		result.addObject("requestURI", "claseSinNombre/list.do");
 
 		return result;
 	}

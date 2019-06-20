@@ -11,12 +11,12 @@
 
 <!-- Listing grid -->
 
-<display:table name="claseSinNombres" id="row" requestURI="${requestURI }"
+<display:table name="claseSinNombre" id="row" requestURI="${requestURI }"
 	pagesize="5" class="displaytag">
 	
 	<!-- Display -->
 	<display:column>
-		<a href="claseSinNombre/display.do?problemId=${row.id}"><spring:message code="claseSinNombre.display"/></a>
+		<a href="claseSinNombre/display.do?claseSinNombreId=${row.id}"><spring:message code="claseSinNombre.display"/></a>
 	</display:column>
 
 	<!-- Attributes -->
@@ -31,6 +31,3 @@
 		
 </display:table>
 <br />
-<security:authorize access="hasRole('COMPANY')">
-<acme:button url="claseSinNombre/company/create.do" code="claseSinNombre.create"/>
-</security:authorize>

@@ -1,6 +1,9 @@
 
 package controllers.any;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -9,9 +12,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ActorService;
 import services.AuditService;
+import services.claseSinNombreService;
 import controllers.AbstractController;
+import domain.Actor;
 import domain.Audit;
+import domain.claseSinNombre;
 
 @Controller
 @RequestMapping("/audit")
@@ -21,6 +28,12 @@ public class AuditController extends AbstractController {
 
 	@Autowired
 	private AuditService	auditService;
+	
+	@Autowired
+	private ActorService	actorService;
+
+	@Autowired
+	private claseSinNombreService	claseSinNombreService;
 
 	// Display
 
@@ -29,7 +42,8 @@ public class AuditController extends AbstractController {
 		// Inicializa resultado
 		ModelAndView result;
 		Audit audit;
-
+		
+		
 		// Busca en el repositorio
 		audit = this.auditService.findOne(auditId);
 		Assert.notNull(audit);
@@ -38,6 +52,24 @@ public class AuditController extends AbstractController {
 		result = new ModelAndView("audit/display");
 		result.addObject("requestURI", "audit/display.do");
 		result.addObject("audit", audit);
+		
+		//Actor para en caso de ser company poder crear claseSinNombre
+		try{
+			Actor principal;
+			principal = this.actorService.findByPrincipal();		
+			result.addObject("principal", principal);
+			String rol;
+			Collection<claseSinNombre> claseSinNombres = new ArrayList<claseSinNombre>();
+			rol = principal.getUserAccount().getAuthorities().iterator().next().toString();
+
+			if(rol.equals("COMPANY"))
+				claseSinNombres = this.claseSinNombreService.findByAudit(auditId);
+			else if(rol.equals("AUDITOR"))
+				claseSinNombres = this.claseSinNombreService.findByAuditFinal(auditId);
+			result.addObject("claseSinNombre", claseSinNombres);
+
+		}catch (Exception e) {
+		}
 
 		// Envía la vista
 		return result;

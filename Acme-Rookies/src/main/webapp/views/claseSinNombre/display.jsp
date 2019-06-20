@@ -14,12 +14,18 @@
 		<jstl:out value="${claseSinNombre.ticker}"/><br/>
 	
 		<b><spring:message code="claseSinNombre.publicationMoment" /></b>:
-		<jstl:out value="${claseSinNombre.publicationMoment }"/><br/>	
-	
+		<jstl:if test="${cookie['language'].getValue()=='es'}">
+				<fmt:formatDate value="${claseSinNombre.publicationMoment}" pattern="dd-MM-yy HH:mm"/>
+		</jstl:if>
+		<jstl:if test="${cookie['language'].getValue()=='en'}">
+				<fmt:formatDate value="${claseSinNombre.publicationMoment}" pattern="yy/MM/dd HH:mm"/>
+		</jstl:if>
+		<br>
 		<b><spring:message code="claseSinNombre.body" /></b>:
 		<jstl:out value="${claseSinNombre.body }"/><br/>
 	
-		<acme:image src="${claseSinNombre.picture }"/>
+		<b><spring:message code="claseSinNombre.picture" /></b>:
+		<br><br><img width="250px" src="${claseSinNombre.picture }"/>
 
 		<br/>
 	
@@ -29,6 +35,10 @@
 			<jstl:out value="${claseSinNombre.audit.position.company.commercialName}"/>
 		</a><br/>
 
+		<!-- Audit -->
+		<a href="audit/display.do?auditId=${claseSinNombre.audit.id}">
+			<b><spring:message code="claseSinNombre.audit" /></b>
+		</a><br/>
 		
 <jstl:if test="${claseSinNombre.audit.position.company.userAccount.username == pageContext.request.userPrincipal.name}">
 <br/>

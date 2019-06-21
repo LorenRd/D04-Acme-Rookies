@@ -61,7 +61,7 @@
 
 <jstl:if test="${audit.position.company.id == principal.id}">
 <jstl:if test="${!audit.isDraft}">
-		<acme:button url="claseSinNombre/company/create.do" code="claseSinNombre.create"/>
+		<acme:button url="claseSinNombre/company/create.do?auditId=${audit.id}" code="claseSinNombre.create"/>
 </jstl:if>
 </jstl:if>
 <jstl:if test="${audit.auditor.userAccount.username == pageContext.request.userPrincipal.name}">

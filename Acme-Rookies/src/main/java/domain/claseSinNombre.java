@@ -34,9 +34,9 @@ public class claseSinNombre extends DomainEntity {
 	@NotBlank
 	@Column(unique = true)
 	//AAMMDD-ABCD
-	@Pattern(regexp = "^[0-9]{6}-([A-Z]{4})$") 
+	//@Pattern(regexp = "^[0-9]{6}-([A-Z]{4})$") 
 	//AAMMDD-1234
-	//@Pattern(regexp = "^[0-9]{6}-([0-9]{4})$") 
+	@Pattern(regexp = "^[0-9]{6}-([0-9]{4})$") 
 	public String getTicker() {
 		return this.ticker;
 	}

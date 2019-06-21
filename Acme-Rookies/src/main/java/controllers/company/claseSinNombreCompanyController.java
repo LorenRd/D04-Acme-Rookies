@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
+import services.AuditService;
 import services.claseSinNombreService;
 import domain.Actor;
+import domain.Audit;
 import domain.claseSinNombre;
 
 @Controller
@@ -30,7 +32,9 @@ public class claseSinNombreCompanyController {
 
 	@Autowired
 	private claseSinNombreService	claseSinNombreService;
-
+	
+	@Autowired
+	private AuditService	auditService;
 	//List
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -74,11 +78,15 @@ public class claseSinNombreCompanyController {
 	//Create
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public ModelAndView create() {
+	public ModelAndView create(@RequestParam final int auditId) {
 		ModelAndView result;
 		claseSinNombre claseSinNombre;
+		Audit audit;
+		
+		audit = this.auditService.findOne(auditId);
 
 		claseSinNombre = this.claseSinNombreService.create();
+		claseSinNombre.setAudit(audit);
 		result = this.createModelAndView(claseSinNombre);
 
 		return result;
@@ -119,11 +127,11 @@ public class claseSinNombreCompanyController {
 	//Save draft --- CREATE
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "saveDraft")
-	public ModelAndView createDraft(@ModelAttribute("claseSinNombre") claseSinNombre claseSinNombre, final BindingResult binding) {
+	public ModelAndView createDraft(@ModelAttribute("claseSinNombre") claseSinNombre claseSinNombre,@RequestParam final int auditId, final BindingResult binding) {
 		ModelAndView result;
 
 		try {
-			claseSinNombre = this.claseSinNombreService.reconstruct(claseSinNombre, binding);
+			claseSinNombre = this.claseSinNombreService.reconstruct(claseSinNombre,auditId, binding);
 			if (binding.hasErrors()) {
 				result = this.createModelAndView(claseSinNombre);
 				for (final ObjectError e : binding.getAllErrors())
@@ -142,11 +150,11 @@ public class claseSinNombreCompanyController {
 	//Save Final --- CREATE
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "saveFinal")
-	public ModelAndView createFinal(@ModelAttribute("claseSinNombre") claseSinNombre claseSinNombre, final BindingResult binding) {
+	public ModelAndView createFinal(@ModelAttribute("claseSinNombre") claseSinNombre claseSinNombre,@RequestParam final int auditId, final BindingResult binding) {
 		ModelAndView result;
 
 		try {
-			claseSinNombre = this.claseSinNombreService.reconstruct(claseSinNombre, binding);
+			claseSinNombre = this.claseSinNombreService.reconstruct(claseSinNombre,auditId, binding);
 			if (binding.hasErrors()) {
 				result = this.createModelAndView(claseSinNombre);
 				for (final ObjectError e : binding.getAllErrors())
@@ -168,7 +176,7 @@ public class claseSinNombreCompanyController {
 		ModelAndView result;
 
 		try {
-			claseSinNombre = this.claseSinNombreService.reconstruct(claseSinNombre, binding);
+			claseSinNombre = this.claseSinNombreService.reconstruct(claseSinNombre,claseSinNombre.getAudit().getId(), binding);
 			if (binding.hasErrors()) {
 				System.out.println(binding.getAllErrors());
 				result = this.editModelAndView(claseSinNombre);
@@ -191,7 +199,7 @@ public class claseSinNombreCompanyController {
 		ModelAndView result;
 
 		try {
-			claseSinNombre = this.claseSinNombreService.reconstruct(claseSinNombre, binding);
+			claseSinNombre = this.claseSinNombreService.reconstruct(claseSinNombre,claseSinNombre.getAudit().getId(), binding);
 			if (binding.hasErrors()) {
 				System.out.println(binding.getAllErrors());
 				result = this.editModelAndView(claseSinNombre);
@@ -262,7 +270,7 @@ public class claseSinNombreCompanyController {
 	private ModelAndView editModelAndView(final claseSinNombre claseSinNombre, final String messageCode) {
 		ModelAndView result;
 
-		result = new ModelAndView("float/edit");
+		result = new ModelAndView("claseSinNombre/edit");
 		result.addObject("claseSinNombre", claseSinNombre);
 		result.addObject("message", messageCode);
 		return result;

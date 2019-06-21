@@ -26,7 +26,9 @@ public class claseSinNombreService {
 	
 
 	// Supporting services ----------------------------------------------------
-
+	@Autowired
+	private AuditService auditService;
+	
 	@Autowired
 	private CompanyService companyService;
 	
@@ -72,6 +74,7 @@ public class claseSinNombreService {
 
 		Assert.notNull(claseSinNombre);
 		Assert.isTrue(claseSinNombre.getAudit().getPosition().getCompany().getId() == principal.getId());
+		Assert.isTrue(claseSinNombre.getAudit().getIsDraft() == false);
 		claseSinNombre.setIsDraft(draft);
 		if(!draft)
 			claseSinNombre.setPublicationMoment(new Date(System.currentTimeMillis() - 1));
@@ -104,19 +107,18 @@ public class claseSinNombreService {
 		return result;
 	}
 
-	public claseSinNombre reconstruct(final claseSinNombre claseSinNombre, final BindingResult binding) {
+	public claseSinNombre reconstruct(final claseSinNombre claseSinNombre,final int auditId, final BindingResult binding) {
 		claseSinNombre result;
 		if (claseSinNombre.getId() == 0) {
 			result = claseSinNombre;
 			result.setBody(claseSinNombre.getBody());
 			result.setPicture(claseSinNombre.getPicture());
-			result.setTicker(claseSinNombre.getTicker());
-			result.setAudit(claseSinNombre.getAudit());
+			result.setTicker(this.generateTicker());
+			result.setAudit(this.auditService.findOne(auditId));
 			result.setIsDraft(true);
 
-			if (claseSinNombre.getAudit() == null)
-				binding.rejectValue("audit", "claseSinNombre.validation.audit", "Can't be null");
-
+			if (result.getAudit().getIsDraft())
+				binding.rejectValue("audit", "claseSinNombre.validation.audit.draft", "Audit must be final");
 		} else {
 			result = this.claseSinNombreRepository.findOne(claseSinNombre.getId());
 
@@ -157,7 +159,10 @@ public class claseSinNombreService {
 		String month = String.valueOf(cal.get(Calendar.MONTH));
 		String year = String.valueOf(cal.get(Calendar.YEAR));
 
-		year.substring(2, 4);
+		year = year.substring(2, 4);
+		
+		if(Integer.parseInt(month)<10)
+			month="0"+month;
 
 		numbers = String.format("%04d", random.nextInt(10000));
 		result = year + month + day + "-" + numbers;

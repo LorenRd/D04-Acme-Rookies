@@ -18,7 +18,7 @@
 
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<form:form action="claseSinNombre/company/create.do" modelAttribute="claseSinNombre">
+<form:form action="claseSinNombre/company/create.do?auditId=${param['auditId']}" modelAttribute="claseSinNombre">
 		<form:hidden path="id"/>
 		<form:hidden path="version"/>
 				

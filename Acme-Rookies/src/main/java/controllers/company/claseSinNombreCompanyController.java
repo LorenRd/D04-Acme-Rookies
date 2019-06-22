@@ -176,7 +176,7 @@ public class claseSinNombreCompanyController {
 		ModelAndView result;
 
 		try {
-			claseSinNombre = this.claseSinNombreService.reconstruct(claseSinNombre,claseSinNombre.getAudit().getId(), binding);
+			claseSinNombre = this.claseSinNombreService.reconstruct(claseSinNombre,0, binding);
 			if (binding.hasErrors()) {
 				System.out.println(binding.getAllErrors());
 				result = this.editModelAndView(claseSinNombre);
@@ -199,7 +199,7 @@ public class claseSinNombreCompanyController {
 		ModelAndView result;
 
 		try {
-			claseSinNombre = this.claseSinNombreService.reconstruct(claseSinNombre,claseSinNombre.getAudit().getId(), binding);
+			claseSinNombre = this.claseSinNombreService.reconstruct(claseSinNombre,0, binding);
 			if (binding.hasErrors()) {
 				System.out.println(binding.getAllErrors());
 				result = this.editModelAndView(claseSinNombre);

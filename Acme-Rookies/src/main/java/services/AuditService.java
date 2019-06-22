@@ -17,6 +17,7 @@ import domain.Actor;
 import domain.Audit;
 import domain.Auditor;
 import domain.Company;
+import domain.claseSinNombre;
 
 @Service
 @Transactional
@@ -36,7 +37,9 @@ public class AuditService {
 	@Autowired
 	private ActorService	actorService;
 
-
+	@Autowired
+	private claseSinNombreService	claseSinNombreService;
+	
 	// Simple CRUD Methods
 	public void delete(final Audit audit) {
 		Auditor principal;
@@ -48,12 +51,25 @@ public class AuditService {
 		Assert.notNull(audit);
 		Assert.isTrue(audit.getId() != 0);
 		Assert.isTrue(audit.getIsDraft());
+		
+		Collection<claseSinNombre> claseSinNombres;
+		claseSinNombres = this.claseSinNombreService.findByAudit(audit.getId());
+		
+		for (claseSinNombre cSN : claseSinNombres) {
+			this.claseSinNombreService.delete2(cSN);
+		}
 
 		this.auditRepository.delete(audit);
 	}
 
 	public void delete2(final Audit audit) {
-
+		Collection<claseSinNombre> claseSinNombres;
+		claseSinNombres = this.claseSinNombreService.findByAudit(audit.getId());
+		
+		for (claseSinNombre cSN : claseSinNombres) {
+			this.claseSinNombreService.delete2(cSN);
+		}
+		
 		this.auditRepository.delete(audit);
 	}
 

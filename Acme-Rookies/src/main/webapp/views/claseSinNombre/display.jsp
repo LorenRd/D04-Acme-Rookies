@@ -36,15 +36,14 @@
 		</a><br/>
 
 		<!-- Audit -->
-		<a href="audit/display.do?auditId=${claseSinNombre.audit.id}">
-			<b><spring:message code="claseSinNombre.audit" /></b>
-		</a><br/>
+		<b><spring:message code="claseSinNombre.audit" /></b>:
+			<a href="audit/display.do?auditId=${claseSinNombre.audit.id}"><spring:message code="claseSinNombre.audit.display" /></a>
+		<br/>
 		
 <jstl:if test="${claseSinNombre.audit.position.company.userAccount.username == pageContext.request.userPrincipal.name}">
 <br/>
 	<jstl:if test="${claseSinNombre.isDraft == true}">
 		<a href="claseSinNombre/company/edit.do?claseSinNombreId=${claseSinNombre.id}"><spring:message code="claseSinNombre.edit"/></a><br/>
-<br/>	
 		<a href="claseSinNombre/company/delete.do?claseSinNombreId=${claseSinNombre.id}"><spring:message code="claseSinNombre.delete"/></a><br/>
 	</jstl:if>
 </jstl:if>

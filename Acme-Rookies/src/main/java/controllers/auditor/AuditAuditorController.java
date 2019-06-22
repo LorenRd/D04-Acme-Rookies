@@ -1,5 +1,6 @@
 package controllers.auditor;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -14,19 +15,26 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ActorService;
 import services.AuditService;
 import services.AuditorService;
 import services.PositionService;
+import services.claseSinNombreService;
 import controllers.AbstractController;
+import domain.Actor;
 import domain.Audit;
 import domain.Auditor;
 import domain.Position;
+import domain.claseSinNombre;
 
 @Controller
 @RequestMapping("/audit/auditor")
 public class AuditAuditorController extends AbstractController {
 	
 	// Services
+	
+	@Autowired
+	private ActorService	actorService;
 
 	@Autowired
 	private AuditService		auditService;
@@ -36,6 +44,10 @@ public class AuditAuditorController extends AbstractController {
 
 	@Autowired
 	private PositionService	positionService;
+	
+	@Autowired
+	private claseSinNombreService	claseSinNombreService;
+
 	
 	// Listing
 
@@ -73,6 +85,24 @@ public class AuditAuditorController extends AbstractController {
 		result = new ModelAndView("audit/display");
 		result.addObject("requestURI", "audit/display.do");
 		result.addObject("audit", audit);
+		
+		//Actor para en caso de ser company poder crear claseSinNombre
+		try{
+			Actor principal;
+			principal = this.actorService.findByPrincipal();		
+			result.addObject("principal", principal);
+			String rol;
+			Collection<claseSinNombre> claseSinNombres = new ArrayList<claseSinNombre>();
+			rol = principal.getUserAccount().getAuthorities().iterator().next().toString();
+
+			if(rol.equals("COMPANY"))
+				claseSinNombres = this.claseSinNombreService.findByAudit(auditId);
+			else if(rol.equals("AUDITOR"))
+				claseSinNombres = this.claseSinNombreService.findByAuditFinal(auditId);
+			result.addObject("claseSinNombre", claseSinNombres);
+
+		}catch (Exception e) {
+		}
 
 		// Envía la vista
 		return result;

@@ -1,5 +1,6 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -27,6 +28,7 @@ import domain.CreditCard;
 import domain.Message;
 import domain.Position;
 import domain.Problem;
+import domain.claseSinNombre;
 import forms.CompanyForm;
 
 @Service
@@ -67,7 +69,10 @@ public class CompanyService {
 	 
 	 @Autowired
 	 private Validator validator;
-
+	 
+	@Autowired
+	private claseSinNombreService claseSinNombreService;	
+	
 	 @Autowired
 	 private CustomisationRepository customisationRepository;
 
@@ -159,6 +164,7 @@ public class CompanyService {
 		 Collection<Application> applications;
 		 Collection<Message> messages;
 		 Collection<Audit> audits;
+		 Collection<claseSinNombre> claseSinNombres;
 
 		 principal = this.findByPrincipal();
 		 Assert.notNull(principal);
@@ -171,6 +177,13 @@ public class CompanyService {
 		 this.applicationService.deleteInBatch(applications);
 		 
 		 audits = this.auditService.findAllByCompany(principal.getId());
+		 for (Audit a : audits) {
+			 claseSinNombres = new ArrayList<claseSinNombre>();
+			 claseSinNombres = this.claseSinNombreService.findByAudit(a.getId());
+			 for (claseSinNombre cSN : claseSinNombres) {
+				this.claseSinNombreService.delete2(cSN);
+			}
+		 }
 		 this.auditService.deleteInBatch(audits);
 		 
 		 positions = this.positionService.findByCompany(principal.getId());

@@ -37,14 +37,40 @@
 <display:table pagesize="5" class="displaytag" name="claseSinNombre" requestURI="audit/display.do" id="claseSinNombre">
 		
 		<!-- Display -->
-		<display:column>
-			<a href="claseSinNombre/display.do?claseSinNombreId=${claseSinNombre.id}"><spring:message code="claseSinNombre.display"/></a>
-		</display:column>
+	<display:column>
+		<a href="claseSinNombre/display.do?claseSinNombreId=${claseSinNombre.id}"><spring:message code="claseSinNombre.display"/></a>
+	</display:column>
+		
+		<!-- Attributes -->
+		<!-- Colors -->
+			<jstl:choose>
+				<jstl:when test="${row.publicationMoment le dateOneMonth}">
+					<jstl:set var="background" value="Indigo" />
+				</jstl:when>
+	
+				<jstl:when test="${row.publicationMoment le dateTwoMonths}">
+					<jstl:set var="background" value="DarkSlateGrey" />
+				</jstl:when>
+		
+				<jstl:otherwise>
+					<jstl:set var="background" value="PapayaWhip" />
+				</jstl:otherwise>
+			</jstl:choose>
+		<!--  -->
 		
 	<spring:message code="claseSinNombre.ticker" var="tickerHeader" />
 	<display:column property="ticker" title="${tickerHeader}"
 		sortable="true" />
-		
+	<jstl:if test="${cookie['language'].getValue()=='es'}">
+		<spring:message code="claseSinNombre.publicationMoment" var="publicationMomentHeader" />
+    	<display:column class="${background}" property="publicationMoment" format="{0,date, dd-MM-yy HH:mm}" title="${publicationMomentHeader}" />
+	</jstl:if>
+	<jstl:if test="${cookie['language'].getValue()=='en'}">
+		<spring:message code="claseSinNombre.publicationMoment" var="publicationMomentHeader" />
+    	<display:column class="${background}" property="publicationMoment" format="{0,date, yy/MM/dd HH:mm}" title="${publicationMomentHeader}" />
+	</jstl:if>
+
+			
 	<spring:message code="claseSinNombre.body" var="bodyHeader" />
 	<display:column property="body" title="${bodyHeader}"
 		sortable="true" />

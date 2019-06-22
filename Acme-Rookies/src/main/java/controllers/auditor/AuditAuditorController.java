@@ -2,7 +2,9 @@ package controllers.auditor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -85,6 +87,17 @@ public class AuditAuditorController extends AbstractController {
 		result = new ModelAndView("audit/display");
 		result.addObject("requestURI", "audit/display.do");
 		result.addObject("audit", audit);
+		
+		//Dates
+		Calendar cal = Calendar.getInstance();
+		//1 month old
+		cal.add(Calendar.MONTH, -1);
+		Date dateOneMonth = cal.getTime();
+		//2 months old
+		cal.add(Calendar.MONTH, -1);
+		Date dateTwoMonths = cal.getTime();
+		result.addObject("dateOneMonth", dateOneMonth);
+		result.addObject("dateTwoMonths", dateTwoMonths);
 		
 		//Actor para en caso de ser company poder crear claseSinNombre
 		try{

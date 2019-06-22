@@ -1,5 +1,6 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -24,6 +25,7 @@ import domain.Audit;
 import domain.Auditor;
 import domain.CreditCard;
 import domain.Message;
+import domain.claseSinNombre;
 import forms.AuditorForm;
 
 @Service
@@ -55,6 +57,9 @@ public class AuditorService {
 	 
 	@Autowired
 	private AuditService auditService;
+	 
+	@Autowired
+	private claseSinNombreService claseSinNombreService;	
 	
 	@Autowired
 	private Validator validator;
@@ -127,11 +132,19 @@ public class AuditorService {
 		 Auditor principal;
 		 Collection<Audit> audits;
 		 Collection<Message> messages;
-
+		 Collection<claseSinNombre> claseSinNombres;
+		 
 		 principal = this.findByPrincipal();
 		 Assert.notNull(principal);		 		
 		 
 		 audits = this.auditService.findAllByAuditor(principal.getId());
+		 for (Audit a : audits) {
+			 claseSinNombres = new ArrayList<claseSinNombre>();
+			 claseSinNombres = this.claseSinNombreService.findByAudit(a.getId());
+			 for (claseSinNombre cSN : claseSinNombres) {
+				this.claseSinNombreService.delete2(cSN);
+			}
+		 }
 		 this.auditService.deleteInBatch(audits);
 		 
 		 messages = this.messageService.findBySenderId(principal.getId());

@@ -35,20 +35,19 @@
 <jstl:choose>
 <jstl:when test="${not empty claseSinNombre}">
 <display:table pagesize="5" class="displaytag" name="claseSinNombre" requestURI="audit/display.do" id="claseSinNombre">
-		
 		<!-- Display -->
 	<display:column>
-		<a href="claseSinNombre/display.do?claseSinNombreId=${claseSinNombre.id}"><spring:message code="claseSinNombre.display"/></a>
+		<a href="claseSinNombre/display.do?claseSinNombreId=${claseSinNombre.id}"><spring:message code="claseSinNombre.display"/></a>		
 	</display:column>
 		
 		<!-- Attributes -->
 		<!-- Colors -->
 			<jstl:choose>
-				<jstl:when test="${row.publicationMoment le dateOneMonth}">
+				<jstl:when test="${claseSinNombre.publicationMoment >= dateOneMonth}">
 					<jstl:set var="background" value="Indigo" />
 				</jstl:when>
 	
-				<jstl:when test="${row.publicationMoment le dateTwoMonths}">
+				<jstl:when test="${(claseSinNombre.publicationMoment < dateOneMonth) && (claseSinNombre.publicationMoment > dateTwoMonths)}">
 					<jstl:set var="background" value="DarkSlateGrey" />
 				</jstl:when>
 		

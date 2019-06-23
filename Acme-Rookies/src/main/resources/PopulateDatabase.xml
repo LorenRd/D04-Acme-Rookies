@@ -669,10 +669,10 @@
 			</list>
 		</property>
 	</bean>
-	<!-- ClaseSinNombre -->
+	<!-- ClaseSinNombre TEST -->
 	<bean class="domain.claseSinNombre" id="claseSinNombre1">
 		<property name="ticker" value="190624-1234" />
-		<property name="publicationMoment" value="2018/03/02 14:00" />
+		<property name="publicationMoment" value="2019/06/23 14:00" />
 		<property name="body" value="Vamos a aprobar el Control Check de DP2" />
 		<property name="picture" value="https://imageog.flaticon.com/icons/png/512/65/65935.png" />
 		<property name="isDraft" value="false" />
@@ -688,7 +688,7 @@
 	
 	<bean class="domain.claseSinNombre" id="claseSinNombre3">
 		<property name="ticker" value="190624-3333" />
-		<property name="publicationMoment" value="2018/03/02 14:00" />
+		<property name="publicationMoment" value="2019/05/10 14:00" />
 		<property name="body" value="TEST TEST TEST TEST TEST TEST TEST TEST" />
 		<property name="picture" value="https://imageog.flaticon.com/icons/png/512/65/65935.png" />
 		<property name="isDraft" value="false" />
@@ -697,7 +697,7 @@
 	
 	<bean class="domain.claseSinNombre" id="claseSinNombre4">
 		<property name="ticker" value="190624-4444" />
-		<property name="publicationMoment" value="2018/03/02 14:00" />
+		<property name="publicationMoment" value="2019/01/01 14:00" />
 		<property name="body" value="TEST TEST TEST TEST" />
 		<property name="picture" value="https://imageog.flaticon.com/icons/png/512/65/65935.png" />
 		<property name="isDraft" value="false" />

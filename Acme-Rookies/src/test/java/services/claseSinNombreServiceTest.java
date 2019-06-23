@@ -45,13 +45,13 @@ public class claseSinNombreServiceTest extends AbstractTest {
 		final Object createTest[][] = {
 			{
 				/*
-				 * Test negativo:
+				 * Test positivo:
 				 * Probamos como company
 				 */
 				"company1", null
 			}, {
 				/*
-				 * Test positivo:
+				 * Test negativo:
 				 * Probamos como rookie
 				 */
 				"rookie1", IllegalArgumentException.class

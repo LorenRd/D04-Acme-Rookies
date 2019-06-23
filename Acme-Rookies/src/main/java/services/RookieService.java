@@ -131,7 +131,7 @@ public class RookieService {
 		 principal = this.findByPrincipal();
 		 Assert.notNull(principal);
 		 		 
-		 applications = this.applicationService.findAllByCompanyId(principal.getId());
+		 applications = this.applicationService.findAllApplicationsByRookieId(principal.getId());
 		 for (Application a : applications) {
 				if(a.getAnswer()!= null)
 					this.answerService.delete(a.getAnswer());

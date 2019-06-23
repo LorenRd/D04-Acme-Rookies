@@ -19,7 +19,9 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-
+<h2 style="text-align: center;">
+	<strong>PRIVACY POLICY</strong>
+</h2>
 <p>&nbsp;</p>
 <p>This Privacy Policy sets forth the terms under which Acme-Rookies
 	uses and protects the information that is provided by its clients.

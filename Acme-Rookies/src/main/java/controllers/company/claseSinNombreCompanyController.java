@@ -18,9 +18,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
 import services.AuditService;
+import services.CompanyService;
 import services.claseSinNombreService;
 import domain.Actor;
 import domain.Audit;
+import domain.Company;
 import domain.claseSinNombre;
 
 @Controller
@@ -30,6 +32,9 @@ public class claseSinNombreCompanyController {
 	@Autowired
 	private ActorService	actorService;
 
+	@Autowired
+	private CompanyService	companyService;
+	
 	@Autowired
 	private claseSinNombreService	claseSinNombreService;
 	
@@ -98,14 +103,21 @@ public class claseSinNombreCompanyController {
 	public ModelAndView delete(final int claseSinNombreId) {
 		claseSinNombre claseSinNombre;
 		ModelAndView result;
+		Company principal;
+		
+		principal = this.companyService.findByPrincipal();
 		
 		claseSinNombre = this.claseSinNombreService.findOne(claseSinNombreId);
-		try {
-			this.claseSinNombreService.delete(claseSinNombre);
-			result = new ModelAndView("redirect:/welcome/index.do");
-		} catch (final Throwable oops) {
+		if(claseSinNombre.getAudit().getPosition().getCompany().getId()==principal.getId()){
+			try {
+				this.claseSinNombreService.delete(claseSinNombre);
+				result = new ModelAndView("redirect:/welcome/index.do");
+			} catch (final Throwable oops) {
+				result = this.displayModelAndView(claseSinNombre, "claseSinNombre.commit.error");
+		
+			}
+		}else{
 			result = this.displayModelAndView(claseSinNombre, "claseSinNombre.commit.error");
-
 		}
 		return result;
 	}

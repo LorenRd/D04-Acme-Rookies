@@ -17,6 +17,8 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
+<jstl:choose>
+<jstl:when test="${(claseSinNombre.audit.position.company.userAccount.username == pageContext.request.userPrincipal.name)}">
 
 <form:form action="claseSinNombre/company/edit.do" modelAttribute="claseSinNombre">
 		<form:hidden path="id"/>
@@ -34,3 +36,8 @@
 		<acme:cancel url="welcome/index.do" code="claseSinNombre.cancel"/>
 		
 </form:form>
+</jstl:when>
+<jstl:otherwise>
+<spring:message code="claseSinNombre.notYours" />
+</jstl:otherwise>
+</jstl:choose>

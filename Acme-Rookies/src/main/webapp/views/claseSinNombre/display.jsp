@@ -9,7 +9,8 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
-
+<jstl:choose>
+<jstl:when test="${(claseSinNombre.audit.auditor.userAccount.username == pageContext.request.userPrincipal.name) || (claseSinNombre.audit.position.company.userAccount.username == pageContext.request.userPrincipal.name)}">
 		<b><spring:message code="claseSinNombre.ticker" /></b>:
 		<jstl:out value="${claseSinNombre.ticker}"/><br/>
 	
@@ -47,5 +48,11 @@
 		<a href="claseSinNombre/company/delete.do?claseSinNombreId=${claseSinNombre.id}"><spring:message code="claseSinNombre.delete"/></a><br/>
 	</jstl:if>
 </jstl:if>
+
+</jstl:when>
+<jstl:otherwise>
+<spring:message code="claseSinNombre.notYours" />
+</jstl:otherwise>
+</jstl:choose>
 
 	

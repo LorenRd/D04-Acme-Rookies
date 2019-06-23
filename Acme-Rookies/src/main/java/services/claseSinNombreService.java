@@ -41,11 +41,58 @@ public class claseSinNombreService {
 		return this.claseSinNombreRepository.exists(arg0);
 	}
 
+	//	private String generateTicker() {
+	//		String result;
+	//		String numbers;
+	//
+	//		final Random random = new Random();
+	//
+	//		final Date today = new Date();
+	//		final Calendar cal = Calendar.getInstance();
+	//		cal.setTime(today);
+	//
+	//		final String day = String.valueOf(cal.get(Calendar.DAY_OF_MONTH));
+	//		String month = String.valueOf(cal.get(Calendar.MONTH));
+	//		String year = String.valueOf(cal.get(Calendar.YEAR));
+	//
+	//		year = year.substring(2, 4);
+	//
+	//		if (Integer.parseInt(month) < 10)
+	//			month = "0" + month;
+	//
+	//		numbers = String.format("%04d", random.nextInt(10000));
+	//		result = year + month + day + "-" + numbers;
+	//		if (this.repeatedTicker(result))
+	//			this.generateTicker();
+	//
+	//		return result;
+	//	}
+
+	//	private String generateTicker() {
+	//		String result;
+	//		final Calendar now = Calendar.getInstance();
+	//		String year = String.valueOf(now.get(Calendar.YEAR));
+	//		year = year.substring(year.length() - 2, year.length());
+	//		final String month = String.valueOf(now.get(Calendar.MONTH) + 1);
+	//		String date = String.valueOf(now.get(Calendar.DATE));
+	//		date = date.length() == 1 ? "0".concat(date) : date;
+	//		final Random r = new Random();
+	//		final char a = (char) (r.nextInt(26) + 'a');
+	//		final char b = (char) (r.nextInt(26) + 'a');
+	//		final char c = (char) (r.nextInt(26) + 'a');
+	//		final char d = (char) (r.nextInt(26) + 'a');
+	//		String code = String.valueOf(a) + String.valueOf(b) + String.valueOf(c) + String.valueOf(d);
+	//		code = code.toUpperCase();
+	//		result = year + month + date + "-" + code;
+	//
+	//		if (this.repeatedTicker(result))
+	//			this.generateTicker();
+	//
+	//		return result;
+	//	}
+
 	private String generateTicker() {
 		String result;
-		String numbers;
-
-		final Random random = new Random();
 
 		final Date today = new Date();
 		final Calendar cal = Calendar.getInstance();
@@ -60,8 +107,15 @@ public class claseSinNombreService {
 		if (Integer.parseInt(month) < 10)
 			month = "0" + month;
 
-		numbers = String.format("%04d", random.nextInt(10000));
-		result = year + month + day + "-" + numbers;
+		final Random r = new Random();
+		final char a = (char) (r.nextInt(26) + 'a');
+		final char b = (char) (r.nextInt(26) + 'a');
+		final char c = (char) (r.nextInt(26) + 'a');
+		final char d = (char) (r.nextInt(26) + 'a');
+		String code = String.valueOf(a) + String.valueOf(b) + String.valueOf(c) + String.valueOf(d);
+		code = code.toUpperCase();
+		result = year + month + day + "-" + code;
+
 		if (this.repeatedTicker(result))
 			this.generateTicker();
 

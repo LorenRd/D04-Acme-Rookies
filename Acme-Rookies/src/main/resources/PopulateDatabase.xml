@@ -1200,7 +1200,7 @@ las TICs!" />
 	
 	<bean class="domain.claseSinNombre" id="claseSinNombre1">
 		<property name="rookie" ref="rookie1" />
-		<property name="publicationMoment" value="2019/04/30 13:00" />
+		<property name="publicationMoment" value="2019/06/23 14:00" />
 		<property name="position" ref="position2" />
 		<property name="body" value="Example text" />
 		<property name="isDraft" value="false" />
@@ -1210,7 +1210,7 @@ las TICs!" />
 	
 	<bean class="domain.claseSinNombre" id="claseSinNombre2">
 		<property name="rookie" ref="rookie1" />
-		<property name="publicationMoment" value="2019/04/30 13:00" />
+		<property name="publicationMoment" value="2019/05/23 13:00" />
 		<property name="position" ref="position2" />
 		<property name="body" value="Example text" />
 		<property name="isDraft" value="false" />
@@ -1220,7 +1220,7 @@ las TICs!" />
 	
 	<bean class="domain.claseSinNombre" id="claseSinNombre3">
 		<property name="rookie" ref="rookie2" />
-		<property name="publicationMoment" value="2019/04/30 13:00" />
+		<property name="publicationMoment" value="2018/04/30 13:00" />
 		<property name="position" ref="position2" />
 		<property name="body" value="Example text" />
 		<property name="isDraft" value="false" />

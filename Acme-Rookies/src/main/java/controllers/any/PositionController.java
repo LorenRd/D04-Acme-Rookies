@@ -1,7 +1,9 @@
 
 package controllers.any;
 
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -95,6 +97,17 @@ public class PositionController extends AbstractController {
 		result.addObject("position", position);
 		result.addObject("audits", audits);
 		result.addObject("claseSinNombres", claseSinNombres);
+
+		//Dates
+		final Calendar cal = Calendar.getInstance();
+		//1 month old 
+		cal.add(Calendar.MONTH, -1);
+		final Date dateOneMonth = cal.getTime();
+		//2 months old 
+		cal.add(Calendar.MONTH, -1);
+		final Date dateTwoMonths = cal.getTime();
+		result.addObject("dateOneMonth", dateOneMonth);
+		result.addObject("dateTwoMonths", dateTwoMonths);
 
 		// Envía la vista
 		return result;

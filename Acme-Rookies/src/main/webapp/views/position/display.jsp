@@ -10,6 +10,7 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
+
 		<b><spring:message code="position.title" /></b>:
 		<jstl:out value="${position.title}"/><br/>
 	
@@ -95,12 +96,28 @@
 <h3> <spring:message code="position.claseSinNombres" /> </h3>
 <jstl:choose>
 <jstl:when test="${not empty claseSinNombres}">
-<display:table pagesize="5" class="displaytag" name="claseSinNombres" requestURI="position/display.do" id="claseSinNombres">
+<display:table pagesize="5" class="displaytag" name="claseSinNombres" requestURI="position/display.do" id="claseSinNombre">
 		
 		<!-- Display -->
 		<display:column>
-			<a href="claseSinNombre/display.do?claseSinNombreId=${claseSinNombres.id}"><spring:message code="claseSinNombre.display"/></a>
+			<a href="claseSinNombre/display.do?claseSinNombreId=${claseSinNombre.id}"><spring:message code="claseSinNombre.display"/></a>
 		</display:column>
+		
+		<!-- Colors -->
+		<jstl:choose>
+				<jstl:when test="${claseSinNombre.publicationMoment >= dateOneMonth}">
+					<jstl:set var="background" value="Indigo" />
+				</jstl:when>
+	
+				<jstl:when test="${(claseSinNombre.publicationMoment < dateOneMonth) && (claseSinNombre.publicationMoment > dateTwoMonths)}">
+					<jstl:set var="background" value="DarkSlateGrey" />
+				</jstl:when>
+		
+				<jstl:otherwise>
+					<jstl:set var="background" value="PapayaWhip" />
+				</jstl:otherwise>
+		</jstl:choose>
+		<!--  -->
 		
 		<spring:message code="claseSinNombre.rookie" var="rookie" />
 		<display:column property="rookie.userAccount.username" title="${rookie}" sortable="true"/>
@@ -110,11 +127,11 @@
 		
 		<jstl:if test="${cookie['language'].getValue()=='es'}">
 			<spring:message code="claseSinNombre.publicationMoment" var="publicationMomentHeader" />
-    		<display:column property="publicationMoment" format="{0,date, dd-MM-yy HH:mm}" title="${publicationMomentHeader}" />
+    		<display:column class="${background}" property="publicationMoment" format="{0,date, dd-MM-yy HH:mm}" title="${publicationMomentHeader}" />
 		</jstl:if>
 		<jstl:if test="${cookie['language'].getValue()=='en'}">
 			<spring:message code="claseSinNombre.publicationMoment" var="publicationMomentHeader" />
-    		<display:column property="publicationMoment" format="{0,date, yy/MM/dd HH:mm}" title="${publicationMomentHeader}" />
+    		<display:column class="${background}" property="publicationMoment" format="{0,date, yy/MM/dd HH:mm}" title="${publicationMomentHeader}" />
 		</jstl:if>
 		
 </display:table>

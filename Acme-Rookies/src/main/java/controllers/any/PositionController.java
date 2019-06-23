@@ -13,9 +13,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.AuditService;
 import services.PositionService;
+import services.claseSinNombreService;
 import controllers.AbstractController;
 import domain.Audit;
 import domain.Position;
+import domain.claseSinNombre;
 
 @Controller
 @RequestMapping("/position")
@@ -24,10 +26,13 @@ public class PositionController extends AbstractController {
 	// Services
 
 	@Autowired
-	private PositionService	positionService;
-	
+	private PositionService			positionService;
+
 	@Autowired
-	private AuditService	auditService;
+	private AuditService			auditService;
+
+	@Autowired
+	private claseSinNombreService	claseSinNombreService;
 
 
 	// List
@@ -48,7 +53,7 @@ public class PositionController extends AbstractController {
 
 		return result;
 	}
-	
+
 	// ListCompanyId
 
 	@RequestMapping(value = "/listCompanyId", method = RequestMethod.GET)
@@ -68,7 +73,6 @@ public class PositionController extends AbstractController {
 		return result;
 	}
 
-
 	// Display
 
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
@@ -77,18 +81,20 @@ public class PositionController extends AbstractController {
 		ModelAndView result;
 		Position position;
 		Collection<Audit> audits;
-		
-		
+		Collection<claseSinNombre> claseSinNombres;
+
 		// Busca en el repositorio
 		position = this.positionService.findOne(positionId);
 		Assert.notNull(position);
 		audits = this.auditService.findAllByPosition(positionId);
+		claseSinNombres = this.claseSinNombreService.findByPosition(positionId);
 
 		// Crea y añade objetos a la vista
 		result = new ModelAndView("position/display");
 		result.addObject("requestURI", "position/display.do");
 		result.addObject("position", position);
 		result.addObject("audits", audits);
+		result.addObject("claseSinNombres", claseSinNombres);
 
 		// Envía la vista
 		return result;

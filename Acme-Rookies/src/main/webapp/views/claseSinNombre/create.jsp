@@ -1,5 +1,5 @@
 <%--
- * edit.jsp
+ * create.jsp
  *
  * Copyright (C) 2019 Universidad de Sevilla
  * 
@@ -18,10 +18,10 @@
 
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<form:form action="claseSinNombre/rookie/edit.do" modelAttribute="claseSinNombre">
+<form:form action="claseSinNombre/rookie/create.do?positionId=${param['positionId']}" modelAttribute="claseSinNombre">
 		<form:hidden path="id"/>
 		<form:hidden path="version"/>
-		
+				
 		<acme:textarea code="claseSinNombre.body" path="body"/>
 		<br />		
 		<acme:textbox code="claseSinNombre.picture" path="picture" />

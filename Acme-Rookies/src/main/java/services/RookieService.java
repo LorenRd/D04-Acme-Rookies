@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.Collection;
@@ -22,8 +23,9 @@ import security.UserAccountRepository;
 import domain.Actor;
 import domain.Application;
 import domain.CreditCard;
-import domain.Rookie;
 import domain.Message;
+import domain.Rookie;
+import domain.claseSinNombre;
 import forms.RookieForm;
 
 @Service
@@ -32,33 +34,37 @@ public class RookieService {
 
 	// Managed repository -----------------------------------------------------
 	@Autowired
-	private RookieRepository rookieRepository;
+	private RookieRepository		rookieRepository;
 
 	@Autowired
-	private UserAccountRepository useraccountRepository;
+	private UserAccountRepository	useraccountRepository;
 
 	@Autowired
-	private CustomisationRepository customisationRepository;
+	private CustomisationRepository	customisationRepository;
 
 	// Supporting services ----------------------------------------------------
 
 	@Autowired
-	private ActorService actorService;
+	private ActorService			actorService;
 
 	@Autowired
-	private CreditCardService creditCardService;
-	
-	@Autowired
-	private ApplicationService applicationService;
-	
-	@Autowired
-	private AnswerService answerService;
+	private CreditCardService		creditCardService;
 
 	@Autowired
-	private MessageService messageService;
+	private ApplicationService		applicationService;
 
 	@Autowired
-	private Validator validator;
+	private AnswerService			answerService;
+
+	@Autowired
+	private MessageService			messageService;
+
+	@Autowired
+	private claseSinNombreService	claseSinNombreService;
+
+	@Autowired
+	private Validator				validator;
+
 
 	// Additional functions
 
@@ -72,8 +78,7 @@ public class RookieService {
 		creditCard = new CreditCard();
 
 		// Nuevo userAccount con Member en la lista de authorities
-		final UserAccount userAccount = this.actorService
-				.createUserAccount(Authority.ROOKIE);
+		final UserAccount userAccount = this.actorService.createUserAccount(Authority.ROOKIE);
 
 		result.setUserAccount(userAccount);
 		result.setCreditCard(creditCard);
@@ -86,15 +91,12 @@ public class RookieService {
 		UserAccount logedUserAccount;
 
 		final Md5PasswordEncoder passwordEncoder = new Md5PasswordEncoder();
-		logedUserAccount = this.actorService
-				.createUserAccount(Authority.ROOKIE);
+		logedUserAccount = this.actorService.createUserAccount(Authority.ROOKIE);
 		Assert.notNull(rookie, "rookie.not.null");
 
 		if (rookie.getId() == 0) {
 			CreditCard creditCard;
-			rookie.getUserAccount().setPassword(
-					passwordEncoder.encodePassword(rookie.getUserAccount()
-							.getPassword(), null));
+			rookie.getUserAccount().setPassword(passwordEncoder.encodePassword(rookie.getUserAccount().getPassword(), null));
 			creditCard = this.creditCardService.saveNew(rookie.getCreditCard());
 			rookie.setCreditCard(creditCard);
 			saved = this.rookieRepository.saveAndFlush(rookie);
@@ -102,51 +104,51 @@ public class RookieService {
 		} else {
 			logedUserAccount = LoginService.getPrincipal();
 			Assert.notNull(logedUserAccount, "rookie.notLogged");
-			Assert.isTrue(logedUserAccount.equals(rookie.getUserAccount()),
-					"rookie.notEqual.userAccount");
+			Assert.isTrue(logedUserAccount.equals(rookie.getUserAccount()), "rookie.notEqual.userAccount");
 			saved = this.rookieRepository.findOne(rookie.getId());
 			Assert.notNull(saved, "rookie.not.null");
-			Assert.isTrue(saved.getUserAccount().getUsername()
-					.equals(rookie.getUserAccount().getUsername()));
-			Assert.isTrue(saved.getUserAccount().getPassword()
-					.equals(rookie.getUserAccount().getPassword()));
+			Assert.isTrue(saved.getUserAccount().getUsername().equals(rookie.getUserAccount().getUsername()));
+			Assert.isTrue(saved.getUserAccount().getPassword().equals(rookie.getUserAccount().getPassword()));
 			saved = this.rookieRepository.saveAndFlush(rookie);
 		}
 
 		return saved;
 	}
-	 public void delete() {
-		 /*
-		  * Orden de borrado:
-		  * 	1 Answer de las applications
-		  * 	2 Application
-		  * 	3 Mensajes 
-		  * 	4 Rookie
-		  * 	5 CC
-		  */
-		 Rookie principal;
-		 Collection<Application> applications;
-		 Collection<Message> messages;
+	public void delete() {
+		/*
+		 * Orden de borrado:
+		 * 1 Answer de las applications
+		 * 2 Application
+		 * 3 Mensajes
+		 * 4 Rookie
+		 * 5 CC
+		 */
+		Rookie principal;
+		Collection<Application> applications;
+		Collection<Message> messages;
+		final Collection<claseSinNombre> claseSinNombres;
 
-		 principal = this.findByPrincipal();
-		 Assert.notNull(principal);
-		 		 
-		 applications = this.applicationService.findAllByCompanyId(principal.getId());
-		 for (Application a : applications) {
-				if(a.getAnswer()!= null)
-					this.answerService.delete(a.getAnswer());
-		 }
-		 this.applicationService.deleteInBatch(applications);	 
-		 
-		 messages = this.messageService.findBySenderId(principal.getId());
-		 this.messageService.deleteInBach(messages);
+		principal = this.findByPrincipal();
+		Assert.notNull(principal);
 
-		 
-		 this.rookieRepository.delete(principal);
-		 
-		 this.creditCardService.delete(principal.getCreditCard());
+		applications = this.applicationService.findAllApplicationsByRookieId(principal.getId());
+		for (final Application a : applications)
+			if (a.getAnswer() != null)
+				this.answerService.delete(a.getAnswer());
+		this.applicationService.deleteInBatch(applications);
 
-	 }
+		messages = this.messageService.findBySenderId(principal.getId());
+		this.messageService.deleteInBach(messages);
+
+		claseSinNombres = this.claseSinNombreService.findByRookie(principal.getId());
+		for (final claseSinNombre cSN : claseSinNombres)
+			this.claseSinNombreService.delete2(cSN);
+
+		this.rookieRepository.delete(principal);
+
+		this.creditCardService.delete(principal.getCreditCard());
+
+	}
 	public Rookie findOne(final int rookieId) {
 		Rookie result;
 
@@ -200,10 +202,8 @@ public class RookieService {
 		rookieForm.setVatNumber(rookie.getVatNumber());
 		rookieForm.setBrandName(rookie.getCreditCard().getBrandName());
 		rookieForm.setCVV(rookie.getCreditCard().getCVV());
-		rookieForm.setExpirationMonth(rookie.getCreditCard()
-				.getExpirationMonth());
-		rookieForm
-				.setExpirationYear(rookie.getCreditCard().getExpirationYear());
+		rookieForm.setExpirationMonth(rookie.getCreditCard().getExpirationMonth());
+		rookieForm.setExpirationYear(rookie.getCreditCard().getExpirationYear());
 		rookieForm.setHolderName(rookie.getCreditCard().getHolderName());
 		rookieForm.setNumber(rookie.getCreditCard().getNumber());
 		rookieForm.setCheckBox(rookieForm.getCheckBox());
@@ -211,8 +211,7 @@ public class RookieService {
 		return rookieForm;
 	}
 
-	public Rookie reconstruct(final RookieForm rookieForm,
-			final BindingResult binding) {
+	public Rookie reconstruct(final RookieForm rookieForm, final BindingResult binding) {
 		Rookie result;
 
 		result = this.create();
@@ -226,35 +225,25 @@ public class RookieService {
 		result.setVatNumber(rookieForm.getVatNumber());
 		result.getCreditCard().setBrandName(rookieForm.getBrandName());
 		result.getCreditCard().setCVV(rookieForm.getCVV());
-		result.getCreditCard().setExpirationMonth(
-				rookieForm.getExpirationMonth());
-		result.getCreditCard()
-				.setExpirationYear(rookieForm.getExpirationYear());
+		result.getCreditCard().setExpirationMonth(rookieForm.getExpirationMonth());
+		result.getCreditCard().setExpirationYear(rookieForm.getExpirationYear());
 		result.getCreditCard().setHolderName(rookieForm.getHolderName());
 		result.getCreditCard().setNumber(rookieForm.getNumber());
 
 		if (!StringUtils.isEmpty(rookieForm.getPhone())) {
-			final Pattern pattern = Pattern.compile("^\\d{4,}$",
-					Pattern.CASE_INSENSITIVE);
+			final Pattern pattern = Pattern.compile("^\\d{4,}$", Pattern.CASE_INSENSITIVE);
 			final Matcher matcher = pattern.matcher(rookieForm.getPhone());
 			if (matcher.matches())
-				rookieForm.setPhone(this.customisationRepository.findAll()
-						.iterator().next().getCountryCode()
-						+ rookieForm.getPhone());
+				rookieForm.setPhone(this.customisationRepository.findAll().iterator().next().getCountryCode() + rookieForm.getPhone());
 		}
 		result.setPhone(rookieForm.getPhone());
 
 		if (!rookieForm.getPassword().equals(rookieForm.getPasswordChecker()))
-			binding.rejectValue("passwordChecker",
-					"member.validation.passwordsNotMatch",
-					"Passwords doesnt match");
-		if (!this.useraccountRepository.findUserAccountsByUsername(
-				rookieForm.getUsername()).isEmpty())
-			binding.rejectValue("username", "member.validation.usernameExists",
-					"This username already exists");
+			binding.rejectValue("passwordChecker", "member.validation.passwordsNotMatch", "Passwords doesnt match");
+		if (!this.useraccountRepository.findUserAccountsByUsername(rookieForm.getUsername()).isEmpty())
+			binding.rejectValue("username", "member.validation.usernameExists", "This username already exists");
 		if (rookieForm.getCheckBox() == false)
-			binding.rejectValue("checkBox", "member.validation.checkBox",
-					"This checkbox must be checked");
+			binding.rejectValue("checkBox", "member.validation.checkBox", "This checkbox must be checked");
 
 		this.validator.validate(result, binding);
 		this.rookieRepository.flush();
@@ -262,8 +251,7 @@ public class RookieService {
 		return result;
 	}
 
-	public Rookie reconstructPruned(final Rookie rookie,
-			final BindingResult binding) {
+	public Rookie reconstructPruned(final Rookie rookie, final BindingResult binding) {
 		Rookie result;
 
 		if (rookie.getId() == 0)
@@ -278,13 +266,10 @@ public class RookieService {
 		result.setVatNumber(rookie.getVatNumber());
 
 		if (!StringUtils.isEmpty(rookie.getPhone())) {
-			final Pattern pattern = Pattern.compile("^\\d{4,}$",
-					Pattern.CASE_INSENSITIVE);
+			final Pattern pattern = Pattern.compile("^\\d{4,}$", Pattern.CASE_INSENSITIVE);
 			final Matcher matcher = pattern.matcher(rookie.getPhone());
 			if (matcher.matches())
-				rookie.setPhone(this.customisationRepository.findAll()
-						.iterator().next().getCountryCode()
-						+ rookie.getPhone());
+				rookie.setPhone(this.customisationRepository.findAll().iterator().next().getCountryCode() + rookie.getPhone());
 		}
 		result.setPhone(rookie.getPhone());
 
@@ -302,8 +287,7 @@ public class RookieService {
 		authority.setAuthority(Authority.ADMIN);
 		final Actor actor = this.actorService.findByPrincipal();
 		Assert.notNull(actor);
-		Assert.isTrue(actor.getUserAccount().getAuthorities()
-				.contains(authority));
+		Assert.isTrue(actor.getUserAccount().getAuthorities().contains(authority));
 		Collection<Rookie> result;
 
 		result = this.rookieRepository.rookiesWithMoreApplications();

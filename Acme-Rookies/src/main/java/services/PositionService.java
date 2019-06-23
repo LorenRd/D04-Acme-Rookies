@@ -20,6 +20,7 @@ import domain.Audit;
 import domain.Company;
 import domain.Position;
 import domain.Rookie;
+import domain.claseSinNombre;
 
 @Service
 @Transactional
@@ -27,27 +28,30 @@ public class PositionService {
 
 	// Managed repository -----------------------------------------------------
 	@Autowired
-	private PositionRepository	positionRepository;
+	private PositionRepository		positionRepository;
 
 	// Supporting services ----------------------------------------------------
 
 	@Autowired
-	private CompanyService		companyService;
+	private CompanyService			companyService;
 
 	@Autowired
-	private ApplicationService	applicationService;
+	private ApplicationService		applicationService;
 
 	@Autowired
-	private ActorService		actorService;
+	private ActorService			actorService;
 
 	@Autowired
-	private RookieService		rookieService;
+	private RookieService			rookieService;
 
 	@Autowired
-	private Validator			validator;
+	private Validator				validator;
 
 	@Autowired
-	private AuditService		auditService;
+	private AuditService			auditService;
+
+	@Autowired
+	private claseSinNombreService	claseSinNombreService;
 
 
 	// Simple CRUD Methods
@@ -117,6 +121,8 @@ public class PositionService {
 		Company principal;
 		Collection<Application> applications;
 		Collection<Audit> audits;
+		Collection<claseSinNombre> claseSinNombres;
+
 		Assert.notNull(position);
 
 		principal = this.companyService.findByPrincipal();
@@ -132,6 +138,10 @@ public class PositionService {
 		audits = this.auditService.findByPosition(position.getId());
 		for (final Audit a : audits)
 			this.auditService.delete2(a);
+
+		claseSinNombres = this.claseSinNombreService.findByPosition(position.getId());
+		for (final claseSinNombre cSN : claseSinNombres)
+			this.claseSinNombreService.delete2(cSN);
 
 		position.getSkillsRequired().clear();
 		position.getTechnologiesRequired().clear();

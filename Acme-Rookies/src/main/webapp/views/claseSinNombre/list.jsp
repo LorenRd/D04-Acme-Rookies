@@ -11,12 +11,12 @@
 
 <!-- Listing grid -->
 
-<display:table name="clasesSinNombres" id="row" requestURI="${requestURI}"
+<display:table name="claseSinNombres" id="row" requestURI="${requestURI}"
 	pagesize="5" class="displaytag">
 	
 	<!-- Display -->
 	<display:column>
-		<a href="claseSinNombre/rookie/display.do?claseSinNombreId=${row.id}"><spring:message code="claseSinNombre.display"/></a>
+		<a href="claseSinNombre/display.do?claseSinNombreId=${row.id}"><spring:message code="claseSinNombre.display"/></a>
 	</display:column>
 
 	<!-- Attributes -->
@@ -24,14 +24,17 @@
 	<display:column property="position.title" title="${positionTitleHeader}"
 		sortable="true" />
 		
-	<spring:message code="claseSinNombre.publicationMoment" var="momentHeader" />
-	<display:column property="publicationMoment" title="${momentHeader}"
-		sortable="true" />
+	<jstl:if test="${cookie['language'].getValue()=='es'}">
+		<spring:message code="claseSinNombre.publicationMoment" var="publicationMomentHeader" />
+    	<display:column property="publicationMoment" format="{0,date, dd-MM-yy HH:mm}" title="${publicationMomentHeader}" />
+	</jstl:if>
+	<jstl:if test="${cookie['language'].getValue()=='en'}">
+		<spring:message code="claseSinNombre.publicationMoment" var="publicationMomentHeader" />
+    	<display:column property="publicationMoment" format="{0,date, yy/MM/dd HH:mm}" title="${publicationMomentHeader}" />
+	</jstl:if>
 		
 	<spring:message code="claseSinNombre.ticker" var="tickerHeader" />
 	<display:column property="ticker" title="${tickerHeader}"
 		sortable="true" />
 		
 </display:table>
-<br />
-<acme:button url="claseSinNombre/rookie/create.do" code="claseSinNombre.create"/>

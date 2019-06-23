@@ -17,10 +17,16 @@
 		<jstl:out value="${claseSinNombre.rookie.userAccount.username}"/><br/>
 	
 		<b><spring:message code="claseSinNombre.publicationMoment" /></b>:
-		<jstl:out value="${claseSinNombre.publicationMoment }"/><br/>	
+		<jstl:if test="${cookie['language'].getValue()=='es'}">
+				<fmt:formatDate value="${claseSinNombre.publicationMoment}" pattern="dd-MM-yy HH:mm"/>
+		</jstl:if>
+		<jstl:if test="${cookie['language'].getValue()=='en'}">
+				<fmt:formatDate value="${claseSinNombre.publicationMoment}" pattern="yy/MM/dd HH:mm"/>
+		</jstl:if>
+		<br>
 	
 		<b><spring:message code="claseSinNombre.body" /></b>:
-		<jstl:out value="${claseSinNombre.text }"/><br/>
+		<jstl:out value="${claseSinNombre.body }"/><br/>
 	
 		<div class="content">
 			<img src="${claseSinNombre.picture}" class="ui mini rounded image" >
@@ -29,17 +35,14 @@
 		<jstl:if test="${claseSinNombre.isDraft}">
 		<b><spring:message code="claseSinNombre.isDraft.draft" /></b>
 		</jstl:if>
-		<jstl:if test="${!claseSinNombre.isDraft}">
-		<b><spring:message code="claseSinNombre.isDraft.final" /></b>
-		</jstl:if>
 <br/>
 
-<jstl:if test="${claseSinNombre.claseSinNombreor.userAccount.username == pageContext.request.userPrincipal.name}">
+<jstl:if test="${claseSinNombre.rookie.userAccount.username == pageContext.request.userPrincipal.name}">
 <br/>
 	<jstl:if test="${claseSinNombre.isDraft == true}">
-		<a href="claseSinNombre/claseSinNombreor/edit.do?claseSinNombreId=${claseSinNombre.id}"><spring:message code="claseSinNombre.edit"/></a><br/>
+		<a href="claseSinNombre/rookie/edit.do?claseSinNombreId=${claseSinNombre.id}"><spring:message code="claseSinNombre.edit"/></a><br/>
 		<br/>
-		<a href="claseSinNombre/claseSinNombreor/delete.do?claseSinNombreId=${claseSinNombre.id}"><spring:message code="claseSinNombre.delete"/></a><br/>
+		<a href="claseSinNombre/rookie/delete.do?claseSinNombreId=${claseSinNombre.id}"><spring:message code="claseSinNombre.delete"/></a><br/>
 	</jstl:if>
 </jstl:if>
 

@@ -1205,7 +1205,7 @@ las TICs!" />
 		<property name="body" value="Example text" />
 		<property name="isDraft" value="false" />
 		<property name="picture" value="http://www.foto1" />
-		<property name="ticker" value="190312-ABCD" />
+		<property name="ticker" value="190624-ABCD" />
 	</bean>
 	
 	<bean class="domain.claseSinNombre" id="claseSinNombre2">

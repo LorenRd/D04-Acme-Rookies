@@ -1,3 +1,4 @@
+
 package controllers.any;
 
 import java.util.Arrays;
@@ -29,10 +30,11 @@ public class RookieController extends AbstractController {
 	// Services
 
 	@Autowired
-	private RookieService rookieService;
+	private RookieService			rookieService;
 
 	@Autowired
-	private CustomisationService customisationService;
+	private CustomisationService	customisationService;
+
 
 	// List
 
@@ -53,8 +55,7 @@ public class RookieController extends AbstractController {
 	// Display
 
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	public ModelAndView show(
-			@RequestParam(required = false) final Integer rookieId) {
+	public ModelAndView show(@RequestParam(required = false) final Integer rookieId) {
 		final ModelAndView result;
 		Rookie rookie = new Rookie();
 
@@ -86,8 +87,7 @@ public class RookieController extends AbstractController {
 
 	// Save de Edit
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@ModelAttribute("rookie") Rookie rookie,
-			final BindingResult binding) {
+	public ModelAndView save(@ModelAttribute("rookie") Rookie rookie, final BindingResult binding) {
 		ModelAndView result;
 
 		try {
@@ -95,9 +95,7 @@ public class RookieController extends AbstractController {
 			if (binding.hasErrors()) {
 				result = this.editModelAndView(rookie);
 				for (final ObjectError e : binding.getAllErrors())
-					System.out.println(e.getObjectName() + " error ["
-							+ e.getDefaultMessage() + "] "
-							+ Arrays.toString(e.getCodes()));
+					System.out.println(e.getObjectName() + " error [" + e.getDefaultMessage() + "] " + Arrays.toString(e.getCodes()));
 			} else
 				rookie = this.rookieService.save(rookie);
 			result = new ModelAndView("welcome/index");
@@ -111,9 +109,7 @@ public class RookieController extends AbstractController {
 
 	// Save de Register
 	@RequestMapping(value = "/register", method = RequestMethod.POST, params = "register")
-	public ModelAndView register(
-			@ModelAttribute("rookieForm") @Valid final RookieForm rookieForm,
-			final BindingResult binding) {
+	public ModelAndView register(@ModelAttribute("rookieForm") @Valid final RookieForm rookieForm, final BindingResult binding) {
 		ModelAndView result;
 		Rookie rookie;
 
@@ -121,17 +117,14 @@ public class RookieController extends AbstractController {
 			rookie = this.rookieService.reconstruct(rookieForm, binding);
 			if (binding.hasErrors()) {
 				for (final ObjectError e : binding.getAllErrors())
-					System.out.println(e.getObjectName() + " error ["
-							+ e.getDefaultMessage() + "] "
-							+ Arrays.toString(e.getCodes()));
+					System.out.println(e.getObjectName() + " error [" + e.getDefaultMessage() + "] " + Arrays.toString(e.getCodes()));
 				result = this.createEditModelAndView(rookieForm);
 			} else {
 				rookie = this.rookieService.save(rookie);
 				result = new ModelAndView("welcome/index");
 			}
 		} catch (final Throwable oops) {
-			result = this.createEditModelAndView(rookieForm,
-					"rookie.commit.error");
+			result = this.createEditModelAndView(rookieForm, "rookie.commit.error");
 		}
 
 		return result;
@@ -158,7 +151,7 @@ public class RookieController extends AbstractController {
 
 			result = new ModelAndView("redirect:/j_spring_security_logout");
 		} catch (final Throwable oops) {
-			result = new ModelAndView("redirect:/company/display.do");
+			result = new ModelAndView("redirect:/rookie/display.do");
 		}
 
 		return result;
@@ -171,8 +164,7 @@ public class RookieController extends AbstractController {
 		return result;
 	}
 
-	private ModelAndView editModelAndView(final Rookie rookie,
-			final String messageCode) {
+	private ModelAndView editModelAndView(final Rookie rookie, final String messageCode) {
 		ModelAndView result;
 		String countryCode;
 
@@ -192,8 +184,7 @@ public class RookieController extends AbstractController {
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(final RookieForm rookieForm,
-			final String message) {
+	protected ModelAndView createEditModelAndView(final RookieForm rookieForm, final String message) {
 		ModelAndView result;
 		String countryCode;
 

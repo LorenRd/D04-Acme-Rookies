@@ -23,13 +23,13 @@ public interface ApplicationRepository extends JpaRepository<Application, Intege
 
 	@Query("select avg(1.0*(select count(a) from Application a where a.rookie.id = h.id)) from Rookie h")
 	Double avgApplicationsPerRookie();
-	
+
 	@Query("select min(1.0*(select count(a) from Application a where a.rookie.id = h.id)) from Rookie h")
 	Double minApplicationsPerRookie();
-	
+
 	@Query("select max(1.0*(select count(a) from Application a where a.rookie.id = h.id)) from Rookie h")
 	Double maxApplicationsPerRookie();
-	
+
 	@Query("select stddev(1.0*(select count(a) from Application a where a.rookie.id = h.id)) from Rookie h")
 	Double stddevApplicationsPerRookie();
 	@Query("select a from Application a where a.rookie.id = ?1")

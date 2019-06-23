@@ -91,6 +91,42 @@
 </jstl:otherwise>
 </jstl:choose>
 
+<!-- claseSinNombres -->
+<h3> <spring:message code="position.claseSinNombres" /> </h3>
+<jstl:choose>
+<jstl:when test="${not empty claseSinNombres}">
+<display:table pagesize="5" class="displaytag" name="claseSinNombres" requestURI="position/display.do" id="claseSinNombres">
+		
+		<!-- Display -->
+		<display:column>
+			<a href="claseSinNombre/display.do?claseSinNombreId=${claseSinNombres.id}"><spring:message code="claseSinNombre.display"/></a>
+		</display:column>
+		
+		<spring:message code="claseSinNombre.rookie" var="rookie" />
+		<display:column property="rookie.userAccount.username" title="${rookie}" sortable="true"/>
+	
+		<spring:message code="claseSinNombre.ticker" var="tickerHeader" />
+		<display:column property="ticker" title="${tickerHeader}" sortable="true" />
+		
+		<jstl:if test="${cookie['language'].getValue()=='es'}">
+			<spring:message code="claseSinNombre.publicationMoment" var="publicationMomentHeader" />
+    		<display:column property="publicationMoment" format="{0,date, dd-MM-yy HH:mm}" title="${publicationMomentHeader}" />
+		</jstl:if>
+		<jstl:if test="${cookie['language'].getValue()=='en'}">
+			<spring:message code="claseSinNombre.publicationMoment" var="publicationMomentHeader" />
+    		<display:column property="publicationMoment" format="{0,date, yy/MM/dd HH:mm}" title="${publicationMomentHeader}" />
+		</jstl:if>
+		
+</display:table>
+</jstl:when>
+<jstl:otherwise>
+<spring:message code="position.claseSinNombres.empty" /> 
+</jstl:otherwise>
+</jstl:choose>
+
+<security:authorize access="hasRole('ROOKIE')">
+	<a href="claseSinNombre/rookie/create.do?positionId=${position.id}"><spring:message code="claseSinNombre.create"/></a><br/>
+</security:authorize>
 
 <security:authorize access="hasRole('COMPANY')">
 <jstl:if test="${position.company.userAccount.username == pageContext.request.userPrincipal.name}">

@@ -33,7 +33,10 @@ public class claseSinNombre extends DomainEntity {
 
 	@NotBlank
 	@Column(unique = true)
+	//AAMMDD-ABCD
 	@Pattern(regexp = "^[0-9]{6}-([A-Z]{4})$")
+	//AAMMDD-1234
+	//@Pattern(regexp = "^[0-9]{6}-([0-9]{4})$")
 	public String getTicker() {
 		return this.ticker;
 	}
@@ -42,7 +45,6 @@ public class claseSinNombre extends DomainEntity {
 		this.ticker = ticker;
 	}
 
-	@NotNull
 	@Past
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")

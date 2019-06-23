@@ -52,6 +52,7 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="application/rookie/list.do"><spring:message code="master.page.application.list" /></a></li>
+					<li><a href="claseSinNombre/rookie/list.do"><spring:message code="master.page.claseSinNombre.list" /></a></li>
 				</ul>
 			</li>
 			<li><a class="fNiv"><spring:message code="master.page.terms" /></a>

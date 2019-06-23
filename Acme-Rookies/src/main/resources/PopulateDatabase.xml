@@ -884,7 +884,7 @@
 
 	<bean class="domain.Audit" id="audit1">
 		<property name="auditor" ref="auditor1" />
-		<property name="moment" value="2019/04/30 13:00" />
+		<property name="moment" value="2019/01/30 13:00" />
 		<property name="position" ref="position2" />
 		<property name="text" value="Example text" />
 		<property name="isDraft" value="false" />
@@ -893,7 +893,7 @@
 
 	<bean class="domain.Audit" id="audit6">
 		<property name="auditor" ref="auditor1" />
-		<property name="moment" value="2019/04/29 15:00" />
+		<property name="moment" value="2018/12/31 15:00" />
 		<property name="position" ref="position6" />
 		<property name="text" value="Example text 6" />
 		<property name="isDraft" value="false" />

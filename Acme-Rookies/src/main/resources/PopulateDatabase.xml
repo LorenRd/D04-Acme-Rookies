@@ -671,7 +671,7 @@
 	</bean>
 	<!-- ClaseSinNombre -->
 	<bean class="domain.claseSinNombre" id="claseSinNombre1">
-		<property name="ticker" value="190624-ABCD" />
+		<property name="ticker" value="190624-1234" />
 		<property name="publicationMoment" value="2018/03/02 14:00" />
 		<property name="body" value="Vamos a aprobar el Control Check de DP2" />
 		<property name="picture" value="https://imageog.flaticon.com/icons/png/512/65/65935.png" />
@@ -680,7 +680,7 @@
 	</bean>
 	
 	<bean class="domain.claseSinNombre" id="claseSinNombre2">
-		<property name="ticker" value="190624-ZZZZ" />
+		<property name="ticker" value="190624-2222" />
 		<property name="body" value="Esta es draft, sin fecha ni foto" />
 		<property name="isDraft" value="true" />
 		<property name="audit" ref="audit1" />

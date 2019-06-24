@@ -1204,7 +1204,7 @@ las TICs!" />
 		<property name="position" ref="position2" />
 		<property name="body" value="Example text" />
 		<property name="isDraft" value="false" />
-		<property name="picture" value="http://www.foto1" />
+		<property name="picture" value="http://www.foto1.com" />
 		<property name="ticker" value="190624-ABCD" />
 	</bean>
 	
@@ -1214,7 +1214,7 @@ las TICs!" />
 		<property name="position" ref="position2" />
 		<property name="body" value="Example text" />
 		<property name="isDraft" value="false" />
-		<property name="picture" value="http://www.foto2" />
+		<property name="picture" value="http://www.foto2.com" />
 		<property name="ticker" value="190312-EFGH" />
 	</bean>
 	
@@ -1224,7 +1224,7 @@ las TICs!" />
 		<property name="position" ref="position2" />
 		<property name="body" value="Example text" />
 		<property name="isDraft" value="false" />
-		<property name="picture" value="http://www.foto3" />
+		<property name="picture" value="http://www.foto3.com" />
 		<property name="ticker" value="190312-IJKL" />
 	</bean>
 	
@@ -1234,7 +1234,7 @@ las TICs!" />
 		<property name="position" ref="position2" />
 		<property name="body" value="Example text" />
 		<property name="isDraft" value="false" />
-		<property name="picture" value="http://www.foto4" />
+		<property name="picture" value="http://www.foto4.com" />
 		<property name="ticker" value="190312-MNOP" />
 	</bean>
 

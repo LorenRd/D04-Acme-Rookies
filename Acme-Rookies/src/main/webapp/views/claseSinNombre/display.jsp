@@ -10,6 +10,9 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
+<jstl:choose>
+<jstl:when test="${(claseSinNombre.position.company.userAccount.username == pageContext.request.userPrincipal.name) || (claseSinNombre.rookie.userAccount.username == pageContext.request.userPrincipal.name)}">
+
 		<b><spring:message code="claseSinNombre.position" /></b>:
 		<jstl:out value="${claseSinNombre.position.title}"/><br/>
 		
@@ -46,4 +49,8 @@
 	</jstl:if>
 </jstl:if>
 
-	
+</jstl:when>
+<jstl:otherwise>
+<spring:message code="claseSinNombre.notYours" />
+</jstl:otherwise>
+</jstl:choose>

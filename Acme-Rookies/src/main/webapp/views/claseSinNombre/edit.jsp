@@ -18,6 +18,9 @@
 
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
+<jstl:choose>
+<jstl:when test="${(claseSinNombre.rookie.userAccount.username == pageContext.request.userPrincipal.name)}">
+
 <form:form action="claseSinNombre/rookie/edit.do" modelAttribute="claseSinNombre">
 		<form:hidden path="id"/>
 		<form:hidden path="version"/>
@@ -34,3 +37,9 @@
 		<acme:cancel url="welcome/index.do" code="claseSinNombre.cancel"/>
 		
 </form:form>
+
+</jstl:when>
+<jstl:otherwise>
+<spring:message code="claseSinNombre.notYours" />
+</jstl:otherwise>
+</jstl:choose>

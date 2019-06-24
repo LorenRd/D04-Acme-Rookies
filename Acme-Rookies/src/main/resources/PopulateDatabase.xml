@@ -495,7 +495,7 @@
 	<bean class="domain.Position" id="position1">
 		<property name="title" value="title position 1" />
 		<property name="description" value="description position 1" />
-		<property name="deadline" value="2018/03/01" />
+		<property name="deadline" value="2019/01/30" />
 		<property name="profileRequired" value="profileRequired 1" />
 		<property name="skillsRequired">
 			<list>
@@ -523,7 +523,7 @@
 	<bean class="domain.Position" id="position2">
 		<property name="title" value="title position 2" />
 		<property name="description" value="description position 2" />
-		<property name="deadline" value="2017/04/30" />
+		<property name="deadline" value="2018/12/31" />
 		<property name="profileRequired" value="profileRequired 2" />
 		<property name="skillsRequired">
 			<list>
@@ -1196,11 +1196,11 @@ las TICs!" />
 			value="https://drive.google.com/drive/folders/12wxFoI0CyRyaWlp44IUK-r2vj0z9p7tK" />
 	</bean>
 	
-	<!-- clasesSinNombre -->
+	<!-- clasesSinNombre TEST -->
 	
 	<bean class="domain.claseSinNombre" id="claseSinNombre1">
 		<property name="rookie" ref="rookie1" />
-		<property name="publicationMoment" value="2019/06/23 14:00" />
+		<property name="publicationMoment" value="2019/06/24 10:00" />
 		<property name="position" ref="position2" />
 		<property name="body" value="Example text" />
 		<property name="isDraft" value="false" />
@@ -1210,7 +1210,7 @@ las TICs!" />
 	
 	<bean class="domain.claseSinNombre" id="claseSinNombre2">
 		<property name="rookie" ref="rookie1" />
-		<property name="publicationMoment" value="2019/05/23 13:00" />
+		<property name="publicationMoment" value="2019/05/24 10:00" />
 		<property name="position" ref="position2" />
 		<property name="body" value="Example text" />
 		<property name="isDraft" value="false" />
@@ -1220,7 +1220,7 @@ las TICs!" />
 	
 	<bean class="domain.claseSinNombre" id="claseSinNombre3">
 		<property name="rookie" ref="rookie2" />
-		<property name="publicationMoment" value="2018/04/30 13:00" />
+		<property name="publicationMoment" value="2019/01/01 10:00" />
 		<property name="position" ref="position2" />
 		<property name="body" value="Example text" />
 		<property name="isDraft" value="false" />
@@ -1230,7 +1230,7 @@ las TICs!" />
 	
 	<bean class="domain.claseSinNombre" id="claseSinNombre4">
 		<property name="rookie" ref="rookie2" />
-		<property name="publicationMoment" value="2019/04/30 13:00" />
+		<property name="publicationMoment" value="2019/04/30 10:00" />
 		<property name="position" ref="position2" />
 		<property name="body" value="Example text" />
 		<property name="isDraft" value="false" />

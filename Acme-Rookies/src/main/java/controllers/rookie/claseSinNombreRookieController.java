@@ -82,15 +82,22 @@ public class claseSinNombreRookieController extends AbstractController {
 	public ModelAndView delete(final int claseSinNombreId) {
 		claseSinNombre claseSinNombre;
 		ModelAndView result;
+		Rookie principal;
+
+		principal = this.rookieService.findByPrincipal();
 
 		claseSinNombre = this.claseSinNombreService.findOne(claseSinNombreId);
-		try {
-			this.claseSinNombreService.delete(claseSinNombre);
-			result = new ModelAndView("redirect:/welcome/index.do");
-		} catch (final Throwable oops) {
+		if (claseSinNombre.getRookie().getId() == principal.getId())
+			try {
+				this.claseSinNombreService.delete(claseSinNombre);
+				result = new ModelAndView("redirect:/welcome/index.do");
+			} catch (final Throwable oops) {
+				result = this.displayModelAndView(claseSinNombre, "claseSinNombre.commit.error");
+
+			}
+		else
 			result = this.displayModelAndView(claseSinNombre, "claseSinNombre.commit.error");
 
-		}
 		return result;
 	}
 
